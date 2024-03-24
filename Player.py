@@ -8,5 +8,8 @@ class Player:
         self.evasiveness = 0
         
     def update():
-        
+        pass
+
+    def draw():
+        pass
         
