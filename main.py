@@ -39,4 +39,6 @@ while True:
             pg.quit()
             sys.exit()
         # Let game manager handle the event
-        
+        gameManager.handleEvent(event)
+    
+    
