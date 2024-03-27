@@ -9,12 +9,14 @@ class Player:
         '''
         Initialize a player.
         Input : window - The main playing window
-                image - The image of the player, already loaded by pg.image.load
+                image - A tuple containing, in order, The image of the player and The image with green outline,
+                        both already loaded by pg.image.load
                 loc - The coordinates of the CENTER of the player image
                 id - The id number use to identify a player. In a game with 2 players,
                       the first player has an index of 0 and the second player has an index of 1
                 name - A string that represents the name of the player. Used to display on top as a name tag 
                       and at the end screen when the winner is announced
+        Needed Attribute : isTurn - Boolean value. True when it is the player's turn, False when it is not
         '''
         # TODO
         pass
@@ -44,6 +46,7 @@ class Player:
         Draws the player on the window at loc,
               the player's name tag on top of the players head,
               the player's health bar at TBD.
+              If it is the player's turn, draw the player_green pic instead of the normal pic
         '''
         # TODO
         pass
