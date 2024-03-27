@@ -33,9 +33,14 @@ class GameManager:
             self.gun.aimRight()
         elif e.key == pg.K_LEFT:
             self.gun.aimLeft()
+            
+    def update(self):
+        for player in self.players:
+            player.update()
+        self.gun.update()
+        
 
     def draw(self):
-        self.window.blit(self.image, self.rect.topleft)
         for player in self.players:
             player.draw()
         self.gun.draw()

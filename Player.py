@@ -21,7 +21,7 @@ class Player:
         scaled = pg.transform.scale(scaled, (PWIDTH, PHEIGHT))
         return scaled
         
-    def update():
+    def update(self):
         pass
 
     def draw(self):

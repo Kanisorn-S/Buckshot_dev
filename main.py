@@ -38,7 +38,16 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
-        # Let game manager handle the event
-        gameManager.handleEvent(event)
+        if event.type == pg.KEYDOWN:
+            # Let game manager handle the event
+            gameManager.handleEvent(event)
+    
+    window.blit(background, (0, 0))
+    gameManager.update()
+    gameManager.draw()
+    pg.display.update()
+    clock.tick(FRAMES_PER_SECOND)
+
+    
     
     

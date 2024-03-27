@@ -7,7 +7,7 @@ class Gun:
     def __init__(self, window, loc, image, nbullets, players):
         self.window = window
         self.nbullets = nbullets
-        self.image = pg.image.load(image)
+        self.image = image
         self.image = pg.transform.scale(self.image, (200, 160))
         self.image_flipped = pg.transform.flip(self.image, 0, 1)
         self.rect = self.image.get_rect()
