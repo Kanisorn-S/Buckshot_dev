@@ -13,11 +13,11 @@ FRAMES_PER_SECOND = 30
 pg.init()
 window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE|SCALED)
 clock = pg.time.Clock()
-bg = pg.image.load('images/background.jpg')
+bg = pg.image.load('images/background.png')
 bg = pg.transform.scale(bg, (WIDTH, HEIGHT))
-image1 = 'images/player1.png'
-image2 = 'images/player2.png'
-gun = 'images/gun.png'
+image1 = 'images/heal.png'
+image2 = 'images/heal.png'
+gun = 'images/evasiveness.png'
 
 while True:
     gameManager = GameManager(window, bg, (0, 0), 2, 5, gun)

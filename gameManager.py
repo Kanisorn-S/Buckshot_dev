@@ -22,7 +22,7 @@ class GameManager:
     def loadPlayer(self):
         Players = {}
         for i in range(self.nplayers):
-            player = Player(self.window, f'images/player{i}.png', self.locations[i], i, f"Player{i}")
+            player = Player(self.window, 'images/heal.png', self.locations[i], i, f"Player{i}")
             Players[player] = player.health
         return Players
     
