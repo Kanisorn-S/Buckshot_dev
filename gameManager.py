@@ -30,7 +30,7 @@ class GameManager:
         self.blank_round = blank_round
         self.locations = [(100, 375/2), (500, 375/2)]
         self.playersInfo = self.loadPlayer()
-        self.players = self.playersInfo.keys()
+        self.players = tuple(self.playersInfo.keys())
         self.gun = Gun(self.window, (640, 400), gun, nbullets, self.players)
         self.turn = 0
         self.winner = None

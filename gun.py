@@ -20,7 +20,7 @@ class Gun:
     def load(self):
         bullets = deque()
         for _ in range(self.nbullets):
-            bullets.append(Bullet(self.odds))
+            bullets.append(Bullet(self.window, self.odds, self.image))
         return bullets
     
     def fire(self):
