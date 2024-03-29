@@ -56,5 +56,4 @@ class Player:
               If it is the player's turn, draw the player_green pic instead of the normal pic
         '''
         # TODO
-        pass
-        
+        self.__window.blit(self.image, self.rect)

@@ -56,7 +56,10 @@ class GameManager:
             self.gun.aimRight()
         elif e.key == pg.K_LEFT:
             self.gun.aimLeft()
-            
+        
+        if e.key == pg.K_f:
+            pg.display.toggle_fullscreen()
+
     def update(self):
         '''
         Loop through all the players.
