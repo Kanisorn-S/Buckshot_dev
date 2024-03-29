@@ -1,11 +1,11 @@
 import pygame as pg
 from pygame.locals import *
 from gun import Gun 
-from Player import Player
+from player import Player
 from item import Item
 
 class GameManager:
-    def __init__(self, window, nplayers, players_pic, nbullets, live_round, blank_round, gun):
+    def __init__(self, window, nplayers: int, players_pic: pg.Surface, nbullets, live_round, blank_round, gun):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
