@@ -5,9 +5,11 @@ PWIDTH = 100
 PHEIGHT = 100
 
 class Player:
-    def __init__(self, window, image, loc, id, name):
+    def __init__(self, window: pg.Surface, image: pg.Surface, loc: tuple[int, int], id: int, name: str):
         '''
         Initialize a player.
+        ------
+
         Input : window - The main playing window
                 image - A tuple containing, in order, The image of the player and The image with green outline,
                         both already loaded by pg.image.load
@@ -16,10 +18,15 @@ class Player:
                       the first player has an index of 0 and the second player has an index of 1
                 name - A string that represents the name of the player. Used to display on top as a name tag 
                       and at the end screen when the winner is announced
+        
         Needed Attribute : isTurn - Boolean value. True when it is the player's turn, False when it is not
         '''
-        # TODO
-        pass
+        self.__window = window 
+        self.image = image
+        self.rect = image.get_rect(center=loc)
+        self.health = 100
+        self.id = id
+        self.name = name
 
     def shot(self, bullet):
         '''
