@@ -4,7 +4,7 @@ from pygame.locals import *
 import sys
 from gameManager import GameManager
 from item import Item
-from player import Player
+from Player import Player
 from gun import Gun 
 
 # Set const parameters
@@ -28,6 +28,7 @@ live_shot = pg.image.load('images/live_shot.png')
 pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
+
 
 # Main program loop
 while True:

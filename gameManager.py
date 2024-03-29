@@ -1,7 +1,7 @@
 import pygame as pg
 from pygame.locals import *
 from gun import Gun 
-from player import Player
+from Player import Player
 from item import Item
 
 class GameManager:
