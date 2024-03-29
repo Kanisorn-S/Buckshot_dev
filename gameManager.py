@@ -5,7 +5,7 @@ from player import Player
 from item import Item
 
 class GameManager:
-    def __init__(self, window, nplayers: int, players_pic: pg.Surface, nbullets, live_round, blank_round, gun):
+    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, live_round: pg.Surface, blank_round: pg.Surface, gun : pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
