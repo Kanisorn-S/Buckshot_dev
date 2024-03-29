@@ -34,7 +34,7 @@ class GameManager:
         self.gun = Gun(self.window, (300, 375/2), gun, nbullets, self.players)
         self.turn = 0
         self.winner = None
-
+        self.bullets_on_screen = []
         
     def loadPlayer(self):
         '''
@@ -50,6 +50,9 @@ class GameManager:
         if e.key == pg.K_SPACE:
             target, bullet = self.gun.fire()
             target.shot(bullet)
+            self.bullets_on_screen.append(bullet)
+
+            
             if target != self.players[self.turn]:
                 self.turn = not self.turn
         elif e.key == pg.K_RIGHT:
@@ -77,8 +80,14 @@ class GameManager:
                 player.isTurn = True
         if not len(self.playersInfo.keys()):
             self.winner = self.playersInfo.keys()[0]
-        self.gun.update()
         
+        self.gun.update()
+        for bullet in self.bullets_on_screen:
+            if bullet.rect.x < 0 or bullet.rect.x > self.window.get_width():
+                # print('bullet removed')
+                self.bullets_on_screen.remove(bullet)
+            bullet.update()
+
 
     def draw(self):
         '''
@@ -88,6 +97,8 @@ class GameManager:
         if self.winner is None:
             for player in self.players:
                 player.draw()
+            for bullet in self.bullets_on_screen:
+                bullet.draw()
             self.gun.draw()
         else:
             # show winning screen with victor at the center

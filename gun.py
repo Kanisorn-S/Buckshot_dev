@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.locals import *
 from collections import deque
+from player import Player
 from bullet import Bullet
 
 class Gun:
@@ -23,7 +24,7 @@ class Gun:
             bullets.append(Bullet(self.window, self.odds, self.image))
         return bullets
     
-    def fire(self):
+    def fire(self) -> tuple[Player, Bullet]:
         # print(f'fire {self.target}')
         return self.players[self.target], self.bullets.pop()
     
@@ -36,7 +37,10 @@ class Gun:
     def update(self):
         # print("Current bullets: ", [bullet.type for bullet in self.bullets])
         # print(self.target)
+       
         pass
+
+            
 
     def draw(self):
         if self.target:

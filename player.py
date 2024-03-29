@@ -43,7 +43,9 @@ class Player:
         # print(bullet.type, Bullet.LIVE)
         if bullet.type == Bullet.LIVE:
             self.health -= bullet.damage
-            print('ouch my health is', self.health, 'now')
+            bullet.aiming = self.id
+            bullet.fired()
+            print(f'ouch! {self.name} got hit! {self.health}/100')
         elif bullet.type == Bullet.BLANK:
             print('survived')
 

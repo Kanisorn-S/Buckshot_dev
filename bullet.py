@@ -8,7 +8,7 @@ class Bullet:
     LIVE = 1
     LEFT = 0
     RIGHT = 1
-    def __init__(self, window, odds, image):
+    def __init__(self, window, odds, image: pg.Surface):
         '''
         Initialize a single bullet
         Input : window - The main window of the game
@@ -22,6 +22,7 @@ class Bullet:
         self.window = window
         self.image = image
         self.rect = self.image.get_rect(center=(300, 375/2))
+        self.exact_pos = list(self.rect.topleft)
         self.types = [Bullet.BLANK, Bullet.LIVE]
         self.type = random.choices(self.types, odds)[0]
         self.damage = 1
@@ -35,22 +36,26 @@ class Bullet:
         Set isFired to True to start drawing and updating the bullet
         Check for the direction the bullet needs to go
         '''
+        # print('fired')
         self.isFired = True
-        if self.aiming == Bullet.LEFT:
-            self.speed = -self.speed
-    
+
     def update(self):
         '''
         Updates the bullet position 
         '''
-        self.rect.x += self.speed
+    
+        if self.isFired:
+            # self.rect.x += self.speed
+            self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
+            self.rect.topleft = self.exact_pos
+            # print(self.rect.x)
     
     def draw(self):
         '''
         Draws the bullet on the window if isFired is True
         '''
         if self.isFired:
-            self.window.blit(self.image, self.rect)
+            self.window.blit(self.image, self.exact_pos)
         
         
         
