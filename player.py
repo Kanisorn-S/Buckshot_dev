@@ -1,4 +1,5 @@
 import pygame as pg
+from bullet import Bullet
 from pygame.locals import *
 
 PWIDTH = 100
@@ -28,7 +29,7 @@ class Player:
         self.id = id
         self.name = name
 
-    def shot(self, bullet):
+    def shot(self, bullet: Bullet):
         '''
         The function updates the players health according to the type of bullet being shot
         Input : bullet - An object of bullet class with the attributes type and damage
@@ -38,7 +39,13 @@ class Player:
         live rounds or not
         '''      
         # TODO
-        pass
+
+        # print(bullet.type, Bullet.LIVE)
+        if bullet.type == Bullet.LIVE:
+            self.health -= bullet.damage
+            print('ouch my health is', self.health, 'now')
+        elif bullet.type == Bullet.BLANK:
+            print('survived')
 
     def update(self):
         '''

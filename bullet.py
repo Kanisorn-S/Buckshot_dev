@@ -23,7 +23,7 @@ class Bullet:
         self.image = image
         self.rect = self.image.get_rect(center=(300, 375/2))
         self.types = [Bullet.BLANK, Bullet.LIVE]
-        self.type = random.choices(self.types, odds)
+        self.type = random.choices(self.types, odds)[0]
         self.damage = 1
         self.speed = 5
         self.aiming = Bullet.LEFT
