@@ -8,7 +8,7 @@ class Gun:
         self.window = window
         self.nbullets = nbullets
         self.image = image
-        self.image = pg.transform.scale(self.image, (200, 160))
+        self.image = pg.transform.scale(self.image, (100, 100))
         self.image_flipped = pg.transform.flip(self.image, 0, 1)
         self.rect = self.image.get_rect()
         self.rect.center = loc
