@@ -30,11 +30,13 @@ pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
 
+
+gameManager = GameManager(window, 2, 2*[heal], 10, live_shot, blank_shot, gun)
 # Main program loop
 while True:
     # Initialize game manager
     # gameManager = GameManager(window, background, (0, 0), NPLAYER, NBULLETS, evasiveness, gun)
-    gameManager = GameManager(window, 2, 2*[heal], 10, live_shot, blank_shot, gun)
+    
     # check events
     for event in pg.event.get():
         if event.type == pg.QUIT:

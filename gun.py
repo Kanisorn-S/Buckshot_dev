@@ -9,7 +9,7 @@ class Gun:
         self.nbullets = nbullets
         self.image = image
         self.image = pg.transform.scale(self.image, (100, 100))
-        self.image_flipped = pg.transform.flip(self.image, 0, 1)
+        self.image_flipped = pg.transform.flip(self.image, 1, 0)
         self.rect = self.image.get_rect()
         self.rect.center = loc
         self.odds = [0.5, 0.5]
@@ -27,13 +27,14 @@ class Gun:
         return self.players[self.target], self.bullets.pop()
     
     def aimRight(self):
-        self.target = not self.target
+        self.target = 1
     
     def aimLeft(self):
-        self.target = not self.target
+        self.target = 0
             
     def update(self):
-        print("Current bullets: ", [bullet.type for bullet in self.bullets])
+        # print("Current bullets: ", [bullet.type for bullet in self.bullets])
+        print(self.target)
 
     def draw(self):
         if self.target:
