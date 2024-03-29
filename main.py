@@ -22,13 +22,13 @@ clock = pg.time.Clock()
 # Load necessary images
 background = pg.image.load('images/background.png')
 blank_shot = pg.image.load('images/blank_shot.png')
-evasiveness = pg.image.load('images/evasiveness.png')
+gun = pg.image.load('images/evasiveness.png')
 heal = pg.image.load('images/heal.png')
+heal = pg.transform.scale_by(heal, 0.05)
 live_shot = pg.image.load('images/live_shot.png')
 pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
-gun = pg.transform.scale_by(evasiveness, 0.005)
 
 # Main program loop
 while True:
