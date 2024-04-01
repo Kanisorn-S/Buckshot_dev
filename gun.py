@@ -37,7 +37,8 @@ class Gun:
     def update(self):
         # print("Current bullets: ", [bullet.type for bullet in self.bullets])
         # print(self.target)
-       
+        if len(self.bullets) == 0:
+            self.bullets = self.load()
         pass
 
             
