@@ -7,6 +7,8 @@ from item import Item
 from player import Player
 from gun import Gun 
 
+print("Hello world")
+
 # Set const parameters
 WIDTH = 600
 HEIGHT = 375
