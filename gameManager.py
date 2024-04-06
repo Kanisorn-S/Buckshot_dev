@@ -5,7 +5,7 @@ from player import Player
 from item import Item
 
 class GameManager:
-    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, live_round: pg.Surface, blank_round: pg.Surface, gun : pg.Surface):
+    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, live_round: pg.Surface, blank_round: pg.Surface, gun : pg.Surface, itemframe: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
@@ -35,6 +35,15 @@ class GameManager:
         self.turn = 0
         self.winner = None
         self.bullets_on_screen = []
+        self.itemframes = []
+        for i in range(4):
+            image = pg.transform.scale_by(itemframe, 0.08)
+            rect = image.get_rect()
+            self.itemframes.append((image, rect))
+        self.itemframes[0][1].center = (200, 375/4)
+        self.itemframes[1][1].center = (400, 375/4)
+        self.itemframes[2][1].center = (200, 3*375/4)
+        self.itemframes[3][1].center = (400, 3*375/4)
         
     def loadPlayer(self):
         '''
@@ -99,6 +108,8 @@ class GameManager:
                 player.draw()
             for bullet in self.bullets_on_screen:
                 bullet.draw()
+            for itemframe, rect in self.itemframes:
+                self.window.blit(itemframe, rect)
             self.gun.draw()
         else:
             # show winning screen with victor at the center

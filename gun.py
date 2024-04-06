@@ -11,7 +11,7 @@ class Gun:
         self.sprites = []
         for i in range(1, 6):
             image = pg.image.load(f'images/gun_{i}.png')
-            self.sprites.append(pg.transform.scale_by(image, 0.1))
+            self.sprites.append(pg.transform.scale_by(image, 0.08))
         self.current_sprite = 2
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
