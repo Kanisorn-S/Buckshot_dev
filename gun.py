@@ -36,12 +36,13 @@ class Gun:
     def load(self):
         bullets = deque()
         for _ in range(self.nbullets):
-            bullets.append(Bullet(self.window, self.odds, self.image))
+            bullets.append(Bullet(self.window, self.odds))
         return bullets
     
     def fire(self) -> tuple[Player, Bullet]:
         # print(f'fire {self.target}')
         bullet = self.bullets.pop()
+        bullet.aiming = self.target
         if bullet.type == Bullet.LIVE:
             self.live -= 1
         else:
@@ -76,6 +77,7 @@ class Gun:
             if self.current_sprite <= 0:
                 self.turning_right = False
             self.image = self.sprites[self.current_sprite]
+
 
                   
 

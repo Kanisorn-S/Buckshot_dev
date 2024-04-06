@@ -25,7 +25,7 @@ class Player:
         self.__window = window 
         self.image = image
         self.rect = image.get_rect(center=loc)
-        self.health = 100
+        self.health = 3
         self.id = id
         self.name = name
 

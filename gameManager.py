@@ -5,7 +5,7 @@ from player import Player
 from item import Item
 
 class GameManager:
-    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
+    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, gun : pg.Surface, itemframe: pg.Surface, heart: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
@@ -27,7 +27,7 @@ class GameManager:
         self.locations = [(100, 375/2), (500, 375/2)]
         self.playersInfo = self.loadPlayer()
         self.players = tuple(self.playersInfo.keys())
-        self.gun = Gun(self.window, (330, 380/2), nbullets, self.players)
+        self.gun = Gun(self.window, (330, 460/2), nbullets, self.players)
         self.turn = 0
         self.winner = None
         self.bullets_on_screen = []
@@ -40,6 +40,8 @@ class GameManager:
         self.itemframes[1][1].center = (400, 375/4)
         self.itemframes[2][1].center = (200, 3*375/4)
         self.itemframes[3][1].center = (400, 3*375/4)
+        self.heart = pg.transform.scale_by(heart, 0.01)
+        print(str(self.playersInfo))
         
     def loadPlayer(self):
         '''
@@ -93,7 +95,6 @@ class GameManager:
                 self.bullets_on_screen.remove(bullet)
             bullet.update()
 
-
     def draw(self):
         '''
         Draws all the components by calling draw() on all objects.
@@ -102,6 +103,13 @@ class GameManager:
         if self.winner is None:
             for player in self.players:
                 player.draw()
+                x, y = player.rect.topleft
+                image = self.heart
+                w, h = image.get_size()
+                for i in range(self.playersInfo[player]):
+                    rect = image.get_rect()
+                    rect.bottomleft = (x + (i * w), y)
+                    self.window.blit(image, rect)
             for bullet in self.bullets_on_screen:
                 bullet.draw()
             for itemframe, rect in self.itemframes:

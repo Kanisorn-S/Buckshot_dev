@@ -29,9 +29,10 @@ pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
 itemframe = pg.image.load('images/itembox.png')
+heart = pg.image.load('images/heart.png')
 
 
-gameManager = GameManager(window, 2, 2*[heal], 10, gun, itemframe)
+gameManager = GameManager(window, 2, 2*[heal], 10, gun, itemframe, heart)
 # Main program loop
 while True:
     # Initialize game manager

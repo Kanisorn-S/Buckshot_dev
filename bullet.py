@@ -8,7 +8,7 @@ class Bullet:
     LIVE = 1
     LEFT = 0
     RIGHT = 1
-    def __init__(self, window, odds, fired_image: pg.Surface):
+    def __init__(self, window, odds):
         '''
         Initialize a single bullet
         Input : window - The main window of the game
@@ -20,7 +20,7 @@ class Bullet:
                      damage - The damage of this bullet
         '''
         self.window = window
-        self.fired_image = fired_image
+        self.fired_image = pg.transform.scale_by(pg.image.load('images/laser.png'), 0.01)
         self.rect = self.fired_image.get_rect(center=(300, 375/2))
         self.exact_pos = list(self.rect.topleft)
         self.types = [Bullet.BLANK, Bullet.LIVE]
@@ -49,7 +49,7 @@ class Bullet:
             self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
             self.rect.topleft = self.exact_pos
             # print(self.rect.x)
-    
+
     def draw(self):
         '''
         Draws the bullet on the window if isFired is True
