@@ -42,6 +42,7 @@ class GameManager:
         self.itemframes[3][1].center = (400, 3*375/4)
         self.heart = pg.transform.scale_by(heart, 0.01)
         print(str(self.playersInfo))
+        self.target = None
         
     def loadPlayer(self):
         '''
@@ -55,12 +56,12 @@ class GameManager:
     
     def handleEvent(self, e):
         if e.key == pg.K_SPACE:
-            target, bullet = self.gun.fire()
-            target.shot(bullet)
+            self.target, bullet = self.gun.fire()
             self.bullets_on_screen.append(bullet)
+            bullet.fired()
 
             
-            if target != self.players[self.turn]:
+            if self.target != self.players[self.turn]:
                 self.turn = not self.turn
         elif e.key == pg.K_RIGHT:
             self.gun.aimRight()
@@ -90,8 +91,10 @@ class GameManager:
         
         self.gun.update()
         for bullet in self.bullets_on_screen:
-            if bullet.rect.x < 0 or bullet.rect.x > self.window.get_width():
+            if bullet.rect.colliderect(self.target.rect):
                 # print('bullet removed')
+                self.target.shot(bullet)
+                self.gun.hit = True
                 self.bullets_on_screen.remove(bullet)
             bullet.update()
 

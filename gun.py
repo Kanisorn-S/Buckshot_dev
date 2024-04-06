@@ -32,6 +32,9 @@ class Gun:
                 self.live += 1
             else:
                 self.blank += 1
+        self.hit = True
+        self.phlive = 0
+        self.phblank = 0
 
     def load(self):
         bullets = deque()
@@ -44,9 +47,9 @@ class Gun:
         bullet = self.bullets.pop()
         bullet.aiming = self.target
         if bullet.type == Bullet.LIVE:
-            self.live -= 1
+            self.phlive -= 1
         else:
-            self.blank -= 1
+            self.phblank -= 1
         return self.players[self.target], bullet
     
     def aimRight(self):
