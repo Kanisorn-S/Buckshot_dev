@@ -31,7 +31,7 @@ class GameManager:
         self.locations = [(100, 375/2), (500, 375/2)]
         self.playersInfo = self.loadPlayer()
         self.players = tuple(self.playersInfo.keys())
-        self.gun = Gun(self.window, (300, 375/2), gun, nbullets, self.players)
+        self.gun = Gun(self.window, (330, 380/2), nbullets, self.players)
         self.turn = 0
         self.winner = None
         self.bullets_on_screen = []

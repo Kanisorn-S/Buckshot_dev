@@ -7,12 +7,11 @@ from item import Item
 from player import Player
 from gun import Gun 
 
-print("Hello world")
 
 # Set const parameters
 WIDTH = 600
 HEIGHT = 375
-FRAMES_PER_SECOND = 30
+FRAMES_PER_SECOND = 60
 NPLAYER = 2
 NBULLETS = 5
 
@@ -22,7 +21,7 @@ window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
 clock = pg.time.Clock()
 
 # Load necessary images
-background = pg.image.load('images/background.png')
+background = pg.Surface((WIDTH, HEIGHT))
 blank_shot = pg.image.load('images/blank_shot.png')
 gun = pg.image.load('images/evasiveness.png')
 heal = pg.image.load('images/heal.png')
@@ -48,7 +47,7 @@ while True:
             # Let game manager handle the event
             gameManager.handleEvent(event)
     
-    window.blit(background, (0, 0))
+    window.fill('black')
     gameManager.update()
     gameManager.draw()
     pg.display.update()
