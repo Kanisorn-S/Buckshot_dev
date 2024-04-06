@@ -22,18 +22,16 @@ clock = pg.time.Clock()
 
 # Load necessary images
 background = pg.Surface((WIDTH, HEIGHT))
-blank_shot = pg.image.load('images/blank_shot.png')
 gun = pg.image.load('images/evasiveness.png')
 heal = pg.image.load('images/heal.png')
 heal = pg.transform.scale_by(heal, 0.05)
-live_shot = pg.image.load('images/live_shot.png')
 pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
 itemframe = pg.image.load('images/itembox.png')
 
 
-gameManager = GameManager(window, 2, 2*[heal], 10, live_shot, blank_shot, gun, itemframe)
+gameManager = GameManager(window, 2, 2*[heal], 10, gun, itemframe)
 # Main program loop
 while True:
     # Initialize game manager

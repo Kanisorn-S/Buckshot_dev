@@ -5,6 +5,9 @@ from player import Player
 from bullet import Bullet
 
 class Gun:
+    BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.02)
+    LIVE_IMG = pg.transform.scale_by(pg.image.load('images/live_shot.png'), 0.02)
+    IMG_W = LIVE_IMG.get_size()[0]
     def __init__(self, window, loc, nbullets, players):
         self.window = window
         self.nbullets = nbullets
@@ -16,12 +19,19 @@ class Gun:
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
         self.rect.center = loc
-        self.odds = [0.6, 0.4]
+        self.odds = [0.5, 0.5]
         self.bullets = self.load()
         self.players = players
         self.target = 69
         self.turning_left = False
         self.turning_right = False
+        self.live = 0
+        self.blank = 0
+        for bullet in self.bullets:
+            if bullet.type == Bullet.LIVE:
+                self.live += 1
+            else:
+                self.blank += 1
 
     def load(self):
         bullets = deque()
@@ -31,7 +41,12 @@ class Gun:
     
     def fire(self) -> tuple[Player, Bullet]:
         # print(f'fire {self.target}')
-        return self.players[self.target], self.bullets.pop()
+        bullet = self.bullets.pop()
+        if bullet.type == Bullet.LIVE:
+            self.live -= 1
+        else:
+            self.blank -= 1
+        return self.players[self.target], bullet
     
     def aimRight(self):
         if self.target == 1:
@@ -62,7 +77,17 @@ class Gun:
                 self.turning_right = False
             self.image = self.sprites[self.current_sprite]
 
-            
+                  
 
     def draw(self):
         self.window.blit(self.image, self.rect)
+        x = 300
+        y = 330
+        for i in range(self.live):
+            rect = Gun.LIVE_IMG.get_rect()
+            rect.topright = (x - (i * Gun.IMG_W), y)
+            self.window.blit(Gun.LIVE_IMG, rect)
+        for i in range(self.blank):
+            rect = Gun.BLANK_IMG.get_rect()
+            rect.topleft = (x + (i * Gun.IMG_W), y)
+            self.window.blit(Gun.BLANK_IMG, rect)

@@ -5,15 +5,13 @@ from player import Player
 from item import Item
 
 class GameManager:
-    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, live_round: pg.Surface, blank_round: pg.Surface, gun : pg.Surface, itemframe: pg.Surface):
+    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
                 nplayers - The number of players in the game
                 players_pic - A list of tuple, each tuple containing a normal player pic and a green outlined player pic
                 nbullets - The number of bullets in the gun
-                live_round - A loaded picture of a live round
-                blank_round - A loaded picture of a blank round
                 gun - A loaded picture of the cannon
         Attributes : locations - A list of coordinates of the center of each players
                      playersInfo - A dictionary where the key is the player and the value is the player's health
@@ -26,8 +24,6 @@ class GameManager:
         self.nplayers = nplayers
         self.nbullets = nbullets
         self.players_pic = players_pic
-        self.live_round = live_round
-        self.blank_round = blank_round
         self.locations = [(100, 375/2), (500, 375/2)]
         self.playersInfo = self.loadPlayer()
         self.players = tuple(self.playersInfo.keys())
