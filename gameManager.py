@@ -54,7 +54,7 @@ class GameManager:
             Players[player] = player.health
         return Players
     
-    def handleEvent(self, e):
+    def handleEvent(self, e: pg.Event):
         if e.key == pg.K_SPACE:
             self.target, bullet = self.gun.fire()
             self.bullets_on_screen.append(bullet)

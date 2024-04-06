@@ -8,16 +8,19 @@ class Bullet:
     LIVE = 1
     LEFT = 0
     RIGHT = 1
-    def __init__(self, window, odds):
+    def __init__(self, window: pg.Surface, odds: tuple):
         '''
         Initialize a single bullet
         Input : window - The main window of the game
                 odds - A tuple of odds. The first is the probability of the bullet being a blank, 
                        the second is the probability of the bullet being a live
-                image - A loaded image of the bullet flying
-        Attributes : types - A list of types of bullet
+        Attributes : fired_image - Load an image of a bullet while in flight
+                     types - A list of types of bullet
                      type - The type of this bullet
                      damage - The damage of this bullet
+                     speed - How fast a bullet is traveling in pixels/frame
+                     aiming - The direction the bullet should move when it is fired
+                     isFired - Boolean, If true then the bullet is fired
         '''
         self.window = window
         self.fired_image = pg.transform.scale_by(pg.image.load('images/laser.png'), 0.01)
