@@ -5,7 +5,7 @@ import sys
 from gameManager import GameManager
 from item import Item
 from player import Player
-from gun import Gun 
+from gun import Gun
 
 
 # Set const parameters
@@ -21,7 +21,7 @@ window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
 clock = pg.time.Clock()
 
 # Load necessary images
-background = pg.Surface((WIDTH, HEIGHT))
+background = pg.image.load('images/background.jpg')
 gun = pg.image.load('images/evasiveness.png')
 heal = pg.image.load('images/heal.png')
 heal = pg.transform.scale_by(heal, 0.05)
@@ -47,7 +47,7 @@ while True:
             # Let game manager handle the event
             gameManager.handleEvent(event)
     
-    window.fill('black')
+    window.blit(background, (0, 0))
     gameManager.update()
     gameManager.draw()
     pg.display.update()

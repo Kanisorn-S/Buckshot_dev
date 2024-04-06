@@ -32,9 +32,9 @@ class Gun:
                 self.live += 1
             else:
                 self.blank += 1
-        self.hit = True
-        self.phlive = 0
-        self.phblank = 0
+        self.hit = False
+        self.phlive = self.live
+        self.phblank = self.blank
 
     def load(self):
         bullets = deque()
@@ -67,6 +67,10 @@ class Gun:
     def update(self):
         # print("Current bullets: ", [bullet.type for bullet in self.bullets])
         # print(self.target)
+        if self.hit:
+            self.live = self.phlive
+            self.blank = self.phblank
+            self.hit = False
         if len(self.bullets) == 0:
             self.bullets = self.load()
         if self.turning_left:
