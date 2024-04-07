@@ -1,5 +1,5 @@
 import pygame as pg
-from bullet import Bullet
+from src.bullet import Bullet
 from pygame.locals import *
 
 PWIDTH = 100

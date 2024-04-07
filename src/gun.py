@@ -1,8 +1,8 @@
 import pygame as pg
 from pygame.locals import *
 from collections import deque
-from player import Player
-from bullet import Bullet
+from src.player import Player
+from src.bullet import Bullet
 
 class Gun:
     BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.02)

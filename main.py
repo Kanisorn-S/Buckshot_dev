@@ -2,10 +2,10 @@
 import pygame as pg
 from pygame.locals import *
 import sys
-from gameManager import GameManager
-from item import Item
-from player import Player
-from gun import Gun
+from src.gameManager import GameManager
+from src.item import Item
+from src.player import Player
+from src.gun import Gun
 
 
 # Set const parameters

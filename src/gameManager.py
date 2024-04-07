@@ -1,8 +1,8 @@
 import pygame as pg
 from pygame.locals import *
-from gun import Gun 
-from player import Player
-from item import Item
+from src.gun import Gun 
+from src.player import Player
+from src.item import Item
 
 class GameManager:
     def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, gun : pg.Surface, itemframe: pg.Surface, heart: pg.Surface):
