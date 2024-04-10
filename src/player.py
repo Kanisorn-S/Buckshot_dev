@@ -6,7 +6,7 @@ PWIDTH = 100
 PHEIGHT = 100
 
 class Player:
-    def __init__(self, window: pg.Surface, image: pg.Surface, loc: tuple[int, int], id: int, name: str):
+    def __init__(self, window: pg.Surface, images: list, loc: tuple[int, int], id: int, name: str):
         '''
         Initialize a player.
         ------
@@ -23,11 +23,16 @@ class Player:
         Needed Attribute : isTurn - Boolean value. True when it is the player's turn, False when it is not
         '''
         self.__window = window 
-        self.image = image
-        self.rect = image.get_rect(center=loc)
+        self.image_full = pg.transform.scale_by(images[0], 0.05)
+        self.image_red = pg.transform.scale_by(images[1], 0.05)
+        self.image_eva = pg.transform.scale_by(images[2], 0.05)
+        self.image = self.image_full
+        self.rect = self.image.get_rect()
+        self.rect.center = loc
         self.health = 3
         self.id = id
         self.name = name
+        self.evading = False
 
     def shot(self, bullet: Bullet):
         '''
@@ -55,7 +60,14 @@ class Player:
         Might implement more stuff later
         '''
         # TODO
-        pass
+        print("each player is being updated")
+        if self.health >= 1:
+            self.image = self.image_full
+        elif self.health == 1:
+            self.image = self.image_red
+        
+        if self.evading:
+            self.image = self.image_eva
 
     def draw(self):
         '''

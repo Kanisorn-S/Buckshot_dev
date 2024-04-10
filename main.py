@@ -30,9 +30,16 @@ power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
 itemframe = pg.image.load('images/itembox.png')
 heart = pg.image.load('images/heart.png')
+player1_full = pg.image.load('images/player1_full.png')
+player1_red = pg.image.load('images/player1_red.png')
+player1_eva = pg.image.load('images/player1_eva.png')
+player2_full = pg.image.load("images/player2_full.png")
+player2_red = pg.image.load("images/player2_red.png")
+player2_eva = pg.image.load("images/player2_eva.png")
+player_pics = [player1_full, player1_red, player1_eva, player2_full, player2_red, player2_eva]
 
 
-gameManager = GameManager(window, 2, 2*[heal], 10, gun, itemframe, heart)
+gameManager = GameManager(window, 2, player_pics, 10, gun, itemframe, heart)
 # Main program loop
 while True:
     # Initialize game manager

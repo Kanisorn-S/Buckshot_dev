@@ -4,8 +4,9 @@ from src.gun import Gun
 from src.player import Player
 from src.item import Item
 
+
 class GameManager:
-    def __init__(self, window : pg.Surface, nplayers: int, players_pic: pg.Surface, nbullets: int, gun : pg.Surface, itemframe: pg.Surface, heart: pg.Surface):
+    def __init__(self, window : pg.Surface, nplayers: int, players_pic: list, nbullets: int, gun : pg.Surface, itemframe: pg.Surface, heart: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
@@ -25,8 +26,8 @@ class GameManager:
         self.nbullets = nbullets
         self.players_pic = players_pic
         self.locations = [(100, 375/2), (500, 375/2)]
+        self.players = []
         self.playersInfo = self.loadPlayer()
-        self.players = tuple(self.playersInfo.keys())
         self.gun = Gun(self.window, (330, 460/2), nbullets, self.players)
         self.turn = 0
         self.winner = None
@@ -49,9 +50,12 @@ class GameManager:
         Create nplayers Player and return a dictionary with the keys being players and the values being their corresponding health
         '''
         Players = {}
-        for i in range(self.nplayers):
-            player = Player(self.window, self.players_pic[i], self.locations[i], i, f"Player{i}")
-            Players[player] = player.health
+        player1 = Player(self.window, self.players_pic[0:3], self.locations[0], 0, "Player 1")
+        Players[player1] = player1.health
+        self.players.append(player1)
+        player2 = Player(self.window, self.players_pic[3:], self.locations[1], 1, "Player 2")
+        Players[player2] = player2.health
+        self.players.append(player2)
         return Players
     
     def handleEvent(self, e: pg.event):
