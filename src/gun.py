@@ -19,7 +19,7 @@ class Gun:
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
         self.rect.center = loc
-        self.odds = [0.5, 0.5]
+        self.odds = [0, 1]
         self.bullets = self.load()
         self.players = players
         self.target = 69

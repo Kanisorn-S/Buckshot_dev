@@ -26,7 +26,7 @@ class Player:
         self.image_full = pg.transform.scale_by(images[0], 0.05)
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
-        self.image = self.image_full
+        self.image = self.image_eva
         self.rect = self.image.get_rect()
         self.rect.center = loc
         self.health = 3
@@ -59,13 +59,10 @@ class Player:
         Update the player's health images to be displayed.
         Might implement more stuff later
         '''
-        # TODO
-        print("each player is being updated")
-        if self.health >= 1:
+        if self.health > 1:
             self.image = self.image_full
         elif self.health == 1:
             self.image = self.image_red
-        
         if self.evading:
             self.image = self.image_eva
 

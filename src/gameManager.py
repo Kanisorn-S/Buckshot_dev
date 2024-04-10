@@ -25,6 +25,7 @@ class GameManager:
         self.nplayers = nplayers
         self.nbullets = nbullets
         self.players_pic = players_pic
+        print(self.players_pic)
         self.locations = [(100, 375/2), (500, 375/2)]
         self.players = []
         self.playersInfo = self.loadPlayer()
