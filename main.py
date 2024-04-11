@@ -29,7 +29,6 @@ pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
 itemframe = pg.image.load('images/itembox.png')
-heart = pg.image.load('images/heart.png')
 player1_full = pg.image.load('images/player1_full.png')
 player1_red = pg.image.load('images/player1_red.png')
 player1_eva = pg.image.load('images/player1_eva.png')
@@ -38,13 +37,11 @@ player2_red = pg.image.load("images/player2_red.png")
 player2_eva = pg.image.load("images/player2_eva.png")
 player_pics = [player1_full, player1_red, player1_eva, player2_full, player2_red, player2_eva]
 
+# Initialize GameManager
+gameManager = GameManager(window, player_pics, 10, gun, itemframe)
 
-gameManager = GameManager(window, 2, player_pics, 10, gun, itemframe, heart)
 # Main program loop
 while True:
-    # Initialize game manager
-    # gameManager = GameManager(window, background, (0, 0), NPLAYER, NBULLETS, evasiveness, gun)
-    
     # check events
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -54,7 +51,10 @@ while True:
             # Let game manager handle the event
             gameManager.handleEvent(event)
     
+    # Fill window's Background
     window.blit(background, (0, 0))
+    
+    # Frame update
     gameManager.update()
     gameManager.draw()
     pg.display.update()

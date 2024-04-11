@@ -2,10 +2,13 @@ import pygame as pg
 from src.bullet import Bullet
 from pygame.locals import *
 
-PWIDTH = 100
-PHEIGHT = 100
+
 
 class Player:
+    # Class Constants
+    PWIDTH = 100
+    PHEIGHT = 100
+    HEART = pg.transform.scale_by(pg.image.load("images/heart.png"), 0.01)
     def __init__(self, window: pg.Surface, images: list, loc: tuple[int, int], id: int, name: str):
         '''
         Initialize a player.
@@ -20,19 +23,23 @@ class Player:
                 name - A string that represents the name of the player. Used to display on top as a name tag 
                       and at the end screen when the winner is announced
         
-        Needed Attribute : isTurn - Boolean value. True when it is the player's turn, False when it is not
+        Attribute : rect - pg.Rect that represents the player
+                    health - Current health of the player
+                    evading - Boolean, True when player used evading items, False by Default
+                    canHeal - Boolean, False when player is on death-notice (health = 1), True by Default
         '''
         self.__window = window 
         self.image_full = pg.transform.scale_by(images[0], 0.05)
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
-        self.image = self.image_eva
+        self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
         self.health = 3
         self.id = id
         self.name = name
         self.evading = False
+        self.canHeal = True
 
     def shot(self, bullet: Bullet):
         '''
@@ -43,35 +50,35 @@ class Player:
         If the player has evasiveness, use it to determine whether the player takes damage from
         live rounds or not
         '''      
-        # TODO
-
-        # print(bullet.type, Bullet.LIVE)
         if bullet.type == Bullet.LIVE:
             self.health -= bullet.damage
             bullet.aiming = self.id
             bullet.fired()
-            print(f'ouch! {self.name} got hit! {self.health}/100')
-        elif bullet.type == Bullet.BLANK:
-            print('survived')
 
     def update(self):
         '''
-        Update the player's health images to be displayed.
-        Might implement more stuff later
+        Update the player's image based on their current health and their evasive status
         '''
-        if self.health > 1:
+        if self.evading:
+            self.image = self.image_eva
+        elif self.health > 1:
             self.image = self.image_full
         elif self.health == 1:
             self.image = self.image_red
-        if self.evading:
-            self.image = self.image_eva
+            self.canHeal = False
+
+        
 
     def draw(self):
         '''
-        Draws the player on the window at loc,
-              the player's name tag on top of the players head,
-              the player's health bar at TBD.
-              If it is the player's turn, draw the player_green pic instead of the normal pic
+        Draws the player on the window using rect as position,
+              the player's health bar on top of the player
         '''
-        # TODO
+        x, y = self.rect.topleft
+        image = Player.HEART
+        w, h = image.get_size()
+        for i in range(self.health):
+            rect = image.get_rect()
+            rect.bottomleft = (x + (i * w), y)
+            self.__window.blit(image, rect)
         self.__window.blit(self.image, self.rect)

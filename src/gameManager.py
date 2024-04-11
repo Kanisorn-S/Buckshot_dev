@@ -6,7 +6,7 @@ from src.item import Item
 
 
 class GameManager:
-    def __init__(self, window : pg.Surface, nplayers: int, players_pic: list, nbullets: int, gun : pg.Surface, itemframe: pg.Surface, heart: pg.Surface):
+    def __init__(self, window : pg.Surface, players_pic: list, nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
@@ -22,7 +22,7 @@ class GameManager:
                      winner - None by default. It is set to a player when that player is the last man standing
         '''
         self.window = window
-        self.nplayers = nplayers
+        self.nplayers = 2
         self.nbullets = nbullets
         self.players_pic = players_pic
         print(self.players_pic)
@@ -42,8 +42,6 @@ class GameManager:
         self.itemframes[1][1].center = (400, 375/4)
         self.itemframes[2][1].center = (200, 3*375/4)
         self.itemframes[3][1].center = (400, 3*375/4)
-        self.heart = pg.transform.scale_by(heart, 0.01)
-        print(str(self.playersInfo))
         self.target = None
         
     def loadPlayer(self):
@@ -111,13 +109,6 @@ class GameManager:
         if self.winner is None:
             for player in self.players:
                 player.draw()
-                x, y = player.rect.topleft
-                image = self.heart
-                w, h = image.get_size()
-                for i in range(self.playersInfo[player]):
-                    rect = image.get_rect()
-                    rect.bottomleft = (x + (i * w), y)
-                    self.window.blit(image, rect)
             for bullet in self.bullets_on_screen:
                 bullet.draw()
             for itemframe, rect in self.itemframes:
