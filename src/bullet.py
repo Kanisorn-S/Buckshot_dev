@@ -8,6 +8,7 @@ class Bullet:
     LIVE = 1
     LEFT = 0
     RIGHT = 1
+    
     def __init__(self, window: pg.Surface, odds: tuple):
         '''
         Initialize a single bullet
@@ -44,7 +45,7 @@ class Bullet:
 
     def update(self):
         '''
-        Updates the bullet position 
+        Updates the bullet position. Gamemanager only calls update on bullets that have been fired. 
         '''
     
         if self.isFired:
@@ -55,10 +56,9 @@ class Bullet:
 
     def draw(self):
         '''
-        Draws the bullet on the window if isFired is True
+        Draws the bullet on the window 
         '''
-        if self.isFired:
-            self.window.blit(self.fired_image, self.exact_pos)
+        self.window.blit(self.fired_image, self.exact_pos)
         
         
         

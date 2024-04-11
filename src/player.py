@@ -22,17 +22,22 @@ class Player:
                       the first player has an index of 0 and the second player has an index of 1
                 name - A string that represents the name of the player. Used to display on top as a name tag 
                       and at the end screen when the winner is announced
-        
-        Attribute : rect - pg.Rect that represents the player
-                    health - Current health of the player
-                    evading - Boolean, True when player used evading items, False by Default
-                    canHeal - Boolean, False when player is on death-notice (health = 1), True by Default
         '''
+        # Normal initialization
         self.__window = window 
         self.image_full = pg.transform.scale_by(images[0], 0.05)
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
         self.image = self.image_full
+        self.rect = self.image.get_rect()
+        self.rect.center = loc
+        self.health = 3
+        self.id = id
+        self.name = name
+        self.evading = False
+        self.canHeal = True
+        
+        # Wobble effect
         w1 = pg.transform.rotate(self.image_full, 4)
         w2 = pg.transform.rotate(self.image_full, 3)
         w3 = pg.transform.rotate(self.image_full, 2)
@@ -44,16 +49,13 @@ class Player:
         self.wobble = [w1, w2, w3, w4, self.image_full, w6, w7, w8, w9]
         self.current_wobble = 2
         self.increasing = True
-        self.rect = self.image.get_rect()
-        self.rect.center = loc
+        
+        # Floating effect
         self.starting_y = loc[1]
-        self.health = 3
-        self.id = id
-        self.name = name
-        self.evading = False
-        self.canHeal = True
         self.dy = 0
         self.floating_down = True
+        
+        # Delay frame update
         self.timer = 0
 
     def shot(self, bullet: Bullet):
