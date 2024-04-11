@@ -35,7 +35,7 @@ player1_eva = pg.image.load('images/player1_eva.png')
 player2_full = pg.image.load("images/player2_full.png")
 player2_red = pg.image.load("images/player2_red.png")
 player2_eva = pg.image.load("images/player2_eva.png")
-player_pics = [player1_full, player1_red, player1_eva, player2_full, player2_red, player2_eva]
+player_pics = [player2_full, player2_red, player2_eva, player1_full, player1_red, player1_eva]
 
 # Initialize GameManager
 gameManager = GameManager(window, player_pics, 10, gun, itemframe)
