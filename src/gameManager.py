@@ -6,20 +6,23 @@ from src.item import Item
 
 
 class GameManager:
-    def __init__(self, window : pg.Surface, players_pic: list, nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
+    def __init__(self, window : pg.Surface, players_pic: list[pg.Surface], nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
-                nplayers - The number of players in the game
-                players_pic - A list of tuple, each tuple containing a normal player pic and a green outlined player pic
+                players_pic - A list of players' pic in different states
                 nbullets - The number of bullets in the gun
                 gun - A loaded picture of the cannon
+                itemframe - A loaded picture of the itemframe
         Attributes : locations - A list of coordinates of the center of each players
                      playersInfo - A dictionary where the key is the player and the value is the player's health
                      players - A list of players
                      gun - The gun object 
                      turn - An int that is the index of the player whose turn it currently is
                      winner - None by default. It is set to a player when that player is the last man standing
+                     bullets_on_screen - A list of bullets that is needed to be update
+                     itemframes - A list of pg.Surface of itemframe
+                     target - The player that the gun is currently aiming at
         '''
         self.window = window
         self.nplayers = 2
@@ -58,14 +61,20 @@ class GameManager:
         return Players
     
     def handleEvent(self, e: pg.event):
+        '''
+        Handle events from the user's input
+        '''
+        # Spacebar to fire
         if e.key == pg.K_SPACE:
             self.target, bullet = self.gun.fire()
             self.bullets_on_screen.append(bullet)
             bullet.fired()
 
-            
+            # If fired at opponent, lose turn
             if self.target != self.players[self.turn]:
                 self.turn = not self.turn
+        
+        # Change aim of the gun
         elif e.key == pg.K_RIGHT:
             self.gun.aimRight()
         elif e.key == pg.K_LEFT:
@@ -80,17 +89,19 @@ class GameManager:
         Calls update on each player then update the health of each player in the playersInfo dictionary.
         If a player's health reaches zero, remove them from the game.
         Check if there's only one player standing, set them as the winner.
-        Update the gun (run cannon reload annimation sprite)
+        Update the gun and bullets on screen.
         '''
         for player in self.players:
             player.update()
             self.playersInfo[player] = player.health
             if self.playersInfo[player] <= 0:
                 del self.playersInfo[player]
-            if player == self.players[self.turn]:
-                player.isTurn = True
-        if not len(self.playersInfo.keys()):
-            self.winner = self.playersInfo.keys()[0]
+                self.players.remove(player)
+                self.winner = self.players[0]
+                break
+            # if player == self.players[self.turn]:
+            #     player.isTurn = True
+
         
         self.gun.update()
         for bullet in self.bullets_on_screen:
@@ -116,4 +127,4 @@ class GameManager:
             self.gun.draw()
         else:
             # show winning screen with victor at the center
-            pass
+            print(f"The winner is {self.winner.name}")
