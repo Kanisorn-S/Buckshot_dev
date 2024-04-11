@@ -33,13 +33,23 @@ class Player:
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
         self.image = self.image_full
+        w1 = pg.transform.rotate(self.image_full, 2)
+        w2 = pg.transform.rotate(self.image_full, 1)
+        w4 = pg.transform.rotate(self.image_full, -1)
+        w5 = pg.transform.rotate(self.image_full, -2)
+        self.wobble = [w1, w2, self.image_full, w4, w5]
+        self.current_wobble = 2
+        self.increasing = True
         self.rect = self.image.get_rect()
         self.rect.center = loc
+        self.starting_y = loc[1]
         self.health = 3
         self.id = id
         self.name = name
         self.evading = False
         self.canHeal = True
+        self.dy = 0
+        self.floating_down = True
 
     def shot(self, bullet: Bullet):
         '''
@@ -62,10 +72,24 @@ class Player:
         if self.evading:
             self.image = self.image_eva
         elif self.health > 1:
-            self.image = self.image_full
+            if self.increasing:
+                self.current_wobble += 1
+            else :
+                self.current_wobble -= 1
+            self.image = self.wobble[self.current_wobble]
+            if (self.current_wobble == (len(self.wobble) - 1)) or (self.current_wobble == 0):
+                self.increasing = not self.increasing
+            if (self.dy >= 5) or (self.dy < 0):
+                self.floating_down = not self.floating_down
+            if self.floating_down:
+                self.dy += 1
+            else:
+                self.dy -= 1
         elif self.health == 1:
             self.image = self.image_red
             self.canHeal = False
+        
+        
 
         
 
@@ -74,6 +98,7 @@ class Player:
         Draws the player on the window using rect as position,
               the player's health bar on top of the player
         '''
+        self.rect.center =  (self.rect.center[0], self.starting_y + self.dy)
         x, y = self.rect.topleft
         image = Player.HEART
         w, h = image.get_size()
