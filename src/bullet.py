@@ -8,6 +8,14 @@ class Bullet:
     LIVE = 1
     LEFT = 0
     RIGHT = 1
+    laser1 = pg.image.load('images/laser1.png')
+    laser2 = pg.image.load('images/laser2.png')
+    laser3 = pg.image.load('images/laser3.png')
+    laser4 = pg.image.load('images/laser4.png')
+    laser5 = pg.image.load('images/laser5.png')
+    sprite = [laser1, laser2, laser3, laser4, laser5]
+    sprite_right = [pg.transform.scale(image, (300, 250)) for image in sprite]
+    sprite_left = [pg.transform.flip(image, 1, 0) for image in sprite_right]
     
     def __init__(self, window: pg.Surface, odds: tuple):
         '''
@@ -24,15 +32,18 @@ class Bullet:
                      isFired - Boolean, If true then the bullet is fired
         '''
         self.window = window
-        self.fired_image = pg.transform.scale_by(pg.image.load('images/laser.png'), 0.01)
-        self.rect = self.fired_image.get_rect(center=(300, 375/2))
-        self.exact_pos = list(self.rect.topleft)
         self.types = [Bullet.BLANK, Bullet.LIVE]
         self.type = random.choices(self.types, odds)[0]
         self.damage = 1
         self.speed = 5
         self.aiming = Bullet.LEFT
         self.isFired = False
+        self.currentFrame = 0
+        self.sprite = Bullet.sprite_left
+        self.image = self.sprite[self.currentFrame]
+        self.rect = self.image.get_rect()
+        self.rect.midleft = (300, 270)
+        print(self.rect.midleft)
     
     def fired(self):
         '''
@@ -47,18 +58,24 @@ class Bullet:
         '''
         Updates the bullet position. Gamemanager only calls update on bullets that have been fired. 
         '''
-    
+        if self.aiming == Bullet.RIGHT:
+            self.sprite = Bullet.sprite_right
+        else:
+             self.sprite = Bullet.sprite_left
         if self.isFired:
             # self.rect.x += self.speed
-            self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
-            self.rect.topleft = self.exact_pos
+            # self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
+            # self.rect.topleft = self.exact_pos
             # print(self.rect.x)
+            self.currentFrame = (self.currentFrame + 1) % len(self.sprite)
+            
+            
 
     def draw(self):
         '''
         Draws the bullet on the window 
         '''
-        self.window.blit(self.fired_image, self.exact_pos)
+        self.window.blit(self.sprite[self.currentFrame], self.rect)
         
         
         
