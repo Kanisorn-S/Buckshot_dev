@@ -69,6 +69,7 @@ class GameManager:
             self.target, bullet = self.gun.fire()
             self.bullets_on_screen.append(bullet)
             bullet.fired()
+            self.target.shot(bullet)
 
             # If fired at opponent, lose turn
             if self.target != self.players[self.turn]:

@@ -64,9 +64,9 @@ class Gun:
         bullet = self.bullets.pop()
         bullet.aiming = self.target
         if bullet.type == Bullet.LIVE:
-            self.phlive -= 1
+            self.live -= 1
         else:
-            self.phblank -= 1
+            self.blank -= 1
         return self.players[self.target], bullet
     
     def aimRight(self):
