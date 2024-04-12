@@ -37,7 +37,7 @@ class Player:
         self.evading = False
         self.canHeal = True
         
-        # Wobble effect
+        # Wobble full effect
         w1 = pg.transform.rotate(self.image_full, 4)
         w2 = pg.transform.rotate(self.image_full, 3)
         w3 = pg.transform.rotate(self.image_full, 2)
@@ -49,6 +49,28 @@ class Player:
         self.wobble = [w1, w2, w3, w4, self.image_full, w6, w7, w8, w9]
         self.current_wobble = 2
         self.increasing = True
+
+        # Wobble red effect
+        wr1 = pg.transform.rotate(self.image_red, 4)
+        wr2 = pg.transform.rotate(self.image_red , 3)
+        wr3 = pg.transform.rotate(self.image_red, 2)
+        wr4 = pg.transform.rotate(self.image_red, 1)
+        wr6 = pg.transform.rotate(self.image_red, -1)
+        wr7 = pg.transform.rotate(self.image_red, -2)
+        wr8 = pg.transform.rotate(self.image_red, -3)
+        wr9 = pg.transform.rotate(self.image_red, -4)
+        self.wobble_red = [wr1, wr2, wr3, wr4, self.image_red, wr6, wr7, wr8, wr9]
+
+        # Wobble evade effect
+        we1 = pg.transform.rotate(self.image_eva, 4)
+        we2 = pg.transform.rotate(self.image_eva, 3)
+        we3 = pg.transform.rotate(self.image_eva, 2)
+        we4 = pg.transform.rotate(self.image_eva, 1)
+        we6 = pg.transform.rotate(self.image_eva, -1)
+        we7 = pg.transform.rotate(self.image_eva, -2)
+        we8 = pg.transform.rotate(self.image_eva, -3)
+        we9 = pg.transform.rotate(self.image_eva, -4)
+        self.wobble_eva = [we1, we2, we3, we4, self.image_eva, we6, we7, we8, we9]
         
         # Floating effect
         self.starting_y = loc[1]
@@ -57,6 +79,7 @@ class Player:
         
         # Delay frame update
         self.timer = 0
+        self.frame = 2
 
     def shot(self, bullet: Bullet):
         '''
@@ -77,27 +100,29 @@ class Player:
         Update the player's image based on their current health and their evasive status
         '''
         self.timer += 1
-        if self.timer >= 2:
-            if self.evading:
+        if self.evading:
                 self.image = self.image_eva
-            elif self.health > 1:
-                if self.increasing:
-                    self.current_wobble += 1
-                else :
-                    self.current_wobble -= 1
-                self.image = self.wobble[self.current_wobble]
-                if (self.current_wobble == (len(self.wobble) - 1)) or (self.current_wobble == 0):
-                    self.increasing = not self.increasing
-                if (self.dy >= 10) or (self.dy < 0):
-                    self.floating_down = not self.floating_down
-                if self.floating_down:
-                    self.dy += 1
-                else:
-                    self.dy -= 1
-            elif self.health == 1:
-                self.image = self.image_red
-                self.canHeal = False
+                self.wobble = self.wobble_eva
+        elif self.health == 1:
+            self.image = self.image_red
+            self.wobble = self.wobble_red
+            self.canHeal = False
+            self.frame = 1
+        if self.timer >= self.frame:
             self.timer = 0
+            if self.increasing:
+                self.current_wobble += 1
+            else :
+                self.current_wobble -= 1
+            self.image = self.wobble[self.current_wobble]
+            if (self.current_wobble == (len(self.wobble) - 1)) or (self.current_wobble == 0):
+                self.increasing = not self.increasing
+            if (self.dy >= 10) or (self.dy < 0):
+                self.floating_down = not self.floating_down
+            if self.floating_down:
+                self.dy += 1
+            else:
+                self.dy -= 1
         
         
 
