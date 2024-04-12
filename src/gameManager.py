@@ -105,11 +105,6 @@ class GameManager:
         
         self.gun.update()
         for bullet in self.bullets_on_screen:
-            if bullet.rect.colliderect(self.target.rect):
-                # print('bullet removed')
-                self.target.shot(bullet)
-                self.gun.hit = True
-                self.bullets_on_screen.remove(bullet)
             bullet.update()
 
     def draw(self):

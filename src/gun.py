@@ -91,6 +91,9 @@ class Gun:
         '''
         Update the attributes of the gun, run turning sequence
         '''
+        for bullet in self.bullets:
+            bullet.aiming = self.target
+            bullet.update()
         if self.hit:
             self.live = self.phlive
             self.blank = self.phblank

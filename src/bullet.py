@@ -14,7 +14,7 @@ class Bullet:
     laser4 = pg.image.load('images/laser4.png')
     laser5 = pg.image.load('images/laser5.png')
     sprite = [laser1, laser2, laser3, laser4, laser5]
-    sprite_right = [pg.transform.scale(image, (300, 250)) for image in sprite]
+    sprite_right = [pg.transform.scale(image, (500, 250)) for image in sprite]
     sprite_left = [pg.transform.flip(image, 1, 0) for image in sprite_right]
     
     def __init__(self, window: pg.Surface, odds: tuple):
@@ -58,16 +58,28 @@ class Bullet:
         '''
         Updates the bullet position. Gamemanager only calls update on bullets that have been fired. 
         '''
-        if self.aiming == Bullet.RIGHT:
-            self.sprite = Bullet.sprite_right
-        else:
-             self.sprite = Bullet.sprite_left
+        print("Bullet being updated")
+        print(self.aiming)
         if self.isFired:
             # self.rect.x += self.speed
             # self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
             # self.rect.topleft = self.exact_pos
             # print(self.rect.x)
-            self.currentFrame = (self.currentFrame + 1) % len(self.sprite)
+            if self.currentFrame < len(self.sprite) - 1:
+                self.currentFrame += 1
+            else:
+                self.isFired = False
+        if self.aiming == Bullet.RIGHT:
+            self.sprite = Bullet.sprite_right
+            self.image = self.sprite[self.currentFrame]
+            self.rect = self.image.get_rect()
+            self.rect.midleft = (250, 260)
+        else:
+             self.sprite = Bullet.sprite_left
+             self.image = self.sprite[self.currentFrame]
+             self.rect = self.image.get_rect()
+             self.rect.midright = (350, 260)
+        
             
             
 
@@ -75,7 +87,8 @@ class Bullet:
         '''
         Draws the bullet on the window 
         '''
-        self.window.blit(self.sprite[self.currentFrame], self.rect)
+        if self.isFired:
+            self.window.blit(self.sprite[self.currentFrame], self.rect)
         
         
         
