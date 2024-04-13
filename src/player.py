@@ -1,6 +1,7 @@
 import pygame as pg
 from src.bullet import Bullet
 from pygame.locals import *
+import math
 
 
 
@@ -32,8 +33,8 @@ class Player:
         self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
-        self.og_health = 3
-        self.health = 3
+        self.health = 5
+        self.death_notice = math.ceil(self.health / 3)
         self.id = id
         self.name = name
         self.evading = False
@@ -103,9 +104,9 @@ class Player:
         '''
         self.timer += 1
         if self.evading:
-                self.image = self.image_eva
-                self.wobble = self.wobble_eva
-        elif self.health == 1:
+            self.image = self.image_eva
+            self.wobble = self.wobble_eva
+        elif self.health <= self.death_notice:
             self.image = self.image_red
             self.wobble = self.wobble_red
             self.canHeal = False
@@ -140,11 +141,11 @@ class Player:
         image = Player.HEART
         broken = Player.BROKEN
         w, h = image.get_size()
-        for i in range(self.og_health):
+        for i in range(self.health):
             rect = image.get_rect()
             rect.bottomleft = (x + (i * w), y)
-            if i < self.health:
-                self.__window.blit(image, rect)
-            else:
+            if i < self.death_notice:
                 self.__window.blit(broken, rect)
+            else:
+                self.__window.blit(image, rect)
         self.__window.blit(self.image, self.rect)
