@@ -63,6 +63,7 @@ while True:
         elif startButton.handleEvent(event):
             # gameManager.start()
             playing = True
+            gameManager.winner = None
             startButton.disable()
 
         
@@ -70,6 +71,7 @@ while True:
     if playing:
         gameManager.update()
         if gameManager.winner:
+            startButton.enable()
             playing = False
             nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
 
