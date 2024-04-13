@@ -56,7 +56,7 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
-        if playing:
+        if playing and gameManager.winner == None:
             if event.type == pg.KEYDOWN:
                 # Let game manager handle the event
                 gameManager.handleEvent(event)
@@ -64,10 +64,15 @@ while True:
             # gameManager.start()
             playing = True
             startButton.disable()
+
         
     # Frame update
     if playing:
         gameManager.update()
+        if gameManager.winner:
+            playing = False
+            nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
+
         
 
     # Fill window's Background

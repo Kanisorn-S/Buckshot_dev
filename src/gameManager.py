@@ -121,6 +121,8 @@ class GameManager:
             for itemframe, rect in self.itemframes:
                 self.window.blit(itemframe, rect)
             self.gun.draw()
+            current_player = self.players[self.turn]
+            pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)
         else:
             # show winning screen with victor at the center
             print(f"The winner is {self.winner.name}")
