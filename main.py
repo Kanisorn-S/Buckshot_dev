@@ -1,6 +1,7 @@
 # Import Libs
 import pygame as pg
 from pygame.locals import *
+import pygwidgets as pw
 import sys
 from src.gameManager import GameManager
 from src.item import Item
@@ -18,6 +19,7 @@ NBULLETS = 5
 # Initialize pygame
 pg.init()
 window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
+pg.display.set_caption("Buckshot Roulette")
 clock = pg.time.Clock()
 
 # Load necessary images
@@ -40,6 +42,13 @@ player_pics = [player2_full, player2_red, player2_eva, player1_full, player1_red
 # Initialize GameManager
 gameManager = GameManager(window, player_pics, 10, gun, itemframe)
 
+nameDisplay = pw.DisplayText(window, (WIDTH/2, HEIGHT/2), "Buckshot Roulette", textColor = 'white', justified = 'center', fontSize = 30)
+nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
+startButton = pw.TextButton(window, (300, 300), 'Start')
+startButton.setCenteredLoc((300, 300))
+
+playing = False 
+
 # Main program loop
 while True:
     # check events
@@ -47,16 +56,29 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
-        if event.type == pg.KEYDOWN:
-            # Let game manager handle the event
-            gameManager.handleEvent(event)
-    
+        if playing:
+            if event.type == pg.KEYDOWN:
+                # Let game manager handle the event
+                gameManager.handleEvent(event)
+        elif startButton.handleEvent(event):
+            # gameManager.start()
+            playing = True
+            startButton.disable()
+        
+    # Frame update
+    if playing:
+        gameManager.update()
+        
+
     # Fill window's Background
     window.blit(background, (0, 0))
-    
-    # Frame update
-    gameManager.update()
-    gameManager.draw()
+
+    if playing:
+        gameManager.draw()
+    else:
+        nameDisplay.draw()
+        startButton.draw()
+
     pg.display.update()
     clock.tick(FRAMES_PER_SECOND)
 
