@@ -8,7 +8,8 @@ class Player:
     # Class Constants
     PWIDTH = 100
     PHEIGHT = 100
-    HEART = pg.transform.scale_by(pg.image.load("images/heart.png"), 0.01)
+    HEART = pg.transform.scale_by(pg.image.load("images/heart.png"), 0.03)
+    BROKEN = pg.transform.scale(pg.image.load('images/broken_heart.png'), HEART.get_size())
     def __init__(self, window: pg.Surface, images: list, loc: tuple[int, int], id: int, name: str):
         '''
         Initialize a player.
@@ -31,6 +32,7 @@ class Player:
         self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
+        self.og_health = 3
         self.health = 3
         self.id = id
         self.name = name
@@ -136,9 +138,13 @@ class Player:
         self.rect.center =  (self.rect.center[0], self.starting_y + self.dy)
         x, y = self.rect.topleft
         image = Player.HEART
+        broken = Player.BROKEN
         w, h = image.get_size()
-        for i in range(self.health):
+        for i in range(self.og_health):
             rect = image.get_rect()
             rect.bottomleft = (x + (i * w), y)
-            self.__window.blit(image, rect)
+            if i < self.health:
+                self.__window.blit(image, rect)
+            else:
+                self.__window.blit(broken, rect)
         self.__window.blit(self.image, self.rect)
