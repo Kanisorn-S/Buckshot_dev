@@ -8,6 +8,7 @@ from src.item import Item
 from src.player import Player
 from src.gun import Gun
 
+print("Hello World")
 
 # Set const parameters
 WIDTH = 600
