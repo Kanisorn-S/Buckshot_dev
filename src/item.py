@@ -1,9 +1,11 @@
 import pygame as pg
 from pygame.locals import *
-import pygwidgets as pw
 
-class Item(pw.CustomButton):
+class Item():
     def __init__(self):
+        pass
+
+    def handleEvent(e):
         pass
 
     def update(self):
