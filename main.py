@@ -58,9 +58,8 @@ while True:
             pg.quit()
             sys.exit()
         if playing and gameManager.winner == None:
-            if event.type == pg.KEYDOWN:
-                # Let game manager handle the event
-                gameManager.handleEvent(event)
+            # Let game manager handle the event
+            gameManager.handleEvent(event)
         elif startButton.handleEvent(event):
             # gameManager.start()
             playing = True

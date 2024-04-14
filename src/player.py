@@ -84,6 +84,9 @@ class Player:
         self.timer = 0
         self.frame = 2
 
+        # Items
+        self.items = []
+
     def shot(self, bullet: Bullet):
         '''
         The function updates the players health according to the type of bullet being shot

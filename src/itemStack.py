@@ -2,9 +2,9 @@ import pygame as pg
 from pygame.locals import *
 import random
 from collections import deque
-from item import Item 
+from src.item import Item 
 
-class itemStack():
+class ItemStack():
     def __init__(self, nitems: int):
         '''
         Initialize a stack of item to draw from
@@ -19,15 +19,20 @@ class itemStack():
         for i in range(nitems):
             itemType = random.randint(0, 10) 
             if itemType == 0:
-                items.append(Heal())
+                pass 
+                # items.append(Heal())
             elif itemType == 1:
-                items.append(PotOfGreed())
+                pass 
+                # items.append(PotOfGreed())
             elif itemType == 2:
-                items.append(PowerAmp())
+                pass
+                # items.append(PowerAmp())
             elif itemType == 3:
-                items.append(Reload())
+                pass
+                # items.append(Reload())
             elif itemType == 4:
-                items.append(Skip())
+                pass
+                # items.append(Skip())
         return items
     
     def getItem(self) -> Item:

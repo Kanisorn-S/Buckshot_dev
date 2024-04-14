@@ -3,6 +3,7 @@ from pygame.locals import *
 from src.gun import Gun 
 from src.player import Player
 from src.item import Item
+from src.itemStack import ItemStack
 
 
 class GameManager:
@@ -46,6 +47,10 @@ class GameManager:
         self.itemframes[2][1].center = (200, 3*375/4)
         self.itemframes[3][1].center = (400, 3*375/4)
         self.target = None
+
+        # Item management
+        self.itemStack = ItemStack(10)
+        self.gotItem = False
         
     def loadPlayer(self):
         '''
@@ -64,25 +69,31 @@ class GameManager:
         '''
         Handle events from the user's input
         '''
+        if e.type == pg.KEYDOWN: 
         # Spacebar to fire
-        if e.key == pg.K_SPACE:
-            self.target, bullet = self.gun.fire()
-            self.bullets_on_screen.append(bullet)
-            bullet.fired()
-            self.target.shot(bullet)
+            if e.key == pg.K_SPACE:
+                self.target, bullet = self.gun.fire()
+                self.bullets_on_screen.append(bullet)
+                bullet.fired()
+                self.target.shot(bullet)
 
-            # If fired at opponent, lose turn
-            if self.target != self.players[self.turn]:
-                self.turn = not self.turn
+                # If fired at opponent, lose turn
+                if self.target != self.players[self.turn]:
+                    self.turn = not self.turn
+                    self.gotItem = False
+            
+            # Change aim of the gun
+            elif e.key == pg.K_RIGHT:
+                self.gun.aimRight()
+            elif e.key == pg.K_LEFT:
+                self.gun.aimLeft()
+            
+            if e.key == pg.K_f:
+                pg.display.toggle_fullscreen()
         
-        # Change aim of the gun
-        elif e.key == pg.K_RIGHT:
-            self.gun.aimRight()
-        elif e.key == pg.K_LEFT:
-            self.gun.aimLeft()
-        
-        if e.key == pg.K_f:
-            pg.display.toggle_fullscreen()
+        for item in self.players[self.turn].items:
+            if item.handleEvent(e):
+                item.useItem(self.players[self.turn], self.gun)
 
     def update(self):
         '''
@@ -92,6 +103,9 @@ class GameManager:
         Check if there's only one player standing, set them as the winner.
         Update the gun and bullets on screen.
         '''
+        if not self.gotItem:
+            self.players[self.turn].items.append(self.itemStack.getItem())
+            self.gotItem = True
         for player in self.players:
             player.update()
             self.playersInfo[player] = player.health
