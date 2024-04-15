@@ -91,7 +91,9 @@ class GameManager:
             if e.key == pg.K_f:
                 pg.display.toggle_fullscreen()
         
+        print(self.players[self.turn].items)
         for item in self.players[self.turn].items:
+            print(self.players[self.turn].items)
             if item.handleEvent(e):
                 item.useItem(self.players[self.turn], self.gun)
 

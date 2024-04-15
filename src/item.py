@@ -3,9 +3,9 @@ from pygame.locals import *
 
 class Item():
     def __init__(self):
-        pass
+        self.isActive = True
 
-    def handleEvent(e):
+    def handleEvent(self, e):
         pass
 
     def update(self):

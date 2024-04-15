@@ -19,18 +19,23 @@ class ItemStack():
         for i in range(nitems):
             itemType = random.randint(0, 10) 
             if itemType == 0:
+                items.append(Item())
                 pass 
                 # items.append(Heal())
             elif itemType == 1:
+                items.append(Item())
                 pass 
                 # items.append(PotOfGreed())
             elif itemType == 2:
+                items.append(Item())
                 pass
                 # items.append(PowerAmp())
             elif itemType == 3:
+                items.append(Item())
                 pass
                 # items.append(Reload())
             elif itemType == 4:
+                items.append(Item())
                 pass
                 # items.append(Skip())
         return items
@@ -40,6 +45,7 @@ class ItemStack():
         Return the top most item on the stack
         '''
         # TODO
+        return self.items.pop()
         pass
 
     def shuffle(self):
