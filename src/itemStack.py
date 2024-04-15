@@ -17,7 +17,7 @@ class ItemStack():
         '''
         items = deque()
         for i in range(nitems):
-            itemType = random.randint(0, 10) 
+            itemType = random.randint(0, 4) 
             if itemType == 0:
                 items.append(Item())
                 pass 
