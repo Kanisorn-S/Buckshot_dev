@@ -73,7 +73,7 @@ class Amongus:
         self.window.blit(image, image_rect)
     
 
-def starting_menu() -> int:
+def starting_menu() -> bool:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
     startButton = pw.TextButton(window, (300, 300), 'Start')
@@ -87,7 +87,7 @@ def starting_menu() -> int:
                 pg.quit()
                 sys.exit()
             if startButton.handleEvent(event):
-                return 1
+                return True
         
         
         window.blit(background, (0, 0))

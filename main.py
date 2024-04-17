@@ -49,15 +49,13 @@ nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
 startButton = pw.TextButton(window, (300, 300), 'Start')
 startButton.setCenteredLoc((300, 300))
 
-state = 0
+playing = False
 
 # Main program loop
 while True:
     # check events
-    if state == 0:
-        state = starting_menu()
-    elif state == 2: # Setting menu
-        pass
+    if not playing:
+        playing = starting_menu()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
