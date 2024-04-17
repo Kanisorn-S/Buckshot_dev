@@ -7,6 +7,7 @@ from src.gameManager import GameManager
 from src.item import Item
 from src.player import Player
 from src.gun import Gun
+from src.starting import starting_menu
 
 print("Hello World")
 
@@ -48,11 +49,13 @@ nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
 startButton = pw.TextButton(window, (300, 300), 'Start')
 startButton.setCenteredLoc((300, 300))
 
-playing = False 
+playing = 0
 
 # Main program loop
 while True:
     # check events
+    if not playing:
+        playing = starting_menu()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
@@ -60,11 +63,6 @@ while True:
         if playing and gameManager.winner == None:
             # Let game manager handle the event
             gameManager.handleEvent(event)
-        elif startButton.handleEvent(event):
-            # gameManager.start()
-            playing = True
-            gameManager.winner = None
-            startButton.disable()
 
         
     # Frame update
@@ -80,11 +78,7 @@ while True:
     # Fill window's Background
     window.blit(background, (0, 0))
 
-    if playing:
-        gameManager.draw()
-    else:
-        nameDisplay.draw()
-        startButton.draw()
+    gameManager.draw()
 
     pg.display.update()
     clock.tick(FRAMES_PER_SECOND)
