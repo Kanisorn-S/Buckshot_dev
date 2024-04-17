@@ -16,3 +16,4 @@ class Item():
 
 
 print("hello world")
+print("hello Kong")
