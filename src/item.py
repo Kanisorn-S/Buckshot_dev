@@ -7,6 +7,9 @@ class Item():
 
     def handleEvent(self, e):
         pass
+    
+    def usedItem(self, player, gun):
+        pass
 
     def update(self):
         pass
