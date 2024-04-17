@@ -46,7 +46,7 @@ gameManager = GameManager(window, player_pics, 10, gun, itemframe)
 
 nameDisplay = pw.DisplayText(window, (WIDTH/2, HEIGHT/2), "Buckshot Roulette", textColor = 'white', justified = 'center', fontSize = 30)
 nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
-startButton = pw.TextButton(window, (300, 300), 'Start')
+startButton = pw.TextButton(window, (300, 300), 'START', textColor = (102, 178, 255))
 startButton.setCenteredLoc((300, 300))
 
 playing = False

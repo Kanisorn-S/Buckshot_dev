@@ -76,7 +76,7 @@ class Amongus:
 def starting_menu() -> bool:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
-    startButton = pw.TextButton(window, (300, 300), 'Start')
+    startButton = pw.TextButton(window, (300, 300), 'START')
     startButton.setCenteredLoc((300, 300))
     logo_rect = logo.get_rect()
     logo_rect.center = (300, 100)
