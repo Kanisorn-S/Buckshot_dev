@@ -25,7 +25,11 @@ pg.display.set_caption("Buckshot Roulette")
 clock = pg.time.Clock()
 
 pg.mixer.init()
-pg.mixer.music.load('sounds/record-online-voice-recorder_kIwejRI.mp3')
+startMenuMusic = pg.mixer.Sound('sounds/record-online-voice-recorder_kIwejRI.mp3')
+gameMusic = pg.mixer.Sound('sounds\Doom Eternal OST - The Only Thing They Fear Is You (Mick Gordon) [Doom Eternal Theme].mp3')
+
+startMenuChannel = pg.mixer.Channel(0)
+gameChannel = pg.mixer.Channel(1)
 
 # Load necessary images
 background = pg.image.load('images/background.jpg')
@@ -53,16 +57,24 @@ startButton = pw.TextButton(window, (300, 300), 'START', textColor = (102, 178, 
 startButton.setCenteredLoc((300, 300))
 
 playing = False
+started = False
+gameStarted = False
 
+gameChannel.set_volume(0.03)
+startMenuChannel.set_volume(0.1)
 # Main program loop
 while True:
     # check events
     if not playing:
-        pg.mixer.music.play(loops = -1, start = 0, fade_ms = 3000)
-        pg.mixer.music.set_volume(0.1)
+        if not started:
+            startMenuChannel.play(startMenuMusic, loops = -1, fade_ms = 3000)
+            started = True
         playing = starting_menu()
-    pg.mixer.music.fadeout(3000)
-    pg.mixer.music.stop()
+    if not gameStarted:
+        startMenuChannel.fadeout(3000)
+        startMenuChannel.stop()
+        gameChannel.play(gameMusic, loops = -1, fade_ms = 3000)
+        gameStarted = True
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
