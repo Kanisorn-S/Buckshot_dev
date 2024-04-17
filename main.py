@@ -24,6 +24,9 @@ window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
 pg.display.set_caption("Buckshot Roulette")
 clock = pg.time.Clock()
 
+pg.mixer.init()
+pg.mixer.music.load('sounds/record-online-voice-recorder_kIwejRI.mp3')
+
 # Load necessary images
 background = pg.image.load('images/background.jpg')
 gun = pg.image.load('images/evasiveness.png')
@@ -55,7 +58,11 @@ playing = False
 while True:
     # check events
     if not playing:
+        pg.mixer.music.play(loops = -1, start = 0, fade_ms = 3000)
+        pg.mixer.music.set_volume(0.1)
         playing = starting_menu()
+    pg.mixer.music.fadeout(3000)
+    pg.mixer.music.stop()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()

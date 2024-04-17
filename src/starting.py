@@ -27,6 +27,8 @@ yellow = pg.image.load('images/amongus/yellow.png')
 sus_images = [red, black, brown, cyan, green, purple, yellow]
 sus_images = [pg.transform.scale(color, (60, 60)) for color in sus_images]
 
+pg.mixer.init()
+pg.mixer.music.load('sounds/Doom Eternal OST - The Only Thing They Fear Is You (Mick Gordon) [Doom Eternal Theme].mp3')
 
 class Amongus:
     def __init__(self, window: pg.Surface, image: pg.Surface):
@@ -87,7 +89,12 @@ def starting_menu() -> bool:
                 pg.quit()
                 sys.exit()
             if startButton.handleEvent(event):
+                pg.mixer.music.play(loops = -1, start = 0, fade_ms = 3000)
+                pg.mixer.music.set_volume(0.1)
                 return True
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_f:
+                    pg.display.toggle_fullscreen()
         
         
         window.blit(background, (0, 0))
