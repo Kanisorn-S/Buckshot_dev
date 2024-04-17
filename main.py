@@ -49,29 +49,30 @@ nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
 startButton = pw.TextButton(window, (300, 300), 'Start')
 startButton.setCenteredLoc((300, 300))
 
-playing = 0
+state = 0
 
 # Main program loop
 while True:
     # check events
-    if not playing:
-        playing = starting_menu()
+    if state == 0:
+        state = starting_menu()
+    elif state == 2: # Setting menu
+        pass
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
-        if playing and gameManager.winner == None:
+        if gameManager.winner == None:
             # Let game manager handle the event
             gameManager.handleEvent(event)
 
         
     # Frame update
-    if playing:
-        gameManager.update()
-        if gameManager.winner:
-            startButton.enable()
-            playing = False
-            nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
+    gameManager.update()
+    if gameManager.winner:
+        startButton.enable()
+        playing = False
+        nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
 
         
 
