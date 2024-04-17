@@ -13,3 +13,6 @@ class Item():
 
     def draw(self):
         pass
+
+
+print("hello world")
