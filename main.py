@@ -8,6 +8,7 @@ from src.item import Item
 from src.player import Player
 from src.gun import Gun
 from src.starting import starting_menu
+from src.ending import ending_menu
 
 print("Hello World")
 
@@ -27,9 +28,11 @@ clock = pg.time.Clock()
 pg.mixer.init()
 startMenuMusic = pg.mixer.Sound('sounds/record-online-voice-recorder_kIwejRI.mp3')
 gameMusic = pg.mixer.Sound('sounds\Doom Eternal OST - The Only Thing They Fear Is You (Mick Gordon) [Doom Eternal Theme].mp3')
+endMusic = pg.mixer.Sound('sounds\Victory Crew.mp3')
 
 startMenuChannel = pg.mixer.Channel(0)
 gameChannel = pg.mixer.Channel(1)
+endChannel = pg.mixer.Channel(2)
 
 # Load necessary images
 background = pg.image.load('images/background.jpg')
@@ -48,58 +51,74 @@ player2_red = pg.image.load("images/player2_red.png")
 player2_eva = pg.image.load("images/player2_eva.png")
 player_pics = [player2_full, player2_red, player2_eva, player1_full, player1_red, player1_eva]
 
-# Initialize GameManager
-gameManager = GameManager(window, player_pics, 10, gun, itemframe)
+
 
 nameDisplay = pw.DisplayText(window, (WIDTH/2, HEIGHT/2), "Buckshot Roulette", textColor = 'white', justified = 'center', fontSize = 30)
 nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
 startButton = pw.TextButton(window, (300, 300), 'START', textColor = (102, 178, 255))
 startButton.setCenteredLoc((300, 300))
 
-playing = False
+state = 0
 started = False
 gameStarted = False
+endStarted = False
 
 gameChannel.set_volume(0.03)
 startMenuChannel.set_volume(0.1)
+endChannel.set_volume(0.1)
 # Main program loop
 while True:
     # check events
-    if not playing:
+    print(state)
+    if state == 0: # Starting Menu
         if not started:
             startMenuChannel.play(startMenuMusic, loops = -1, fade_ms = 3000)
             started = True
-        playing = starting_menu()
-    if not gameStarted:
-        startMenuChannel.fadeout(3000)
-        startMenuChannel.stop()
-        gameChannel.play(gameMusic, loops = -1, fade_ms = 3000)
-        gameStarted = True
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            pg.quit()
-            sys.exit()
-        if gameManager.winner == None:
-            # Let game manager handle the event
-            gameManager.handleEvent(event)
+        state = starting_menu()
+    elif state == 2: # Ending Menu
+        if not endStarted:
+            endChannel.play(endMusic, loops = 1, fade_ms = 1000)
+            endStarted = True
+        state = ending_menu()
+    else:
+        if not gameStarted:
+            # Initialize GameManager
+            gameManager = GameManager(window, player_pics, 10, gun, itemframe)
+            started = False
+            endStarted = False
+            startMenuChannel.fadeout(3000)
+            startMenuChannel.stop()
+            endChannel.fadeout(3000)
+            endChannel.stop()
+            gameChannel.play(gameMusic, loops = -1, fade_ms = 3000)
+            gameStarted = True
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if gameManager.winner == None:
+                # Let game manager handle the event
+                gameManager.handleEvent(event)
 
-        
-    # Frame update
-    gameManager.update()
-    if gameManager.winner:
-        startButton.enable()
-        playing = False
-        nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
+            
+        # Frame update
+        gameManager.update()
+        if gameManager.winner:
+            gameChannel.fadeout(2000)
+            gameChannel.stop()
+            gameStarted = False
+            state = 2
+            nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
 
-        
+            
 
-    # Fill window's Background
-    window.blit(background, (0, 0))
+        # Fill window's Background
+        window.blit(background, (0, 0))
 
-    gameManager.draw()
+        gameManager.draw()
 
-    pg.display.update()
-    clock.tick(FRAMES_PER_SECOND)
+        pg.display.update()
+        clock.tick(FRAMES_PER_SECOND)
 
     
     

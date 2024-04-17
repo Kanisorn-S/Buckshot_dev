@@ -73,7 +73,7 @@ class Amongus:
         self.window.blit(image, image_rect)
     
 
-def starting_menu() -> bool:
+def starting_menu() -> int:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
     startButton = pw.TextButton(window, (300, 300), 'START')
@@ -87,7 +87,7 @@ def starting_menu() -> bool:
                 pg.quit()
                 sys.exit()
             if startButton.handleEvent(event):
-                return True
+                return 1
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_f:
                     pg.display.toggle_fullscreen()
