@@ -15,6 +15,8 @@ NPLAYER = 2
 background = pg.image.load('images/background.jpg')
 logo = pg.image.load('images/logo.png')
 logo = pg.transform.scale_by(logo, 0.5)
+logo_mask = pg.mask.from_surface(logo).to_surface()
+logo_mask.set_colorkey((0, 0, 0))
 red = pg.image.load('images/amongus/red.png')
 black = pg.image.load('images/amongus/black.png')
 brown = pg.image.load('images/amongus/brown.png')
@@ -92,7 +94,9 @@ def starting_menu() -> int:
         for sus in susses:
             sus.update()
             sus.draw()
+        window.blit(logo_mask, (logo_rect.x + 2, logo_rect.y + 2))
         window.blit(logo, logo_rect)
+
         startButton.draw()
 
         
