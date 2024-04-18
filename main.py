@@ -53,11 +53,6 @@ player_pics = [player2_full, player2_red, player2_eva, player1_full, player1_red
 
 
 
-nameDisplay = pw.DisplayText(window, (WIDTH/2, HEIGHT/2), "Buckshot Roulette", textColor = 'white', justified = 'center', fontSize = 30)
-nameDisplay.setCenteredLoc((WIDTH/2, HEIGHT/2))
-startButton = pw.TextButton(window, (300, 300), 'START', textColor = (102, 178, 255))
-startButton.setCenteredLoc((300, 300))
-
 state = 0
 started = False
 gameStarted = False
@@ -79,7 +74,7 @@ while True:
         if not endStarted:
             endChannel.play(endMusic, loops = 1, fade_ms = 1000)
             endStarted = True
-        state = ending_menu()
+        state = ending_menu(gameManager)
     else:
         if not gameStarted:
             # Initialize GameManager
@@ -108,7 +103,7 @@ while True:
             gameChannel.stop()
             gameStarted = False
             state = 2
-            nameDisplay.setValue(f"{gameManager.winner.name} is the winnner!")
+
 
             
 

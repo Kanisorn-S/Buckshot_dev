@@ -134,21 +134,25 @@ class Player:
 
         
 
-    def draw(self):
+    def draw(self, displayHealth = True):
         '''
         Draws the player on the window using rect as position,
               the player's health bar on top of the player
         '''
         self.rect.center =  (self.rect.center[0], self.starting_y + self.dy)
-        x, y = self.rect.topleft
-        image = Player.HEART
-        broken = Player.BROKEN
-        w, h = image.get_size()
-        for i in range(self.health):
-            rect = image.get_rect()
-            rect.bottomleft = (x + (i * w), y)
-            if i < self.death_notice:
-                self.__window.blit(broken, rect)
-            else:
-                self.__window.blit(image, rect)
+        if displayHealth:
+            x, y = self.rect.topleft
+            image = Player.HEART
+            broken = Player.BROKEN
+            w, h = image.get_size()
+            for i in range(self.health):
+                rect = image.get_rect()
+                rect.bottomleft = (x + (i * w), y)
+                if i < self.death_notice:
+                    self.__window.blit(broken, rect)
+                else:
+                    self.__window.blit(image, rect)
+        else:
+            self.image = pg.transform.scale_by(self.image, 3)
+            self.rect = self.image.get_rect()
         self.__window.blit(self.image, self.rect)

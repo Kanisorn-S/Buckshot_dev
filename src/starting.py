@@ -79,7 +79,7 @@ def starting_menu() -> int:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
     startButton = pw.CustomButton(window, (300, 300), 'images/start_button.png')
-    startButton.setCenteredLoc((360, 250))
+    startButton.setCenteredLoc((300, 250))
     logo_rect = logo.get_rect()
     logo_rect.center = (300, 100)
     susses = [Amongus(window, color) for color in sus_images]

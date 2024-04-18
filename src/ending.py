@@ -3,6 +3,8 @@ from pygame.locals import *
 import pygwidgets as pw
 import sys
 import random
+from src.player import Player
+from src.gameManager import GameManager
 
 # Set const parameters
 WIDTH = 600
@@ -16,13 +18,15 @@ background = pg.image.load('images/background.jpg')
 
     
 
-def ending_menu() -> int:
+def ending_menu(gameManager: GameManager) -> int:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
-    restartButton = pw.TextButton(window, (300, 300), 'RESTART')
+    restartButton = pw.CustomButton(window, (300, 300), 'images/restart.png')
     restartButton.setCenteredLoc((300, 200))
-    backToMenuButton = pw.TextButton(window, (300, 300), 'BACK TO MENU')
+    backToMenuButton = pw.CustomButton(window, (300, 300), 'images/exit.png')
     backToMenuButton.setCenteredLoc((300, 300))
+    winner = gameManager.winner
+    winner.rect.center = (300, 300)
 
     while True:
         for event in pg.event.get():
@@ -37,11 +41,14 @@ def ending_menu() -> int:
                 if event.key == pg.K_f:
                     pg.display.toggle_fullscreen()
         
+        winner.update()
         
         window.blit(background, (0, 0))
+        
 
         backToMenuButton.draw()
         restartButton.draw()
+        winner.draw(False)
 
         
         pg.display.update()
