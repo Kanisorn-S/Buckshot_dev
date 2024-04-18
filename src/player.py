@@ -27,6 +27,7 @@ class Player:
         '''
         # Normal initialization
         self.__window = window 
+        self.winner_image = pg.transform.scale_by(images[0], 0.1)
         self.image_full = pg.transform.scale_by(images[0], 0.05)
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
@@ -74,6 +75,18 @@ class Player:
         we8 = pg.transform.rotate(self.image_eva, -3)
         we9 = pg.transform.rotate(self.image_eva, -4)
         self.wobble_eva = [we1, we2, we3, we4, self.image_eva, we6, we7, we8, we9]
+        
+        # Wobble winner effect
+        ww1 = pg.transform.rotate(self.winner_image, 4)
+        ww2 = pg.transform.rotate(self.winner_image, 3)
+        ww3 = pg.transform.rotate(self.winner_image, 2)
+        ww4 = pg.transform.rotate(self.winner_image, 1)
+        ww6 = pg.transform.rotate(self.winner_image, -1)
+        ww7 = pg.transform.rotate(self.winner_image, -2)
+        ww8 = pg.transform.rotate(self.winner_image, -3)
+        ww9 = pg.transform.rotate(self.winner_image, -4)
+        self.wobble_winner = [ww1, ww2, ww3, ww4, self.winner_image, ww6, ww7, ww8, ww9]
+
         
         # Floating effect
         self.starting_y = loc[1]
@@ -131,28 +144,46 @@ class Player:
                 self.dy -= 1
         
         
-
+    def updateWin(self):
+        self.timer += 1
+        if self.timer >= self.frame:
+            self.timer = 0
+            if self.increasing:
+                self.current_wobble += 1
+            else:
+                self.current_wobble -= 1
+            self.image = self.wobble_winner[self.current_wobble]
+            if (self.current_wobble == (len(self.wobble_winner) - 1)) or (self.current_wobble == 0):
+                self.increasing = not self.increasing
+            if (self.dy >= 10) or (self.dy < 0):
+                self.floating_down = not self.floating_down
+            if self.floating_down:
+                self.dy += 1
+            else:
+                self.dy -= 1
+            
         
 
-    def draw(self, displayHealth = True):
+    def draw(self):
         '''
         Draws the player on the window using rect as position,
               the player's health bar on top of the player
         '''
         self.rect.center =  (self.rect.center[0], self.starting_y + self.dy)
-        if displayHealth:
-            x, y = self.rect.topleft
-            image = Player.HEART
-            broken = Player.BROKEN
-            w, h = image.get_size()
-            for i in range(self.health):
-                rect = image.get_rect()
-                rect.bottomleft = (x + (i * w), y)
-                if i < self.death_notice:
-                    self.__window.blit(broken, rect)
-                else:
-                    self.__window.blit(image, rect)
-        else:
-            self.image = pg.transform.scale_by(self.image, 3)
-            self.rect = self.image.get_rect()
+        x, y = self.rect.topleft
+        image = Player.HEART
+        broken = Player.BROKEN
+        w, h = image.get_size()
+        for i in range(self.health):
+            rect = image.get_rect()
+            rect.bottomleft = (x + (i * w), y)
+            if i < self.death_notice:
+                self.__window.blit(broken, rect)
+            else:
+                self.__window.blit(image, rect)
         self.__window.blit(self.image, self.rect)
+        
+    def drawWin(self, window, loc):
+        rect = self.image.get_rect()
+        rect.center = loc
+        window.blit(self.image, rect)

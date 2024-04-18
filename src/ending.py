@@ -26,7 +26,6 @@ def ending_menu(gameManager: GameManager) -> int:
     backToMenuButton = pw.CustomButton(window, (300, 300), 'images/exit.png')
     backToMenuButton.setCenteredLoc((300, 300))
     winner = gameManager.winner
-    winner.rect.center = (300, 300)
 
     while True:
         for event in pg.event.get():
@@ -41,14 +40,14 @@ def ending_menu(gameManager: GameManager) -> int:
                 if event.key == pg.K_f:
                     pg.display.toggle_fullscreen()
         
-        winner.update()
+        winner.updateWin()
         
         window.blit(background, (0, 0))
         
 
         backToMenuButton.draw()
         restartButton.draw()
-        winner.draw(False)
+        winner.drawWin(window, (300, 100))
 
         
         pg.display.update()

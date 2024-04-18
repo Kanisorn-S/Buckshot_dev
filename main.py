@@ -72,7 +72,7 @@ while True:
         state = starting_menu()
     elif state == 2: # Ending Menu
         if not endStarted:
-            endChannel.play(endMusic, loops = 1, fade_ms = 1000)
+            endChannel.play(endMusic, loops = 0, fade_ms = 1000)
             endStarted = True
         state = ending_menu(gameManager)
     else:
