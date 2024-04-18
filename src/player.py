@@ -192,7 +192,7 @@ class Player:
         w, h = image.get_size()
         for i in range(self.health):
             rect = image.get_rect()
-            rect.bottomleft = (x + (i * w), y)
+            rect.bottomleft = (x + (i * w) - (0.5 * w), y)
             if i < self.death_notice:
                 self.__window.blit(broken, rect)
             else:
