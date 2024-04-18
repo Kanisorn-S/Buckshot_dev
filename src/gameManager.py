@@ -53,6 +53,8 @@ class GameManager:
         self.itemStack = ItemStack(10)
         self.gotItem = False
         
+        self.death_time = 0
+        
     def loadPlayer(self):
         '''
         Create nplayers Player and return a dictionary with the keys being players and the values being their corresponding health
@@ -113,10 +115,12 @@ class GameManager:
             player.update()
             self.playersInfo[player] = player.health
             if self.playersInfo[player] <= 0:
-                del self.playersInfo[player]
-                self.players.remove(player)
-                self.winner = self.players[0]
-                break
+                self.death_time += 1
+                if self.death_time >= 60:
+                    del self.playersInfo[player]
+                    self.players.remove(player)
+                    self.winner = self.players[0]
+                    break
             # if player == self.players[self.turn]:
             #     player.isTurn = True
 
@@ -139,7 +143,8 @@ class GameManager:
                 self.window.blit(itemframe, rect)
             self.gun.draw()
             current_player = self.players[self.turn]
-            pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)
+            if current_player.health:
+                pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)
         else:
             # show winning screen with victor at the center
             print(f"The winner is {self.winner.name}")

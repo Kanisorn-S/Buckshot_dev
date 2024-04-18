@@ -91,6 +91,7 @@ class Player:
         # Floating effect
         self.starting_y = loc[1]
         self.dy = 0
+        self.y_speed = 1
         self.floating_down = True
         
         # Delay frame update
@@ -118,6 +119,8 @@ class Player:
         '''
         Update the player's image based on their current health and their evasive status
         '''
+        if self.health == 0:
+            self.y_speed = 10
         self.timer += 1
         if self.evading:
             self.image = self.image_eva
@@ -139,9 +142,9 @@ class Player:
             if (self.dy >= 10) or (self.dy < 0):
                 self.floating_down = not self.floating_down
             if self.floating_down:
-                self.dy += 1
+                self.dy += self.y_speed
             else:
-                self.dy -= 1
+                self.dy -= self.y_speed
         
         
     def updateWin(self):
