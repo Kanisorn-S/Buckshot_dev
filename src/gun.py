@@ -4,6 +4,10 @@ from collections import deque
 from src.player import Player
 from src.bullet import Bullet
 
+pg.mixer.init()
+laser = pg.mixer.Sound('sounds\laser-104024.mp3')
+laserChannel = pg.mixer.Channel(0)
+
 class Gun:
     # Class Constants
     BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.02)
@@ -67,6 +71,7 @@ class Gun:
             self.live -= 1
         else:
             self.blank -= 1
+        laserChannel.play(laser)
         return self.players[self.target], bullet
     
     def aimRight(self):

@@ -58,7 +58,7 @@ started = False
 gameStarted = False
 endStarted = False
 
-gameChannel.set_volume(0.03)
+gameChannel.set_volume(0.02)
 startMenuChannel.set_volume(0.1)
 endChannel.set_volume(0.1)
 # Main program loop

@@ -3,6 +3,9 @@ from src.bullet import Bullet
 from pygame.locals import *
 import math
 
+pg.mixer.init()
+explosion = pg.mixer.Sound('sounds\Explosion sfx.mp3')
+explosionChannel = pg.mixer.Channel(3)
 
 
 class Player:
@@ -87,6 +90,7 @@ class Player:
         ww9 = pg.transform.rotate(self.winner_image, -4)
         self.wobble_winner = [ww1, ww2, ww3, ww4, self.winner_image, ww6, ww7, ww8, ww9]
 
+        explosionChannel.set_volume(0.1)
         
         # Floating effect
         self.starting_y = loc[1]
@@ -97,6 +101,8 @@ class Player:
         # Delay frame update
         self.timer = 0
         self.frame = 2
+        self.isShot = False
+        self.shotTimer = 0
 
         # Items
         self.items = []
@@ -109,17 +115,24 @@ class Player:
         If the type is "BLANK", the player's health remains unchanged
         If the player has evasiveness, use it to determine whether the player takes damage from
         live rounds or not
-        '''      
+        '''     
+        self.isShot = True 
         if bullet.type == Bullet.LIVE:
             self.health -= bullet.damage
             bullet.aiming = self.id
-            bullet.fired()
 
     def update(self):
         '''
         Update the player's image based on their current health and their evasive status
         '''
+        if self.isShot:
+            self.shotTimer += 1
+            if self.shotTimer >= 8:
+                self.shotTimer = 0
+                explosionChannel.play(explosion)
+                self.isShot = False
         if self.health == 0:
+            explosionChannel.set_volume(0.5)
             self.y_speed = 10
         self.timer += 1
         if self.evading:
