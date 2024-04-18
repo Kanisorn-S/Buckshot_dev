@@ -13,8 +13,8 @@ class Bullet:
     laser3 = pg.image.load('images/laser3.png')
     laser4 = pg.image.load('images/laser4.png')
     laser5 = pg.image.load('images/laser5.png')
-    sprite = [laser1, laser2, laser3, laser3, laser3, laser3, laser3, laser4, laser5]
-    sprite_right = [pg.transform.scale(image, (500, 200)) for image in sprite]
+    sprite = [laser1, laser2, laser3, laser3, laser3, laser3, laser3, laser3, laser4, laser5]
+    sprite_right = [pg.transform.scale(image, (500, 100)) for image in sprite]
     sprite_left = [pg.transform.flip(image, 1, 0) for image in sprite_right]
     
     def __init__(self, window: pg.Surface, odds: tuple):
@@ -59,7 +59,7 @@ class Bullet:
         Updates the bullet position. Gamemanager only calls update on bullets that have been fired. 
         '''
         if self.isFired:
-            if self.timer >= 2:
+            if self.timer >= 4:
             # self.rect.x += self.speed
             # self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
             # self.rect.topleft = self.exact_pos
@@ -75,12 +75,12 @@ class Bullet:
             self.sprite = Bullet.sprite_right
             self.image = self.sprite[self.currentFrame]
             self.rect = self.image.get_rect()
-            self.rect.midleft = (300, 250)
+            self.rect.midleft = (270, 222)
         else:
              self.sprite = Bullet.sprite_left
              self.image = self.sprite[self.currentFrame]
              self.rect = self.image.get_rect()
-             self.rect.midright = (300, 250)
+             self.rect.midright = (350, 222)
         
             
             

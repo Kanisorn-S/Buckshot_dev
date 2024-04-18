@@ -83,7 +83,7 @@ while True:
     else:
         if not gameStarted:
             # Initialize GameManager
-            gameManager = GameManager(window, player_pics, 10, gun, itemframe)
+            gameManager = GameManager(window, player_pics, 6, gun, itemframe)
             started = False
             endStarted = False
             startMenuChannel.fadeout(3000)
