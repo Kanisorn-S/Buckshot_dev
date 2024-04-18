@@ -142,3 +142,6 @@ class Gun:
             rect = Gun.BLANK_IMG.get_rect()
             rect.topleft = (x + (i * Gun.IMG_W), y)
             self.window.blit(Gun.BLANK_IMG, rect)
+
+    # Have an instance variable to keep track of the state of showing or hiding bullets
+    # Fade bullets pic in/out
