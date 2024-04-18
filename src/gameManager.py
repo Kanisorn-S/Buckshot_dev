@@ -50,7 +50,7 @@ class GameManager:
         self.target = None
 
         # Item management
-        self.itemStack = ItemStack(10)
+        self.itemStack = ItemStack(100)
         self.gotItem = False
         
         self.death_time = 0

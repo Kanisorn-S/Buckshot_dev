@@ -36,7 +36,7 @@ class Gun:
         self.players = players
         
         # Initialize bullets and firing mechanism
-        self.odds = [0, 1]
+        self.odds = [0.5, 0.5]
         self.bullets = self.load()
         self.target = 69
         self.turning_left = False
@@ -67,10 +67,10 @@ class Gun:
         '''
         bullet = self.bullets.pop()
         bullet.aiming = self.target
-        if bullet.type == Bullet.LIVE:
-            self.live -= 1
-        else:
-            self.blank -= 1
+        # if bullet.type == Bullet.LIVE:
+        #     self.live -= 1
+        # else:
+        #     self.blank -= 1
         laserChannel.play(laser)
         return self.players[self.target], bullet
     

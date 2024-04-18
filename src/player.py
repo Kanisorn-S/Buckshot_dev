@@ -116,10 +116,10 @@ class Player:
         If the player has evasiveness, use it to determine whether the player takes damage from
         live rounds or not
         '''     
-        self.isShot = True 
         if bullet.type == Bullet.LIVE:
             self.health -= bullet.damage
             bullet.aiming = self.id
+            self.isShot = True 
 
     def update(self):
         '''
