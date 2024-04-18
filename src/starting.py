@@ -26,6 +26,8 @@ purple = pg.image.load('images/amongus/purple.png')
 yellow = pg.image.load('images/amongus/yellow.png')
 sus_images = [red, black, brown, cyan, green, purple, yellow]
 sus_images = [pg.transform.scale(color, (60, 60)) for color in sus_images]
+start_button = pg.image.load('images/start_button.png')
+start_button = pg.transform.scale_by(start_button, 0.3)
 
 
 class Amongus:
@@ -76,8 +78,8 @@ class Amongus:
 def starting_menu() -> int:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
-    startButton = pw.TextButton(window, (300, 300), 'START')
-    startButton.setCenteredLoc((300, 300))
+    startButton = pw.CustomButton(window, (300, 300), 'images/start_button.png')
+    startButton.setCenteredLoc((360, 250))
     logo_rect = logo.get_rect()
     logo_rect.center = (300, 100)
     susses = [Amongus(window, color) for color in sus_images]
