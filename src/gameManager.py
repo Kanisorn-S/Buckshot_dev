@@ -4,6 +4,7 @@ from src.gun import Gun
 from src.player import Player
 from src.item import Item
 from src.itemStack import ItemStack
+from src.bullet import Bullet
 
 
 class GameManager:
@@ -78,7 +79,7 @@ class GameManager:
                 self.target.shot(bullet)
 
                 # If fired at opponent, lose turn
-                if self.target != self.players[self.turn]:
+                if (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE):
                     self.turn = not self.turn
                     self.gotItem = False
             
