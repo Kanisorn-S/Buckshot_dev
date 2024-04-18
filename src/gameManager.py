@@ -75,6 +75,8 @@ class GameManager:
         if e.type == pg.KEYDOWN: 
         # Spacebar to fire
             if e.key == pg.K_SPACE:
+                if self.gun.target not in [0, 1]:
+                    return
                 self.target, bullet = self.gun.fire()
                 self.bullets_on_screen.append(bullet)
                 bullet.fired()
