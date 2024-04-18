@@ -67,6 +67,8 @@ while True:
     print(state)
     if state == 0: # Starting Menu
         if not started:
+            endChannel.fadeout(3000)
+            endChannel.stop()
             startMenuChannel.play(startMenuMusic, loops = -1, fade_ms = 3000)
             started = True
         state = starting_menu()
