@@ -7,6 +7,9 @@ from src.bullet import Bullet
 pg.mixer.init()
 laser = pg.mixer.Sound('sounds\laser-104024.mp3')
 laserChannel = pg.mixer.Channel(0)
+smoke = pg.mixer.Sound('sounds\Smoke_puff_sfx.mp3')
+smokeChannel = pg.mixer.Channel(4)
+smokeChannel.set_volume(0.3)
 
 class Gun:
     # Class Constants
@@ -86,9 +89,11 @@ class Gun:
         bullet.aiming = self.target
         if bullet.type == Bullet.LIVE:
             self.live -= 1
+            laserChannel.play(laser)
         else:
             self.blank -= 1
-        laserChannel.play(laser)
+            smokeChannel.play(smoke)
+
         return self.players[self.target], bullet
     
     def aimRight(self):
