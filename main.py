@@ -27,7 +27,7 @@ clock = pg.time.Clock()
 
 pg.mixer.init()
 startMenuMusic = pg.mixer.Sound('sounds/record-online-voice-recorder_kIwejRI.mp3')
-gameMusic = pg.mixer.Sound('sounds\Doom Eternal OST - The Only Thing They Fear Is You (Mick Gordon) [Doom Eternal Theme].mp3')
+gameMusic = pg.mixer.Sound('sounds/Undertale_OST__095_-_Bring_It_In_Guys.mp3')
 endMusic = pg.mixer.Sound('sounds\Victory Crew.mp3')
 
 startMenuChannel = pg.mixer.Channel(0)
@@ -58,7 +58,7 @@ started = False
 gameStarted = False
 endStarted = False
 
-gameChannel.set_volume(0.02)
+gameChannel.set_volume(0.08)
 startMenuChannel.set_volume(0.1)
 endChannel.set_volume(0.1)
 # Main program loop
