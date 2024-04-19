@@ -10,8 +10,8 @@ laserChannel = pg.mixer.Channel(0)
 
 class Gun:
     # Class Constants
-    BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.02)
-    LIVE_IMG = pg.transform.scale_by(pg.image.load('images/live_shot.png'), 0.02)
+    BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.03)
+    LIVE_IMG = pg.transform.scale_by(pg.image.load('images/live_shot.png'), 0.03)
     BLANK_BLUR = []
     LIVE_BLUR = []
     for i in range(1, 6):
@@ -57,6 +57,8 @@ class Gun:
         self.phlive = self.live
         self.phblank = self.blank
         
+        self.bulletHolder = pg.Rect(300, 300, (6 * Gun.IMG_W) + 10, 50)
+        self.bulletHolder.center = (300, 375 / 2)
         self.displaying = True
         self.displayingTimer = 0
         self.fading = False
@@ -169,18 +171,20 @@ class Gun:
                 self.fading = True
                 self.live_img = Gun.LIVE_BLUR[self.blur_sprite]
                 self.blank_img = Gun.BLANK_BLUR[self.blur_sprite]
+            pg.draw.rect(self.window, 'gray', self.bulletHolder, border_radius = 5)
                 
-            x = 300
-            y = 330
+            x = self.bulletHolder.center[0] - (2.5 * Gun.IMG_W) - 17
+            y = self.bulletHolder.topleft[1] + 5
             factor = self.fading * ((-1) ** (self.fadeUpdate % 2) * self.dx)
             for i in range(self.live):
                 rect = self.live_img.get_rect()
-                rect.topright = (x - (i * Gun.IMG_W) + factor, y)
+                rect.topleft = (x + (i * Gun.IMG_W) + factor, y)
                 self.window.blit(self.live_img, rect)
             for i in range(self.blank):
                 rect = self.blank_img.get_rect()
-                rect.topleft = (x + (i * Gun.IMG_W) + factor, y)
+                rect.topleft = (x + (Gun.IMG_W * self.live) + (i * Gun.IMG_W) + factor, y)
                 self.window.blit(self.blank_img, rect)
+            
 
     # Have an instance variable to keep track of the state of showing or hiding bullets
     # Fade bullets pic in/out

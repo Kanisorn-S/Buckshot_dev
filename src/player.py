@@ -37,7 +37,7 @@ class Player:
         self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
-        self.health = 5
+        self.health = 6
         self.death_notice = math.ceil(self.health / 3)
         self.id = id
         self.name = name
@@ -106,6 +106,8 @@ class Player:
 
         # Items
         self.items = []
+        
+        self.disrepair = False
 
     def shot(self, bullet: Bullet):
         '''
