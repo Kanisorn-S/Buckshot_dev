@@ -17,6 +17,14 @@ class Bullet:
     sprite_right = [pg.transform.scale(image, (500, 100)) for image in sprite]
     sprite_left = [pg.transform.flip(image, 1, 0) for image in sprite_right]
     
+    blank1 = pg.image.load('images/blank1.png')
+    blank2 = pg.image.load('images/blank2.png')
+    blank3 = pg.image.load('images/blank3.png')
+    blank4 = pg.image.load('images/blank4.png')
+    blank_sprite = [blank1, blank2, blank3, blank4]
+    blank_sprite_right = [pg.transform.scale(image, (500, 100)) for image in blank_sprite]
+    blank_sprite_left = [pg.transform.flip(image, 1, 0) for image in blank_sprite_right]
+    
     def __init__(self, window: pg.Surface, odds: tuple):
         '''
         Initialize a single bullet
@@ -39,7 +47,14 @@ class Bullet:
         self.aiming = Bullet.LEFT
         self.isFired = False
         self.currentFrame = 0
-        self.sprite = Bullet.sprite_left
+        self.sprite_left = None
+        self.sprite_right = None
+        if self.type == Bullet.LIVE:
+            self.sprite_left = Bullet.sprite_left
+            self.sprite_right = Bullet.sprite_right
+        else:
+            self.sprite_left = Bullet.blank_sprite_left
+            self.sprite_right = Bullet.blank_sprite_right
         self.image = self.sprite[self.currentFrame]
         self.rect = self.image.get_rect()
         self.rect.midleft = (300, 270)
@@ -72,12 +87,12 @@ class Bullet:
             self.timer += 1
                 
         if self.aiming == Bullet.RIGHT:
-            self.sprite = Bullet.sprite_right
+            self.sprite = self.sprite_right
             self.image = self.sprite[self.currentFrame]
             self.rect = self.image.get_rect()
             self.rect.midleft = (270, 222)
         else:
-             self.sprite = Bullet.sprite_left
+             self.sprite = self.sprite_left
              self.image = self.sprite[self.currentFrame]
              self.rect = self.image.get_rect()
              self.rect.midright = (350, 222)
