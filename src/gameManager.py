@@ -147,7 +147,7 @@ class GameManager:
                 self.window.blit(itemframe, rect)
             self.gun.draw()
             current_player = self.players[self.turn]
-            if current_player.health:
+            if current_player.health > 0:
                 pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)
         else:
             # show winning screen with victor at the center

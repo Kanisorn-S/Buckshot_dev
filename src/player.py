@@ -119,21 +119,26 @@ class Player:
         live rounds or not
         '''     
         if bullet.type == Bullet.LIVE:
-            self.health -= bullet.damage
-            bullet.aiming = self.id
-            self.isShot = True 
+            if self.disrepair:
+                self.health -= 99999999999
+            else:
+                self.health -= bullet.damage
+                bullet.aiming = self.id
+                self.isShot = True 
 
     def update(self):
         '''
         Update the player's image based on their current health and their evasive status
         '''
+        if self.health <= self.death_notice:
+            self.disrepair = True
         if self.isShot:
             self.shotTimer += 1
             if self.shotTimer >= 8:
                 self.shotTimer = 0
                 explosionChannel.play(explosion)
                 self.isShot = False
-        if self.health == 0:
+        if self.health <= 0:
             explosionChannel.set_volume(0.5)
             self.y_speed = 10
         self.timer += 1
