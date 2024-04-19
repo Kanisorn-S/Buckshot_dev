@@ -13,7 +13,7 @@ class Bullet:
     laser3 = pg.image.load('images/laser3.png')
     laser4 = pg.image.load('images/laser4.png')
     laser5 = pg.image.load('images/laser5.png')
-    sprite = [laser1, laser2, laser3, laser3, laser3, laser3, laser3, laser3, laser4, laser5]
+    sprite = [laser1, laser2, laser3, laser3, laser4, laser5]
     sprite_right = [pg.transform.scale(image, (500, 100)) for image in sprite]
     sprite_left = [pg.transform.flip(image, 1, 0) for image in sprite_right]
     

@@ -12,6 +12,11 @@ class Gun:
     # Class Constants
     BLANK_IMG = pg.transform.scale_by(pg.image.load('images/blank_shot.png'), 0.02)
     LIVE_IMG = pg.transform.scale_by(pg.image.load('images/live_shot.png'), 0.02)
+    BLANK_BLUR = []
+    LIVE_BLUR = []
+    for i in range(1, 6):
+        BLANK_BLUR.append(pg.transform.box_blur(BLANK_IMG, i))
+        LIVE_BLUR.append(pg.transform.box_blur(LIVE_IMG, i))
     IMG_W = LIVE_IMG.get_size()[0]
     
     def __init__(self, window: pg.Surface, loc: tuple[int, int], nbullets: int, players: list[Player, Player]):
@@ -36,7 +41,7 @@ class Gun:
         self.players = players
         
         # Initialize bullets and firing mechanism
-        self.odds = [1, 0] # [blank, live]
+        self.odds = [0.5, 0.5] # [blank, live]
         self.bullets = self.load()
         self.target = 69
         self.turning_left = False
@@ -51,6 +56,16 @@ class Gun:
         self.hit = False
         self.phlive = self.live
         self.phblank = self.blank
+        
+        self.displaying = True
+        self.displayingTimer = 0
+        self.fading = False
+        self.fadingTimer = 0
+        self.fadeUpdate = 0
+        self.blur_sprite = 0
+        self.dx = 5
+        self.live_img = Gun.LIVE_IMG
+        self.blank_img = Gun.BLANK_IMG
 
     def load(self):
         '''
@@ -96,6 +111,15 @@ class Gun:
         '''
         Update the attributes of the gun, run turning sequence
         '''
+        if self.fading:
+            self.fadeUpdate += 1
+            if self.fadeUpdate >= 15:
+                self.fadeUpdate = 0
+                if self.blur_sprite < len(Gun.BLANK_BLUR) - 1:
+                    self.blur_sprite += 1
+                else:
+                    self.fading = False
+                    self.displaying = False
         for bullet in self.bullets:
             bullet.aiming = self.target
             bullet.update()
@@ -112,6 +136,13 @@ class Gun:
                     self.live += 1
                 else:
                     self.blank += 1
+            self.displaying = True
+            self.displayingTimer = 0
+            self.fading = False
+            self.fadeUpdate = 0
+            self.blur_sprite = 0
+            self.live_img = Gun.LIVE_IMG
+            self.blank_img = Gun.BLANK_IMG
         if self.turning_left:
             print(self.current_sprite)
             self.current_sprite += 1
@@ -132,16 +163,24 @@ class Gun:
         Draw the gun on the main game window
         '''
         self.window.blit(self.image, self.rect)
-        x = 300
-        y = 330
-        for i in range(self.live):
-            rect = Gun.LIVE_IMG.get_rect()
-            rect.topright = (x - (i * Gun.IMG_W), y)
-            self.window.blit(Gun.LIVE_IMG, rect)
-        for i in range(self.blank):
-            rect = Gun.BLANK_IMG.get_rect()
-            rect.topleft = (x + (i * Gun.IMG_W), y)
-            self.window.blit(Gun.BLANK_IMG, rect)
+        if self.displaying:
+            self.displayingTimer += 1
+            if self.displayingTimer > 150:
+                self.fading = True
+                self.live_img = Gun.LIVE_BLUR[self.blur_sprite]
+                self.blank_img = Gun.BLANK_BLUR[self.blur_sprite]
+                
+            x = 300
+            y = 330
+            factor = self.fading * ((-1) ** (self.fadeUpdate % 2) * self.dx)
+            for i in range(self.live):
+                rect = self.live_img.get_rect()
+                rect.topright = (x - (i * Gun.IMG_W) + factor, y)
+                self.window.blit(self.live_img, rect)
+            for i in range(self.blank):
+                rect = self.blank_img.get_rect()
+                rect.topleft = (x + (i * Gun.IMG_W) + factor, y)
+                self.window.blit(self.blank_img, rect)
 
     # Have an instance variable to keep track of the state of showing or hiding bullets
     # Fade bullets pic in/out
