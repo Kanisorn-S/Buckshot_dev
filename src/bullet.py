@@ -49,12 +49,14 @@ class Bullet:
         self.currentFrame = 0
         self.sprite_left = None
         self.sprite_right = None
+        self.frame = 4
         if self.type == Bullet.LIVE:
             self.sprite_left = Bullet.sprite_left
             self.sprite_right = Bullet.sprite_right
         else:
             self.sprite_left = Bullet.blank_sprite_left
             self.sprite_right = Bullet.blank_sprite_right
+            self.frame = 5
         self.image = self.sprite[self.currentFrame]
         self.rect = self.image.get_rect()
         self.rect.midleft = (300, 270)
@@ -74,7 +76,7 @@ class Bullet:
         Updates the bullet position. Gamemanager only calls update on bullets that have been fired. 
         '''
         if self.isFired:
-            if self.timer >= 4:
+            if self.timer >= self.frame:
             # self.rect.x += self.speed
             # self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
             # self.rect.topleft = self.exact_pos
