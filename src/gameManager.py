@@ -85,7 +85,7 @@ class GameManager:
                 self.target.shot(bullet)
 
                 # If fired at opponent, lose turn
-                if (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE):
+                if (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets)):
                     self.turn = not self.turn
                     self.gotItem = False
             
