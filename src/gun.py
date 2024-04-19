@@ -160,12 +160,12 @@ class Gun:
 
                   
 
-    def draw(self):
+    def draw(self, death_time):
         '''
         Draw the gun on the main game window
         '''
         self.window.blit(self.image, self.rect)
-        if self.displaying:
+        if self.displaying and not death_time:
             self.displayingTimer += 1
             if self.displayingTimer > 150:
                 self.fading = True

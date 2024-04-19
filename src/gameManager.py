@@ -145,7 +145,7 @@ class GameManager:
                 bullet.draw()
             for itemframe, rect in self.itemframes:
                 self.window.blit(itemframe, rect)
-            self.gun.draw()
+            self.gun.draw(self.death_time)
             current_player = self.players[self.turn]
             if current_player.health > 0:
                 pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)

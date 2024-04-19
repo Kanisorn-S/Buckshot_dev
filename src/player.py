@@ -120,7 +120,8 @@ class Player:
         '''     
         if bullet.type == Bullet.LIVE:
             if self.disrepair:
-                self.health -= 99999999999
+                self.health = 0
+                self.isShot = True
             else:
                 self.health -= bullet.damage
                 bullet.aiming = self.id
@@ -139,7 +140,7 @@ class Player:
                 explosionChannel.play(explosion)
                 self.isShot = False
         if self.health <= 0:
-            explosionChannel.set_volume(0.5)
+            explosionChannel.set_volume(0.8)
             self.y_speed = 10
         self.timer += 1
         if self.evading:
