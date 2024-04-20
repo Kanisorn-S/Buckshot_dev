@@ -25,9 +25,7 @@ def rule_menu() -> int:
     window = pg.display.get_surface()
     backToMenuButton = pw.CustomButton(window, (300, 300), 'images/exit.png')
     backToMenuButton.setCenteredLoc((300, 335))
-    text = pw.DisplayText(window, (20, 20), raw_text, textColor = 'white', fontName = 'comicsans', fontSize = 12)
-    text.setCenteredLoc((300, 150))
-    scrollText = ScrollText(window, text, 200)
+    scrollText = ScrollText(window, raw_text, (500, 200), (20, 20))
     
     while True:
         for event in pg.event.get():
