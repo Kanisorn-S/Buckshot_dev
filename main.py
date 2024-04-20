@@ -9,6 +9,7 @@ from src.player import Player
 from src.gun import Gun
 from src.starting import starting_menu
 from src.ending import ending_menu
+from src.rules import rule_menu
 
 
 # Set const parameters
@@ -28,7 +29,7 @@ clock = pg.time.Clock()
 pg.mixer.init()
 startMenuMusic = pg.mixer.Sound('sounds/record-online-voice-recorder_kIwejRI.mp3')
 gameMusic = pg.mixer.Sound('sounds/Undertale_OST__095_-_Bring_It_In_Guys.mp3')
-endMusic = pg.mixer.Sound('sounds\Victory Crew.mp3')
+endMusic = pg.mixer.Sound('sounds/Victory Crew.mp3')
 
 startMenuChannel = pg.mixer.Channel(0)
 gameChannel = pg.mixer.Channel(1)
@@ -76,6 +77,8 @@ while True:
             endChannel.play(endMusic, loops = 0, fade_ms = 1000)
             endStarted = True
         state = ending_menu(gameManager)
+    elif state == 3: # Rule Menu
+        state = rule_menu()
     else:
         if not gameStarted:
             # Initialize GameManager

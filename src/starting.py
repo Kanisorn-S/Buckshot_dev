@@ -79,7 +79,9 @@ def starting_menu() -> int:
     clock = pg.time.Clock()
     window = pg.display.get_surface()
     startButton = pw.CustomButton(window, (300, 300), 'images/start_button.png')
-    startButton.setCenteredLoc((300, 250))
+    startButton.setCenteredLoc((300, 200))
+    rulesButton = pw.CustomButton(window, (300, 300), 'images/rules.png')
+    rulesButton.setCenteredLoc((300, 250))
     logo_rect = logo.get_rect()
     logo_rect.center = (300, 100)
     susses = [Amongus(window, color) for color in sus_images]
@@ -90,6 +92,8 @@ def starting_menu() -> int:
                 sys.exit()
             if startButton.handleEvent(event):
                 return 1
+            if rulesButton.handleEvent(event):
+                return 3
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_f:
                     pg.display.toggle_fullscreen()
@@ -103,6 +107,7 @@ def starting_menu() -> int:
         window.blit(logo, logo_rect)
 
         startButton.draw()
+        rulesButton.draw()
 
         
         pg.display.update()
