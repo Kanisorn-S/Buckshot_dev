@@ -65,6 +65,8 @@ class GameManager:
         '''
         Handle events from the user's input
         '''
+        if self.death_time:
+            return
         if e.type == pg.KEYDOWN: 
         # Spacebar to fire
             if e.key == pg.K_SPACE:
