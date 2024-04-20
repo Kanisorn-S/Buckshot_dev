@@ -47,6 +47,11 @@ class GameManager:
         
         # Timer for death animation
         self.death_time = 0
+
+        self.itemPos1 = [(160, 54), (203, 54), (160, 88), (203, 88), (160, 235), (203, 235), (160, 278), (203, 278)]
+        self.nItems1 = 0
+        self.itemPos2 = [(357, 45), (400, 45), (357, 88), (400, 88), (357, 235), (400, 235), (357, 278), (400, 278)]
+        self.nItems2 = 0
         
     def loadPlayer(self):
         '''
@@ -95,9 +100,14 @@ class GameManager:
         
     def distributeItems(self):
         print("distributing items")
-        for player in self.players:
-            for _ in range(4):
-                self.playersItem[player].append(self.itemStack.getItem())
+        # Player1
+        for i in range(4):
+            self.playersItem[self.players[0]].append((self.nItems1 + i, self.itemStack.getItem()))
+        self.nItems1 += 4
+        # Player2
+        for j in range(4):
+            self.playersItem[self.players[1]].append((self.nItems2 + j, self.itemStack.getItem()))
+        self.nItems2 += 4
 
     def update(self):
         '''
@@ -143,6 +153,16 @@ class GameManager:
             current_player = self.players[self.turn]
             if current_player.health > 0:
                 pg.draw.rect(self.window, 'green', current_player.rect, 2, border_radius = 5)
+            # Player 1
+            for i, item in self.playersItem[self.players[0]]:
+                item.setLoc(self.itemPos1[i])
+                item.draw()
+            # Player 2 
+            for j, item in self.playersItem[self.players[1]]:
+                print(j, item)
+                item.setLoc(self.itemPos2[j])
+                item.draw()
+
         else:
             # show winning screen with victor at the center
             print(f"The winner is {self.winner.name}")

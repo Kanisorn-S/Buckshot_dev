@@ -19,21 +19,21 @@ class ItemStack():
         '''
         items = deque()
         for i in range(nitems):
-            itemType = random.randint(0, 4) 
+            itemType = random.randint(0, 6) 
             if itemType == 0:
-                items.append(Heal())
+                items.append(Heal(self.window))
             elif itemType == 1:
-                items.append(PotOfGreed())
+                items.append(PotOfGreed(self.window))
             elif itemType == 2:
-                items.append(SuperCharger())
+                items.append(SuperCharger(self.window))
             elif itemType == 3:
-                items.append(GNDrive())
+                items.append(GNDrive(self.window))
             elif itemType == 4:
-                items.append(DemonCore())
+                items.append(DemonCore(self.window))
             elif itemType == 5:
-                items.append(AccessCard())
+                items.append(AccessCard(self.window))
             elif itemType == 6:
-                items.append(Lasso())
+                items.append(Lasso(self.window))
 
         return items
     

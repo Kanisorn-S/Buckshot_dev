@@ -3,12 +3,10 @@ from pygame.locals import *
 import pygwidgets as pw
 
 class Item(pw.CustomButton):
-    def __init__(self, window, loc, image):
-        super().__init__(window, loc, image)
+    def __init__(self, window, image):
+        super().__init__(window, (0, 0), image)
         self.isActive = True
-        self.image = None  # Placeholder for the item's image
-        self.rect = None   # Placeholder for the item's rectangular area
-        self.effect = None  # Placeholder for the effect the item has when used
+
     
     def usedItem(self, player, gun):
         pass
@@ -17,19 +15,14 @@ class Item(pw.CustomButton):
         pass
         #update the state
 
-    def draw(self, screen):
-        #show on screen
-        if self.isActive:
-            screen.blit(self.image, self.rect)
 
 
 class PotOfGreed(Item):
-    pot_of_greed = 'images/pot_of_greed'
-    def __init__(self, window, loc):
-        super().__init__(window, loc, PotOfGreed.pot_of_greed)
+    pot_of_greed = 'images/pot_of_greed.png'
+    def __init__(self, window):
+        super().__init__(window, PotOfGreed.pot_of_greed)
         self.effect = "Draw 2 cards"
-        self.image = pg.image.load("pot_of_greed.png")  # Load image for Pot of Greed
-        self.rect = self.image.get_rect()
+
 
     def usedItem(self, Player, gun):
         #draw 2 items
@@ -39,11 +32,10 @@ class PotOfGreed(Item):
 
 class SuperCharger(Item):
     power_amp = 'images/power_amp.png'
-    def __init__(self, window, loc):
-        super().__init__(window, loc, SuperCharger.power_amp)
+    def __init__(self, window):
+        super().__init__(window, SuperCharger.power_amp)
         self.effect = "Next shot deals 2 damage"
-        self.image = pg.image.load("super_charger.png")  # Load image for Super Charger
-        self.rect = self.image.get_rect()
+
 
     def usedItem(self, player, gun):
        #increase bullet damage
@@ -52,12 +44,11 @@ class SuperCharger(Item):
 
 
 class GNDrive(Item):
-    evasiveness = 'imgaes/evasiveness.png'
-    def __init__(self, window, loc):
-        super().__init__(window, loc, GNDrive.evasiveness)
+    evasiveness = 'images/evasiveness.png'
+    def __init__(self, window):
+        super().__init__(window, GNDrive.evasiveness)
         self.effect = "Increase evasiveness by 0.5 for next shot"
-        self.image = pg.image.load("gn_drive.png")  # Load image for GN Drive
-        self.rect = self.image.get_rect()
+
 
     def usedItem(self, player, gun):
         player.evading = True
@@ -67,11 +58,9 @@ class GNDrive(Item):
 
 class DemonCore(Item):
     skip = 'images/skip.png'
-    def __init__(self, window, loc):
-        super().__init__(window, loc, DemonCore.skip)
+    def __init__(self, window):
+        super().__init__(window, DemonCore.skip)
         self.effect = "Skip opponent's turn (once per turn)"
-        self.image = pg.image.load("demon_core.png")  # Load image for Demon Core
-        self.rect = self.image.get_rect()
         self.used = False
 
     def usedItem(self, player, gun):
@@ -87,11 +76,8 @@ class DemonCore(Item):
 
 class Heal(Item):
     heal = 'images/heal.png'
-    def __init__(self, window, loc):
-        super().__init__()
-        self.effect = "Restore one healthy heart to user"
-        self.image = pg.image.load("crewmate.png")  # Load image for Crewmate
-        self.rect = self.image.get_rect()
+    def __init__(self, window):
+        super().__init__(window, Heal.heal)
 
     def usedItem(self, player, gun):
         # restore healty heart to player
@@ -101,11 +87,9 @@ class Heal(Item):
 
 
 class AccessCard(Item):
-    def __init__(self, window, loc):
-        super().__init__()
-        self.effect = "Skip next shot and reveal bullet type"
-        self.image = pg.image.load("access_card.png")  # Load image for Access Card
-        self.rect = self.image.get_rect()
+    reload = 'images/reload.png'
+    def __init__(self, window):
+        super().__init__(window, AccessCard.reload)
 
     def usedItem(self, player, gun):
         #skip next shot and show that bullet type
@@ -114,11 +98,9 @@ class AccessCard(Item):
 
 
 class Lasso(Item):
-    def __init__(self, window, loc):
-        super().__init__()
-        self.effect = "Take away opponent's item"
-        self.image = pg.image.load("lasso.png")  # Load image for Lasso
-        self.rect = self.image.get_rect()
+    steal = 'images/steal.png'
+    def __init__(self, window):
+        super().__init__(window, Lasso.steal)
 
     def usedItem(self, player, gun):
         #take away one item on opponent side and destroy it
