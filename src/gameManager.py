@@ -48,9 +48,11 @@ class GameManager:
         # Timer for death animation
         self.death_time = 0
 
-        self.itemPos1 = [(160, 54), (203, 54), (160, 88), (203, 88), (160, 235), (203, 235), (160, 278), (203, 278)]
+        self.itemPos1 = [(160, 45), (203, 45), (160, 88), (203, 88), (160, 235), (203, 235), (160, 278), (203, 278)]
+        self.itemPos1 = [(w , h + 5) for w, h in self.itemPos1]
         self.nItems1 = 0
         self.itemPos2 = [(357, 45), (400, 45), (357, 88), (400, 88), (357, 235), (400, 235), (357, 278), (400, 278)]
+        self.itemPos2 = [(w + 5, h + 5) for w, h in self.itemPos2]
         self.nItems2 = 0
         
     def loadPlayer(self):
@@ -159,7 +161,6 @@ class GameManager:
                 item.draw()
             # Player 2 
             for j, item in self.playersItem[self.players[1]]:
-                print(j, item)
                 item.setLoc(self.itemPos2[j])
                 item.draw()
 
