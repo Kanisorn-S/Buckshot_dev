@@ -40,6 +40,7 @@ class ItemStack():
                 items.append(Item())
                 pass
                 # items.append(Skip())
+
         return items
     
     def getItem(self) -> Item:
@@ -54,4 +55,5 @@ class ItemStack():
         Shuffle the item stack
         '''
         # TODO 
+        random.shuffle(self.items)
         pass
