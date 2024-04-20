@@ -1,22 +1,23 @@
 import pygame
 
-SCREEN_WIDTH = 660
-SCREEN_HEIGHT = 480
 
 GRAY = (197,194,197)
 BLUE = (0,0,255)
 WHITE = (255,255,255)
 
 class ScrollBar(object):
-    def __init__(self,image_height):
+    def __init__(self,window, image_height):
+        self.window = window
+        self.width = window.get_width()
+        self.height = window.get_height()
         self.y_axis = 0
         self.image_height = image_height
         self.change_y = 0
         
-        bar_height = int((SCREEN_HEIGHT - 40) / (image_height / (SCREEN_HEIGHT * 1.0)))
-        self.bar_rect = pygame.Rect(SCREEN_WIDTH - 20,20,20,bar_height)
-        self.bar_up = pygame.Rect(SCREEN_WIDTH - 20,0,20,20)
-        self.bar_down = pygame.Rect(SCREEN_WIDTH - 20,SCREEN_HEIGHT - 20,20,20)
+        bar_height = int((self.height - 40) / (image_height / (self.height * 1.0)))
+        self.bar_rect = pygame.Rect(self.width - 20,20,20,bar_height)
+        self.bar_up = pygame.Rect(self.width - 20,0,20,20)
+        self.bar_down = pygame.Rect(self.width - 20,self.height - 20,20,20)
         
         self.bar_up_image = pygame.image.load("images/up.png").convert()
         self.bar_down_image = pygame.image.load("images/down.png").convert()
@@ -29,12 +30,12 @@ class ScrollBar(object):
         
         if self.y_axis > 0:
             self.y_axis = 0
-        elif (self.y_axis + self.image_height) < SCREEN_HEIGHT:
-            self.y_axis = SCREEN_HEIGHT - self.image_height
+        elif (self.y_axis + self.image_height) < self.height:
+            self.y_axis = self.height - self.image_height
             
-        height_diff = self.image_height - SCREEN_HEIGHT
+        height_diff = self.image_height - self.height
         
-        scroll_length = SCREEN_HEIGHT - self.bar_rect.height - 40
+        scroll_length = self.height - self.bar_rect.height - 40
         bar_half_lenght = self.bar_rect.height / 2 + 20
         
         if self.on_bar:
@@ -42,8 +43,8 @@ class ScrollBar(object):
             self.bar_rect.y = pos[1] - self.mouse_diff
             if self.bar_rect.top < 20:
                 self.bar_rect.top = 20
-            elif self.bar_rect.bottom > (SCREEN_HEIGHT - 20):
-                self.bar_rect.bottom = SCREEN_HEIGHT - 20
+            elif self.bar_rect.bottom > (self.height - 20):
+                self.bar_rect.bottom = self.height - 20
             
             self.y_axis = int(height_diff / (scroll_length * 1.0) * (self.bar_rect.centery - bar_half_lenght) * -1)
         else:
@@ -77,8 +78,9 @@ class ScrollBar(object):
             elif event.key == pygame.K_DOWN:
                 self.change_y = 0
                 
-    def draw(self,screen):
-        pygame.draw.rect(screen,GRAY,self.bar_rect)
+    def draw(self):
+        print("drawing")
+        pygame.draw.rect(self.window,GRAY,self.bar_rect)
         
-        screen.blit(self.bar_up_image,(SCREEN_WIDTH - 20,0))
-        screen.blit(self.bar_down_image,(SCREEN_WIDTH - 20,SCREEN_HEIGHT - 20))
+        # self.window.blit(self.bar_up_image,(self.width - 20,0))
+        # self.window.blit(self.bar_down_image,(self.width - 20,self.height - 20))

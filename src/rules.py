@@ -5,7 +5,7 @@ import sys
 import random
 from src.player import Player
 from src.gameManager import GameManager
-from src.scrollbar import ScrollBar
+from src.new_scrollbar import ScrollText
 
 # Set const parameters
 WIDTH = 600
@@ -26,7 +26,8 @@ def rule_menu() -> int:
     backToMenuButton = pw.CustomButton(window, (300, 300), 'images/exit.png')
     backToMenuButton.setCenteredLoc((300, 335))
     text = pw.DisplayText(window, (20, 20), raw_text, textColor = 'white', fontName = 'comicsans', fontSize = 12)
-    text.setCenteredLoc((300, 100))
+    text.setCenteredLoc((300, 150))
+    scrollText = ScrollText(window, text, 200)
     
     while True:
         for event in pg.event.get():
@@ -38,14 +39,14 @@ def rule_menu() -> int:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_f:
                     pg.display.toggle_fullscreen()
-        
+            scrollText.handleEvent(event)
             
+        scrollText.update()
 
         window.blit(background, (0, 0))
 
-        
+        scrollText.draw()
         backToMenuButton.draw()
-        text.draw()
         
         pg.display.update()
         clock.tick(60)
