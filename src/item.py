@@ -28,16 +28,17 @@ class Item():
             screen.blit(self.image, self.rect)
 
 
-class PotOfGreed(Item):
+class PotOfGreed(Item, Player):
     def __init__(self):
         super().__init__()
         self.effect = "Draw 2 cards"
         self.image = pg.image.load("pot_of_greed.png")  # Load image for Pot of Greed
         self.rect = self.image.get_rect()
 
-    def usedItem(self, player, gun):
-        # Implement the functionality of Pot of Greed
-        pass
+    def usedItem(self, Player, gun):
+        #draw 2 items
+        self.heath += 1
+        
 
 
 class SuperCharger(Item):
@@ -48,7 +49,9 @@ class SuperCharger(Item):
         self.rect = self.image.get_rect()
 
     def usedItem(self, player, gun):
-        # Implement the functionality of Super Charger
+       #increase bullet damage
+       gun.damage += 2 
+       # one turn
         pass
 
 
@@ -60,7 +63,8 @@ class GNDrive(Item):
         self.rect = self.image.get_rect()
 
     def usedItem(self, player, gun):
-        # Implement the functionality of GN Drive
+        player.evading = True
+       #increase evasiveness
         pass
 
 
@@ -70,10 +74,17 @@ class DemonCore(Item):
         self.effect = "Skip opponent's turn (once per turn)"
         self.image = pg.image.load("demon_core.png")  # Load image for Demon Core
         self.rect = self.image.get_rect()
+        self.used = False
 
     def usedItem(self, player, gun):
-        # Implement the functionality of Demon Core
-        pass
+        if self.used == True:
+            #draw new casd
+            pass
+        
+        else:
+            #skip opponent 1  turn
+            pass
+
 
 
 class Crewmate(Item):
@@ -84,7 +95,9 @@ class Crewmate(Item):
         self.rect = self.image.get_rect()
 
     def usedItem(self, player, gun):
-        # Implement the functionality of Crewmate
+        # restore healty heart to player
+        player.heath += 2
+        
         pass
 
 
@@ -96,7 +109,8 @@ class AccessCard(Item):
         self.rect = self.image.get_rect()
 
     def usedItem(self, player, gun):
-        # Implement the functionality of Access Card
+        #skip next shot and show that bullet type
+        gun.skip_next_shot = True
         pass
 
 
@@ -108,5 +122,13 @@ class Lasso(Item):
         self.rect = self.image.get_rect()
 
     def usedItem(self, player, gun):
-        # Implement the functionality of Lasso
+        #take away one item on opponent side and destroy it
+        if player.opponent:
+            if player.opponent.item_stack:
+                taken_item = player.opponent.item_stack.pop()
+                print("Player {} used Lasso! They took away {} from their opponent.".format(player.name, taken_item))
+            else:
+                print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
+        else:
+            print("Player {} used Lasso! But there is no opponent to take an item from.".format(player.name))
         pass
