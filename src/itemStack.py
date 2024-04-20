@@ -2,7 +2,7 @@ import pygame as pg
 from pygame.locals import *
 import random
 from collections import deque
-from src.item import Item 
+from src.item import *
 
 class ItemStack():
     def __init__(self, window: pg.Surface, nitems: int):
@@ -21,25 +21,19 @@ class ItemStack():
         for i in range(nitems):
             itemType = random.randint(0, 4) 
             if itemType == 0:
-                items.append(Item())
-                pass 
-                # items.append(Heal())
+                items.append(Heal())
             elif itemType == 1:
-                items.append(Item())
-                pass 
-                # items.append(PotOfGreed())
+                items.append(PotOfGreed())
             elif itemType == 2:
-                items.append(Item())
-                pass
-                # items.append(PowerAmp())
+                items.append(SuperCharger())
             elif itemType == 3:
-                items.append(Item())
-                pass
-                # items.append(Reload())
+                items.append(GNDrive())
             elif itemType == 4:
-                items.append(Item())
-                pass
-                # items.append(Skip())
+                items.append(DemonCore())
+            elif itemType == 5:
+                items.append(AccessCard())
+            elif itemType == 6:
+                items.append(Lasso())
 
         return items
     
