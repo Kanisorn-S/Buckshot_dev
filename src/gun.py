@@ -4,6 +4,7 @@ from collections import deque
 from src.player import Player
 from src.bullet import Bullet
 
+# Initialize mixer for music and sound effects
 pg.mixer.init()
 laser = pg.mixer.Sound('sounds\laser-104024.mp3')
 laserChannel = pg.mixer.Channel(0)
@@ -56,10 +57,9 @@ class Gun:
                 self.live += 1
             else:
                 self.blank += 1
-        self.hit = False
-        self.phlive = self.live
-        self.phblank = self.blank
+
         
+        # Bullet display and animation
         self.bulletHolder = pg.Rect(300, 300, (6 * Gun.IMG_W) + 10, 50)
         self.bulletHolder.center = (300, 375 / 2)
         self.displaying = True
@@ -71,6 +71,7 @@ class Gun:
         self.dx = 5
         self.live_img = Gun.LIVE_IMG
         self.blank_img = Gun.BLANK_IMG
+        self.first = True
 
     def load(self):
         '''
@@ -114,9 +115,9 @@ class Gun:
         self.turning_left = True
         self.target = 0
             
-    def update(self):
+    def update(self) -> int:
         '''
-        Update the attributes of the gun, run turning sequence
+        Update the attributes of the gun, run turning sequence. Return 1 if reload, 0 by default
         '''
         if self.fading:
             self.fadeUpdate += 1
@@ -130,10 +131,6 @@ class Gun:
         for bullet in self.bullets:
             bullet.aiming = self.target
             bullet.update()
-        if self.hit:
-            self.live = self.phlive
-            self.blank = self.phblank
-            self.hit = False
         if len(self.bullets) == 0:
             self.bullets = self.load()
             self.live = 0
@@ -150,8 +147,8 @@ class Gun:
             self.blur_sprite = 0
             self.live_img = Gun.LIVE_IMG
             self.blank_img = Gun.BLANK_IMG
+            return 1
         if self.turning_left:
-            print(self.current_sprite)
             self.current_sprite += 1
             if self.current_sprite >= (len(self.sprites) - 1):
                 self.turning_left = False
@@ -161,6 +158,10 @@ class Gun:
             if self.current_sprite <= 0:
                 self.turning_right = False
             self.image = self.sprites[self.current_sprite]
+        if self.first:
+            self.first = False
+            return 1
+        return 0
 
 
                   
@@ -190,6 +191,3 @@ class Gun:
                 rect.topleft = (x + (Gun.IMG_W * self.live) + (i * Gun.IMG_W) + factor, y)
                 self.window.blit(self.blank_img, rect)
             
-
-    # Have an instance variable to keep track of the state of showing or hiding bullets
-    # Fade bullets pic in/out

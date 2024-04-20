@@ -10,14 +10,13 @@ from src.gun import Gun
 from src.starting import starting_menu
 from src.ending import ending_menu
 
-print("Hello World")
 
 # Set const parameters
 WIDTH = 600
 HEIGHT = 375
 FRAMES_PER_SECOND = 60
 NPLAYER = 2
-NBULLETS = 5
+NBULLETS = 6
 
 # Initialize pygame
 pg.init()
@@ -25,6 +24,7 @@ window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
 pg.display.set_caption("Buckshot Roulette")
 clock = pg.time.Clock()
 
+# Initialize mixer for music and sound effects
 pg.mixer.init()
 startMenuMusic = pg.mixer.Sound('sounds/record-online-voice-recorder_kIwejRI.mp3')
 gameMusic = pg.mixer.Sound('sounds/Undertale_OST__095_-_Bring_It_In_Guys.mp3')
@@ -34,15 +34,17 @@ startMenuChannel = pg.mixer.Channel(0)
 gameChannel = pg.mixer.Channel(1)
 endChannel = pg.mixer.Channel(2)
 
+gameChannel.set_volume(0.08)
+startMenuChannel.set_volume(0.1)
+endChannel.set_volume(0.1)
+
 # Load necessary images
 background = pg.image.load('images/background.jpg')
-gun = pg.image.load('images/evasiveness.png')
 heal = pg.image.load('images/heal.png')
 heal = pg.transform.scale_by(heal, 0.05)
 pot_of_greed = pg.image.load('images/pot_of_greed.png')
 power_amp = pg.image.load('images/power_amp.png')
 skip = pg.image.load('images/skip.png')
-itemframe = pg.image.load('images/itembox.png')
 player1_full = pg.image.load('images/player1_full.png')
 player1_red = pg.image.load('images/player1_red.png')
 player1_eva = pg.image.load('images/player1_eva.png')
@@ -52,19 +54,16 @@ player2_eva = pg.image.load("images/player2_eva.png")
 player_pics = [player2_full, player2_red, player2_eva, player1_full, player1_red, player1_eva]
 
 
-
+# Application state for different menu
 state = 0
 started = False
 gameStarted = False
 endStarted = False
 
-gameChannel.set_volume(0.08)
-startMenuChannel.set_volume(0.1)
-endChannel.set_volume(0.1)
+
 # Main program loop
 while True:
     # check events
-    print(state)
     if state == 0: # Starting Menu
         if not started:
             endChannel.fadeout(3000)
@@ -80,7 +79,7 @@ while True:
     else:
         if not gameStarted:
             # Initialize GameManager
-            gameManager = GameManager(window, player_pics, 6, gun, itemframe)
+            gameManager = GameManager(window, player_pics, NBULLETS)
             started = False
             endStarted = False
             startMenuChannel.fadeout(3000)

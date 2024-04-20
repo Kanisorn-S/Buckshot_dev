@@ -2,6 +2,7 @@ import pygame as pg
 from src.bullet import Bullet
 from pygame.locals import *
 import math
+import random
 
 pg.mixer.init()
 explosion = pg.mixer.Sound('sounds\Explosion sfx.mp3')
@@ -42,7 +43,8 @@ class Player:
         self.id = id
         self.name = name
         self.evading = False
-        self.canHeal = True
+        self.evasiveness = 0
+        self.disrepair = False
         
         # Wobble full effect
         w1 = pg.transform.rotate(self.image_full, 4)
@@ -107,7 +109,7 @@ class Player:
         # Items
         self.items = []
         
-        self.disrepair = False
+
 
     def shot(self, bullet: Bullet):
         '''
@@ -119,6 +121,9 @@ class Player:
         live rounds or not
         '''     
         if bullet.type == Bullet.LIVE:
+            hit = random.choices([0, 1], [self.evasiveness, 1 - self.evasiveness], k = 1)[0]
+            if not hit:
+                return
             if self.disrepair:
                 self.health = 0
                 self.isShot = True

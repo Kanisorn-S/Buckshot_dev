@@ -5,11 +5,13 @@ from collections import deque
 from src.item import Item 
 
 class ItemStack():
-    def __init__(self, nitems: int):
+    def __init__(self, window: pg.Surface, nitems: int):
         '''
         Initialize a stack of item to draw from
         '''
+        self.window = window
         self.items = self.loadItem(nitems)
+
 
     def loadItem(self, nitems: int) -> deque:
         '''
@@ -46,7 +48,6 @@ class ItemStack():
         '''
         # TODO
         return self.items.pop()
-        pass
 
     def shuffle(self):
         '''

@@ -6,38 +6,30 @@ from src.item import Item
 from src.itemStack import ItemStack
 from src.bullet import Bullet
 
+itemframe = pg.image.load('images/itembox.png')
 
 class GameManager:
-    def __init__(self, window : pg.Surface, players_pic: list[pg.Surface], nbullets: int, gun : pg.Surface, itemframe: pg.Surface):
+    def __init__(self, window : pg.Surface, players_pic: list[pg.Surface], nbullets: int):
         '''
         Initialize the gameManager.
         Input : window - The main display window of the game
                 players_pic - A list of players' pic in different states
                 nbullets - The number of bullets in the gun
-                gun - A loaded picture of the cannon
-                itemframe - A loaded picture of the itemframe
-        Attributes : locations - A list of coordinates of the center of each players
-                     playersInfo - A dictionary where the key is the player and the value is the player's health
-                     players - A list of players
-                     gun - The gun object 
-                     turn - An int that is the index of the player whose turn it currently is
-                     winner - None by default. It is set to a player when that player is the last man standing
-                     bullets_on_screen - A list of bullets that is needed to be update
-                     itemframes - A list of pg.Surface of itemframe
-                     target - The player that the gun is currently aiming at
         '''
         self.window = window
         self.nplayers = 2
         self.nbullets = nbullets
         self.players_pic = players_pic
-        print(self.players_pic)
         self.locations = [(70, 375/2), (530, 375/2)]
         self.players = []
         self.playersInfo = self.loadPlayer()
+        self.playersItem = {player: [] for player in self.players}
         self.gun = Gun(self.window, (330, 460/2), nbullets, self.players)
         self.turn = 0
         self.winner = None
         self.bullets_on_screen = []
+
+        # Itemframes
         self.itemframes = []
         for i in range(4):
             image = pg.transform.scale_by(itemframe, 0.08)
@@ -50,9 +42,10 @@ class GameManager:
         self.target = None
 
         # Item management
-        self.itemStack = ItemStack(100)
+        self.itemStack = ItemStack(self.window, 100)
         self.gotItem = False
         
+        # Timer for death animation
         self.death_time = 0
         
     def loadPlayer(self):
@@ -84,7 +77,7 @@ class GameManager:
                 bullet.fired()
                 self.target.shot(bullet)
 
-                # If fired at opponent, lose turn
+                # If fired at opponent or fired the last bullet, lose turn
                 if (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets)):
                     self.turn = not self.turn
                     self.gotItem = False
@@ -98,11 +91,11 @@ class GameManager:
             if e.key == pg.K_f:
                 pg.display.toggle_fullscreen()
         
-        print(self.players[self.turn].items)
-        for item in self.players[self.turn].items:
-            print(self.players[self.turn].items)
-            if item.handleEvent(e):
-                item.useItem(self.players[self.turn], self.gun)
+    def distributeItems(self):
+        print("distributing items")
+        for player in self.players:
+            for _ in range(4):
+                self.playersItem[player].append(self.itemStack.getItem())
 
     def update(self):
         '''
@@ -112,9 +105,6 @@ class GameManager:
         Check if there's only one player standing, set them as the winner.
         Update the gun and bullets on screen.
         '''
-        if not self.gotItem:
-            self.players[self.turn].items.append(self.itemStack.getItem())
-            self.gotItem = True
         for player in self.players:
             player.update()
             self.playersInfo[player] = player.health
@@ -129,7 +119,9 @@ class GameManager:
             #     player.isTurn = True
 
         
-        self.gun.update()
+        reload = self.gun.update()
+        if reload:
+            self.distributeItems()
         for bullet in self.bullets_on_screen:
             bullet.update()
 
