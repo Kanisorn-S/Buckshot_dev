@@ -22,9 +22,6 @@ class Item(pw.CustomButton):
     
     def usedItem(self, player, gun):
         print("Item is used")
-    
-    def handleEvent(self, event):
-        return False
 
     def update(self):
         pass
