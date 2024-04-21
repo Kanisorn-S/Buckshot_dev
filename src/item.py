@@ -37,10 +37,9 @@ class SuperCharger(Item):
         self.effect = "Next shot deals 2 damage"
 
 
-    #def usedItem(self, player, gun):
-       #increase bullet damage
-       #gun.damage += 2 
-       # one turn
+    def usedItem(self, player, gun):
+       # increase bullet damage
+       gun.bullets[len(gun.bullets) - 1].damage = 2
 
 
 class GNDrive(Item):
@@ -50,10 +49,10 @@ class GNDrive(Item):
         self.effect = "Increase evasiveness by 0.5 for next shot"
 
 
-    #def usedItem(self, player, gun):
-        #player.evading = True
-       #increase evasiveness
-        #pass
+    def usedItem(self, player, gun):
+        # player evasiveness to 0.5
+        player.evading = True
+        player.evasiveness = 0.5
 
 
 class DemonCore(Item):
@@ -79,11 +78,10 @@ class Heal(Item):
     def __init__(self, window):
         super().__init__(window, Heal.heal)
 
-    #def usedItem(self, player, gun):
+    def usedItem(self, player, gun):
         # restore healty heart to player
-        #player.health += 1
+        player.health += 1
         
-        #pass
 
 
 class AccessCard(Item):
