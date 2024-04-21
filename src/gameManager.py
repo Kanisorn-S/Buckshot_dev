@@ -43,7 +43,6 @@ class GameManager:
 
         # Item management
         self.itemStack = ItemStack(self.window, 100)
-        self.gotItem = False
         
         # Timer for death animation
         self.death_time = 0
@@ -56,6 +55,9 @@ class GameManager:
         self.itemPos2 = [(w + 5, h + 5) for w, h in self.itemPos2]
         self.nItems2 = 0
         self.slot2 = {i:0 for i in range(8)}
+
+        self.free_shot = False
+        self.lock = False
         
     def loadPlayer(self):
         '''
@@ -89,9 +91,12 @@ class GameManager:
                 self.target.shot(bullet)
 
                 # If fired at opponent or fired the last bullet, lose turn
-                if (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets)):
+                if ((self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets))) and (not self.free_shot or self.lock):
                     self.turn = not self.turn
-                    self.gotItem = False
+                    self.lock = False
+                
+                self.free_shot = False
+                self.lock = True
             
             # Change aim of the gun
             elif e.key == pg.K_RIGHT:
@@ -112,6 +117,8 @@ class GameManager:
                     self.slot2[i] = 0
                 if result == 0: # Pot of greed
                     self.distributeItems(id = self.turn, amount = 2)
+                elif result == 1: # Skip
+                    self.free_shot = True
         
     def distributeItems(self, id = 2, amount = 4):
         print("distributing items")

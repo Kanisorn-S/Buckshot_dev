@@ -62,14 +62,8 @@ class DemonCore(Item):
         self.effect = "Skip opponent's turn (once per turn)"
         self.used = False
 
-    #def usedItem(self, player, gun):
-        #if self.used == True:
-            #draw new casd
-            #pass
-        
-        #else:
-            #skip opponent 1  turn
-            #pass
+    def usedItem(self, player, gun):
+        return 1
 
 
 
