@@ -41,11 +41,6 @@ endChannel.set_volume(0.3)
 
 # Load necessary images
 background = pg.image.load('images/background.jpg')
-heal = pg.image.load('images/heal.png')
-heal = pg.transform.scale_by(heal, 0.05)
-pot_of_greed = pg.image.load('images/pot_of_greed.png')
-power_amp = pg.image.load('images/power_amp.png')
-skip = pg.image.load('images/skip.png')
 player1_full = pg.image.load('images/player1_full.png')
 player1_red = pg.image.load('images/player1_red.png')
 player1_eva = pg.image.load('images/player1_eva.png')
