@@ -11,7 +11,7 @@ class ItemStack():
         '''
         self.window = window
         # weights of [Heal, PotOfGreed, SuperCharger, GNDrive, DemonCore, AccessCard, Lasso]
-        self.weights = [7/100, 7/100, 7/100, 7/100, 7/100, 7/100, 7/100]
+        self.weights = [16/100, 4/100, 16/100, 16/100, 16/100, 16/100, 16/100]
         self.items = self.loadItem(nitems)
 
 
