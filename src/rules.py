@@ -5,7 +5,7 @@ import sys
 import random
 from src.player import Player
 from src.gameManager import GameManager
-from src.new_scrollbar import ScrollText
+from src.scrollText import ScrollText
 from src.raw_text import RAW_TEXT
 
 # Set const parameters

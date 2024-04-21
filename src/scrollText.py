@@ -17,6 +17,7 @@ class ScrollText:
         self.w, self.h = size
         self.x, self.y = loc
         self.scroll = 0
+        self.bar_scroll = 0
         self.surface = pg.Surface((self.w + 30, self.h))
         self.surface.set_colorkey('black')
         self.text = text
@@ -33,12 +34,13 @@ class ScrollText:
             # event.y is 1 when scrolling up, -1 when scrolling down
             if not self.rect.collidepoint(pg.mouse.get_pos()):
                 print(event.y)
-                self.scroll = min(self.scroll + event.y * self.speed, 0)
+                self.scroll = max(-560, min(self.scroll + event.y * self.speed, 0))
+                self.bar_scroll = -self.scroll * (self.h - 40) / 560
 
     
     def update(self):
 
-        self.slider_rect.top = max(-self.scroll, 0)
+        self.slider_rect.top = min(max(self.bar_scroll, 0), self.h - 40)
 
     def draw(self):
         self.surface.fill('black')
