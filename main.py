@@ -19,10 +19,12 @@ FRAMES_PER_SECOND = 60
 NPLAYER = 2
 NBULLETS = 6
 
+heal = pg.image.load('images/heal.png')
 # Initialize pygame
 pg.init()
 window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
 pg.display.set_caption("Buckshot Roulette")
+pg.display.set_icon(heal)
 clock = pg.time.Clock()
 
 # Initialize mixer for music and sound effects

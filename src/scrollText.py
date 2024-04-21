@@ -23,7 +23,7 @@ class ScrollText:
         self.x, self.y = loc
         self.scroll = 0
         self.bar_scroll = 0
-        self.surface = pg.Surface((self.w + 30, self.h))
+        self.surface = pg.Surface((self.w + 30, self.h), RESIZABLE | SCALED)
         self.surface.set_colorkey('black')
         self.text = text
         self.tab_rect = pg.Rect(self.surface.get_width() - 20, 0, 20, self.surface.get_height())
