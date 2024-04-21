@@ -2,7 +2,7 @@
 import pygame as pg
 from pygame.locals import *
 
-class Item():
+class Item:
     def __init__(self):
         self.isActive = True
         self.image = None  # Placeholder for the item's image
@@ -31,10 +31,9 @@ class Item():
                 self.button.draw(screen)
 
 class Button:
-    def __init__(self, x, y, width, height, text, font, action):
-        self.rect = pg.Rect(x, y, width, height)
-        self.text = text
-        self.font = font
+    def __init__(self, x, y, image, action):
+        self.image = image
+        self.rect = self.image.get_rect(topleft=(x, y))
         self.action = action
         self.active = True
 
@@ -49,25 +48,7 @@ class Button:
         pass
 
     def draw(self, screen):
-        color = (0, 255, 0) if self.active else (255, 0, 0)
-        pg.draw.rect(screen, color, self.rect)
-        text_surface = self.font.render(self.text, True, (255, 255, 255))
-        text_rect = text_surface.get_rect(center=self.rect.center)
-        screen.blit(text_surface, text_rect)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        screen.blit(self.image, self.rect)
 
 class PotOfGreed(Item):
     def __init__(self):
@@ -75,12 +56,12 @@ class PotOfGreed(Item):
         self.effect = "Draw 2 cards"
         self.image = pg.image.load("pot_of_greed.png")  
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, Player, gun):
-        #draw 2 items
-        #Itemstack.loadItem(2)
-        
-
+        # Draw 2 items
+        # ItemStack.loadItem(2)
+        pass
 
 class SuperCharger(Item):
     def __init__(self):
@@ -88,13 +69,13 @@ class SuperCharger(Item):
         self.effect = "Next shot deals 2 damage"
         self.image = pg.image.load("super_charger.png")  
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
-       #increase bullet damage
+       # Increase bullet damage
        gun.damage += 2 
-       # one turn
-
-
+       # One turn
+       pass
 
 class GNDrive(Item):
     def __init__(self):
@@ -102,12 +83,11 @@ class GNDrive(Item):
         self.effect = "Increase evasiveness by 50% for next shot"
         self.image = pg.image.load("gn_drive.png")  
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
         player.evading = True
-       #increase evasiveness
-       
-
+       # Increase evasiveness
 
 class DemonCore(Item):
     def __init__(self):
@@ -116,17 +96,15 @@ class DemonCore(Item):
         self.image = pg.image.load("demon_core.png") 
         self.rect = self.image.get_rect()
         self.used = False
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
         if self.used == True:
-            #draw new casd
+            # Draw new card
             pass
-        
         else:
-            #skip opponent 1  turn
+            # Skip opponent's turn
             pass
-
-
 
 class Crewmate(Item):
     def __init__(self):
@@ -134,13 +112,12 @@ class Crewmate(Item):
         self.effect = "Restore one healthy heart to user"
         self.image = pg.image.load("crewmate.png")
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
-        # restore healty heart to player
+        # Restore healthy heart to player
         player.heath += 2
-        
         pass
-
 
 class AccessCard(Item):
     def __init__(self):
@@ -148,12 +125,12 @@ class AccessCard(Item):
         self.effect = "Skip next shot and reveal bullet type"
         self.image = pg.image.load("access_card.png")  
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
-        #skip next shot and show that bullet type
+        # Skip next shot and show bullet type
         gun.skip_next_shot = True
-        
-
+        pass
 
 class Lasso(Item):
     def __init__(self):
@@ -161,17 +138,13 @@ class Lasso(Item):
         self.effect = "Take away opponent's item"
         self.image = pg.image.load("lasso.png")  # Load image for Lasso
         self.rect = self.image.get_rect()
+        self.button = Button(0, 0, self.image, self.usedItem)
 
     def usedItem(self, player, gun):
-        #take away one item on opponent side and destroy it
-        if player.opponent:
-            if player.opponent.item_stack:
-                taken_item = player.opponent.item_stack.pop()
-                print("Player {} used Lasso! They took away {} from their opponent.".format(player.name, taken_item))
-            else:
-                print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
+        # Take away one item from opponent's side and destroy it
+        if player.opponent and player.opponent.item_stack:
+            taken_item = player.opponent.item_stack.pop()
+            print(f"Player {player.name} used Lasso! They took away {taken_item} from their opponent.")
         else:
-            print("Player {} used Lasso! But there is no opponent to take an item from.".format(player.name))
+            print(f"Player {player.name} used Lasso! But there is no item to take from the opponent.")
         pass
-
-
