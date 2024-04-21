@@ -10,6 +10,8 @@ class ItemStack():
         Initialize a stack of item to draw from
         '''
         self.window = window
+        # weights of [Heal, PotOfGreed, SuperCharger, GNDrive, DemonCore, AccessCard, Lasso]
+        self.weights = [7/100 for _ in range(7)]
         self.items = self.loadItem(nitems)
 
 
@@ -19,8 +21,7 @@ class ItemStack():
         '''
         items = deque()
         for i in range(nitems):
-            # itemType = random.randint(0, 6) 
-            itemType = 4
+            itemType = random.choices(range(7), self.weights, k = 1)[0]
             if itemType == 0:
                 items.append(Heal(self.window))
             elif itemType == 1:

@@ -45,7 +45,7 @@ class Gun:
         self.players = players
         
         # Initialize bullets and firing mechanism
-        self.odds = [0, 1] # [blank, live]
+        self.odds = [0.5, 0.5] # [blank, live]
         self.bullets = self.load()
         self.target = 69
         self.turning_left = False
@@ -72,6 +72,12 @@ class Gun:
         self.live_img = Gun.LIVE_IMG
         self.blank_img = Gun.BLANK_IMG
         self.first = True
+        self.discarding = False
+        self.discard = None
+        self.ejectHolder = pg.Rect(300, 300, (Gun.IMG_W) + 10, 50)
+        self.ejectHolder.center = (300, 375 / 2)
+        self.ejectTimer = 0
+        self.eject_img = None
 
     def load(self):
         '''
@@ -114,6 +120,12 @@ class Gun:
             return
         self.turning_left = True
         self.target = 0
+
+    def eject(self):
+        self.ejectTimer = 0
+        self.blur_sprite = 0
+        self.discard = self.bullets.pop()
+        self.discarding = True
             
     def update(self) -> int:
         '''
@@ -128,6 +140,7 @@ class Gun:
                 else:
                     self.fading = False
                     self.displaying = False
+                    self.discarding = False
         for bullet in self.bullets:
             bullet.aiming = self.target
             bullet.update()
@@ -171,6 +184,25 @@ class Gun:
         Draw the gun on the main game window
         '''
         self.window.blit(self.image, self.rect)
+        if self.discarding:
+            bullet = self.discard
+            self.ejectTimer += 1
+            if bullet.type == Bullet.LIVE:
+                self.eject_img = Gun.LIVE_IMG
+            else:
+                self.eject_img = Gun.BLANK_IMG
+
+            if self.ejectTimer > 100:
+                self.fading = True
+                if bullet.type == Bullet.LIVE:
+                    self.eject_img = Gun.LIVE_BLUR[self.blur_sprite]
+                else:
+                    self.eject_img = Gun.BLANK_BLUR[self.blur_sprite]
+            pg.draw.rect(self.window, 'gray', self.ejectHolder, border_radius=5)
+            x = self.ejectHolder.topleft[0] + 5
+            y = self.ejectHolder.topleft[1] + 5
+            factor = self.fading * ((-1) ** (self.fadeUpdate % 2) * self.dx)
+            self.window.blit(self.eject_img, (x + factor, y))
         if self.displaying and not death_time:
             self.displayingTimer += 1
             if self.displayingTimer > 150:

@@ -133,21 +133,23 @@ class GameManager:
                         while self.slot1[stolen_slot] == 0:
                             if j > 6:
                                 break
-                            stolen_slot += 1
+                            stolen_slot = (stolen_slot + 1) % 8
                             j += 1
                         for pair in self.playersItem[self.players[opp]]:
                             if pair[0] == stolen_slot:
                                 self.playersItem[self.players[opp]].remove(pair)
+                                self.slot1[stolen_slot] = 0
                     else:
                         j = 0
                         while self.slot2[stolen_slot] == 0:
                             if j > 6:
                                 break
-                            stolen_slot += 1
+                            stolen_slot = (stolen_slot + 1) % 8
                             j += 1
                         for pair in self.playersItem[self.players[opp]]:
                             if pair[0] == stolen_slot:
                                 self.playersItem[self.players[opp]].remove(pair)
+                                self.slot2[stolen_slot] = 0
                         
         
     def distributeItems(self, id = 2, amount = 4):
