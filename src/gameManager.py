@@ -112,6 +112,8 @@ class GameManager:
                 pg.display.toggle_fullscreen()
         
         for i, item in self.playersItem[self.players[self.turn]]:
+            if self.gun.displaying:
+                return
             if item.handleEvent(e):
                 result = item.usedItem(self.players[self.turn], self.gun)
                 self.playersItem[self.players[self.turn]].remove((i, item))

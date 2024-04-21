@@ -95,7 +95,7 @@ class Player:
 
         self.wobble = self.wobble_full
 
-        explosionChannel.set_volume(0.1)
+        explosionChannel.set_volume(0.3)
         
         # Floating effect
         self.starting_y = loc[1]
