@@ -24,9 +24,9 @@ class PotOfGreed(Item):
         self.effect = "Draw 2 cards"
 
 
-    def usedItem(self, player, gun):
-        #draw 2 items
-        player.heath += 1
+    # def usedItem(self, player, gun):
+    #     #draw 2 items
+    #     player.heath += 1
         
 
 
@@ -37,9 +37,9 @@ class SuperCharger(Item):
         self.effect = "Next shot deals 2 damage"
 
 
-    def usedItem(self, player, gun):
+    #def usedItem(self, player, gun):
        #increase bullet damage
-       gun.damage += 2 
+       #gun.damage += 2 
        # one turn
 
 
@@ -50,10 +50,10 @@ class GNDrive(Item):
         self.effect = "Increase evasiveness by 0.5 for next shot"
 
 
-    def usedItem(self, player, gun):
-        player.evading = True
+    #def usedItem(self, player, gun):
+        #player.evading = True
        #increase evasiveness
-        pass
+        #pass
 
 
 class DemonCore(Item):
@@ -63,14 +63,14 @@ class DemonCore(Item):
         self.effect = "Skip opponent's turn (once per turn)"
         self.used = False
 
-    def usedItem(self, player, gun):
-        if self.used == True:
+    #def usedItem(self, player, gun):
+        #if self.used == True:
             #draw new casd
-            pass
+            #pass
         
-        else:
+        #else:
             #skip opponent 1  turn
-            pass
+            #pass
 
 
 
@@ -79,11 +79,11 @@ class Heal(Item):
     def __init__(self, window):
         super().__init__(window, Heal.heal)
 
-    def usedItem(self, player, gun):
+    #def usedItem(self, player, gun):
         # restore healty heart to player
-        player.heath += 2
+        #player.health += 1
         
-        pass
+        #pass
 
 
 class AccessCard(Item):
@@ -91,10 +91,10 @@ class AccessCard(Item):
     def __init__(self, window):
         super().__init__(window, AccessCard.reload)
 
-    def usedItem(self, player, gun):
+    #def usedItem(self, player, gun):
         #skip next shot and show that bullet type
-        gun.skip_next_shot = True
-        pass
+        #gun.skip_next_shot = True
+        #pass
 
 
 class Lasso(Item):
@@ -102,14 +102,14 @@ class Lasso(Item):
     def __init__(self, window):
         super().__init__(window, Lasso.steal)
 
-    def usedItem(self, player, gun):
-        #take away one item on opponent side and destroy it
-        if player.opponent:
-            if player.opponent.item_stack:
-                taken_item = player.opponent.item_stack.pop()
-                print("Player {} used Lasso! They took away {} from their opponent.".format(player.name, taken_item))
-            else:
-                print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
-        else:
-            print("Player {} used Lasso! But there is no opponent to take an item from.".format(player.name))
-        pass
+    # def usedItem(self, player, gun):
+    #     #take away one item on opponent side and destroy it
+    #     if player.opponent:
+    #         if player.opponent.item_stack:
+    #             taken_item = player.opponent.item_stack.pop()
+    #             print("Player {} used Lasso! They took away {} from their opponent.".format(player.name, taken_item))
+    #         else:
+    #             print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
+    #     else:
+    #         print("Player {} used Lasso! But there is no opponent to take an item from.".format(player.name))
+    #     pass

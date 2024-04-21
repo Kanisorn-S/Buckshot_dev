@@ -51,9 +51,11 @@ class GameManager:
         self.itemPos1 = [(160, 45), (203, 45), (160, 88), (203, 88), (160, 235), (203, 235), (160, 278), (203, 278)]
         self.itemPos1 = [(w , h + 5) for w, h in self.itemPos1]
         self.nItems1 = 0
+        self.slot1 = {i:0 for i in range(8)}
         self.itemPos2 = [(357, 45), (400, 45), (357, 88), (400, 88), (357, 235), (400, 235), (357, 278), (400, 278)]
         self.itemPos2 = [(w + 5, h + 5) for w, h in self.itemPos2]
         self.nItems2 = 0
+        self.slot2 = {i:0 for i in range(8)}
         
     def loadPlayer(self):
         '''
@@ -104,17 +106,49 @@ class GameManager:
             if item.handleEvent(e):
                 item.usedItem(self.players[self.turn], self.gun)
                 self.playersItem[self.players[self.turn]].remove((i, item))
+                if self.turn == 0:
+                    self.slot1[i] = 0
+                else:
+                    self.slot2[i] = 0
         
     def distributeItems(self):
         print("distributing items")
         # Player1
+        full1 = False
+        added1 = 0
+        full2 = False
+        added2 =0
         for i in range(4):
-            self.playersItem[self.players[0]].append((self.nItems1 + i, self.itemStack.getItem()))
-        self.nItems1 += 4
+            slot = (self.nItems1 + i) % 8
+            j = 0
+            while self.slot1[slot]:
+                if j >=7:
+                    full1 = True
+                slot = (slot + 1) % 8
+                j += 1
+            if not full1:
+                self.playersItem[self.players[0]].append((slot, self.itemStack.getItem()))
+                self.slot1[slot] = 1
+                added1 += 1
+            else:
+                break
+        self.nItems1 += added1
         # Player2
-        for j in range(4):
-            self.playersItem[self.players[1]].append((self.nItems2 + j, self.itemStack.getItem()))
-        self.nItems2 += 4
+        for i in range(4):
+            slot = (self.nItems2 + i) % 8
+            j = 0
+            while self.slot2[slot]:
+                if j >=7:
+                    full2 = True
+                slot = (slot + 1) % 8
+                j += 1
+            if not full2:
+                self.playersItem[self.players[1]].append((slot, self.itemStack.getItem()))
+                self.slot2[slot] = 1
+                added2 += 1
+            else:
+                break
+        self.nItems2 += added2
 
     def update(self):
         '''
