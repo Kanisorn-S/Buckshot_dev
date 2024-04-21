@@ -3,10 +3,15 @@ from pygame.locals import *
 import pygwidgets as pw
 import sys
 
-heal = pg.image.load('images/heal.png')
-pot_of_greed = pg.image.load('images/pot_of_greed.png')
-power_amp = pg.image.load('images/power_amp.png')
-skip = pg.image.load('images/skip.png')
+pot_of_greed = pg.image.load('images/rule_pic/pot_of_greed_r.png')
+power_amp = pg.image.load('images/rule_pic/power_amp_r.png')
+gn_drive = pg.image.load('images/rule_pic/evasiveness_r.png')
+skip = pg.image.load('images/rule_pic/skip_r.png')
+heal = pg.image.load('images/rule_pic/heal_r.png')
+access_card = pg.image.load('images/rule_pic/reload_r.png')
+lasso = pg.image.load('images/rule_pic/lasso_r.png')
+rule_pics = [pot_of_greed, power_amp, gn_drive, skip, heal, access_card, lasso]
+rule_pics = [pg.transform.scale(pic, (52, 52)) for pic in rule_pics]
 
 pg.font.init()
 font = pg.font.Font(size = 18)
@@ -34,8 +39,8 @@ class ScrollText:
             # event.y is 1 when scrolling up, -1 when scrolling down
             if not self.rect.collidepoint(pg.mouse.get_pos()):
                 print(event.y)
-                self.scroll = max(-560, min(self.scroll + event.y * self.speed, 0))
-                self.bar_scroll = -self.scroll * (self.h - 40) / 560
+                self.scroll = max(-580, min(self.scroll + event.y * self.speed, 0))
+                self.bar_scroll = -self.scroll * (self.h - 40) / 580
 
     
     def update(self):
@@ -44,9 +49,11 @@ class ScrollText:
 
     def draw(self):
         self.surface.fill('black')
-        pg.draw.rect(self.surface, "gray", self.tab_rect)
-        pg.draw.rect(self.surface, "green", self.slider_rect)
+        pg.draw.rect(self.surface, "lightgray", self.tab_rect, border_radius=3)
+        pg.draw.rect(self.surface, "darkgray", self.slider_rect, border_radius=3)
         self.surface.blit(self.item_surface, (0, self.scroll + 190))
         self.surface.blit(self.text_surface, (0, self.scroll))
+        for i, pic in enumerate(rule_pics):
+            self.surface.blit(pic, (50, self.scroll + 300 + (i * 70)))
         self.window.blit(self.surface, (self.x, self.y))
 
