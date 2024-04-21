@@ -35,6 +35,7 @@ class Player:
         self.image_full = pg.transform.scale_by(images[0], 0.05)
         self.image_red = pg.transform.scale_by(images[1], 0.05)
         self.image_eva = pg.transform.scale_by(images[2], 0.05)
+        self.image_eva = pg.transform.gaussian_blur(self.image_eva, 1)
         self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
@@ -55,7 +56,7 @@ class Player:
         w7 = pg.transform.rotate(self.image_full, -2)
         w8 = pg.transform.rotate(self.image_full, -3)
         w9 = pg.transform.rotate(self.image_full, -4)
-        self.wobble = [w1, w2, w3, w4, self.image_full, w6, w7, w8, w9]
+        self.wobble_full = [w1, w2, w3, w4, self.image_full, w6, w7, w8, w9]
         self.current_wobble = 2
         self.increasing = True
 
@@ -92,6 +93,8 @@ class Player:
         ww9 = pg.transform.rotate(self.winner_image, -4)
         self.wobble_winner = [ww1, ww2, ww3, ww4, self.winner_image, ww6, ww7, ww8, ww9]
 
+        self.wobble = self.wobble_full
+
         explosionChannel.set_volume(0.1)
         
         # Floating effect
@@ -108,6 +111,7 @@ class Player:
 
         # Items
         self.items = []
+
         
 
 
@@ -123,21 +127,23 @@ class Player:
         if bullet.type == Bullet.LIVE:
             hit = random.choices([0, 1], [self.evasiveness, 1 - self.evasiveness], k = 1)[0]
             if not hit:
-                return
-            if self.disrepair:
+                print("Dodged!")
+            elif self.disrepair:
                 self.health = 0
                 self.isShot = True
             else:
                 self.health -= bullet.damage
                 bullet.aiming = self.id
                 self.isShot = True 
+        self.evading = False
+        self.evasiveness = 0
 
     def update(self):
         '''
         Update the player's image based on their current health and their evasive status
         '''
-        if self.health <= self.death_notice:
-            self.disrepair = True
+        if self.health > 6:
+            self.health = 6
         if self.isShot:
             self.shotTimer += 1
             if self.shotTimer >= 8:
@@ -148,13 +154,8 @@ class Player:
             explosionChannel.set_volume(0.8)
             self.y_speed = 10
         self.timer += 1
-        if self.evading:
-            self.image = self.image_eva
-            self.wobble = self.wobble_eva
-        elif self.health <= self.death_notice:
-            self.image = self.image_red
-            self.wobble = self.wobble_red
-            self.canHeal = False
+        if self.health <= self.death_notice:
+            self.disrepair = True
             self.frame = 1
         if self.timer >= self.frame:
             self.timer = 0
@@ -162,7 +163,12 @@ class Player:
                 self.current_wobble += 1
             else :
                 self.current_wobble -= 1
-            self.image = self.wobble[self.current_wobble]
+            if self.evading:
+                self.image = self.wobble_eva[self.current_wobble]
+            elif self.health < self.death_notice:
+                self.image = self.wobble_red[self.current_wobble]
+            else:
+                self.image = self.wobble_full[self.current_wobble]
             if (self.current_wobble == (len(self.wobble) - 1)) or (self.current_wobble == 0):
                 self.increasing = not self.increasing
             if (self.dy >= 10) or (self.dy < 0):
