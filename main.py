@@ -23,7 +23,7 @@ logo = pg.image.load('images/heal.png')
 # Initialize pygame
 pg.init()
 window = pg.display.set_mode((WIDTH, HEIGHT), RESIZABLE | SCALED)
-pg.display.set_caption("Buckshot Roulette")
+pg.display.set_caption("Starship Showdown")
 pg.display.set_icon(logo)
 clock = pg.time.Clock()
 
