@@ -84,10 +84,9 @@ class AccessCard(Item):
     def __init__(self, window):
         super().__init__(window, AccessCard.reload)
 
-    #def usedItem(self, player, gun):
-        #skip next shot and show that bullet type
-        #gun.skip_next_shot = True
-        #pass
+    def usedItem(self, player, gun):
+        # skip next shot and show that bullet type
+        gun.eject()
 
 
 class Lasso(Item):
@@ -95,14 +94,10 @@ class Lasso(Item):
     def __init__(self, window):
         super().__init__(window, Lasso.steal)
 
-    # def usedItem(self, player, gun):
-    #     #take away one item on opponent side and destroy it
-    #     if player.opponent:
-    #         if player.opponent.item_stack:
-    #             taken_item = player.opponent.item_stack.pop()
-    #             print("Player {} used Lasso! They took away {} from their opponent.".format(player.name, taken_item))
-    #         else:
-    #             print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
-    #     else:
-    #         print("Player {} used Lasso! But there is no opponent to take an item from.".format(player.name))
-    #     pass
+    def usedItem(self, player, gun):
+        #take away one item on opponent side and destroy it
+
+        print("Player {} used Lasso! They took away from their opponent.".format(player.name))
+        print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
+        return 2
+

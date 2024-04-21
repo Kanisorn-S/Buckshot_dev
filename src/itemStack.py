@@ -19,7 +19,8 @@ class ItemStack():
         '''
         items = deque()
         for i in range(nitems):
-            itemType = random.randint(0, 6) 
+            # itemType = random.randint(0, 6) 
+            itemType = 4
             if itemType == 0:
                 items.append(Heal(self.window))
             elif itemType == 1:

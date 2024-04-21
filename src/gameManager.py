@@ -5,6 +5,7 @@ from src.player import Player
 from src.item import Item
 from src.itemStack import ItemStack
 from src.bullet import Bullet
+import random
 
 itemframe = pg.image.load('images/itembox.png')
 
@@ -91,12 +92,15 @@ class GameManager:
                 self.target.shot(bullet)
 
                 # If fired at opponent or fired the last bullet, lose turn
-                if ((self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets))) and (not self.free_shot or self.lock):
+                if ((self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets))) and ((not self.free_shot) or self.lock):
                     self.turn = not self.turn
                     self.lock = False
-                
-                self.free_shot = False
-                self.lock = True
+                else:
+                    self.free_shot = False
+                    self.lock = True
+                    print(self.free_shot)
+                    print(self.lock)
+                    print(self.turn)
             
             # Change aim of the gun
             elif e.key == pg.K_RIGHT:
@@ -119,6 +123,32 @@ class GameManager:
                     self.distributeItems(id = self.turn, amount = 2)
                 elif result == 1: # Skip
                     self.free_shot = True
+                    print(self.free_shot)
+                    print(self.lock)
+                elif result == 2: # Lasso
+                    opp = not self.turn
+                    stolen_slot = random.randint(0, 7)
+                    if opp == 0:
+                        j = 0
+                        while self.slot1[stolen_slot] == 0:
+                            if j > 6:
+                                break
+                            stolen_slot += 1
+                            j += 1
+                        for pair in self.playersItem[self.players[opp]]:
+                            if pair[0] == stolen_slot:
+                                self.playersItem[self.players[opp]].remove(pair)
+                    else:
+                        j = 0
+                        while self.slot2[stolen_slot] == 0:
+                            if j > 6:
+                                break
+                            stolen_slot += 1
+                            j += 1
+                        for pair in self.playersItem[self.players[opp]]:
+                            if pair[0] == stolen_slot:
+                                self.playersItem[self.players[opp]].remove(pair)
+                        
         
     def distributeItems(self, id = 2, amount = 4):
         print("distributing items")
