@@ -11,6 +11,8 @@ demon_core = pg.mixer.Sound('sounds\Demon core sfx.mp3')
 gn_drive = pg.mixer.Sound('sounds\GN drive sfx.mp3')
 pot_of_greed = pg.mixer.Sound('sounds\Pot of greed sfx.mp3')
 super_charger = pg.mixer.Sound('sounds\Super Charger sfx.mp3')
+heal = pg.mixer.Sound('sounds\Heal_sfx.mp3')
+lasso = pg.mixer.Sound('sounds\Steal_sfx.mp3')
 
 class Item(pw.CustomButton):
     def __init__(self, window, image):
@@ -24,6 +26,9 @@ class Item(pw.CustomButton):
     def update(self):
         pass
         #update the state
+
+    def __del__(self):
+        print("Item is gone")
 
 
 
@@ -88,6 +93,7 @@ class Heal(Item):
 
     def usedItem(self, player, gun):
         # restore healty heart to player
+        itemChannel.play(heal, loops = 0)
         if not player.disrepair:
             player.health += 1
         
@@ -111,7 +117,7 @@ class Lasso(Item):
 
     def usedItem(self, player, gun):
         #take away one item on opponent side and destroy it
-
+        itemChannel.play(lasso, loops = 0)
         print("Player {} used Lasso! They took away from their opponent.".format(player.name))
         print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
         return 2
