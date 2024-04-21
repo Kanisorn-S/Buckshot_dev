@@ -124,6 +124,7 @@ class GameManager:
             while self.slot1[slot]:
                 if j >=7:
                     full1 = True
+                    break
                 slot = (slot + 1) % 8
                 j += 1
             if not full1:
@@ -140,6 +141,7 @@ class GameManager:
             while self.slot2[slot]:
                 if j >=7:
                     full2 = True
+                    break
                 slot = (slot + 1) % 8
                 j += 1
             if not full2:
