@@ -9,7 +9,7 @@ class Item(pw.CustomButton):
 
     
     def usedItem(self, player, gun):
-        pass
+        print("Item is used")
 
     def update(self):
         pass
@@ -24,9 +24,9 @@ class PotOfGreed(Item):
         self.effect = "Draw 2 cards"
 
 
-    def usedItem(self, Player, gun):
+    def usedItem(self, player, gun):
         #draw 2 items
-        self.heath += 1
+        player.heath += 1
         
 
 

@@ -100,6 +100,11 @@ class GameManager:
             if e.key == pg.K_f:
                 pg.display.toggle_fullscreen()
         
+        for i, item in self.playersItem[self.players[self.turn]]:
+            if item.handleEvent(e):
+                item.usedItem(self.players[self.turn], self.gun)
+                self.playersItem[self.players[self.turn]].remove((i, item))
+        
     def distributeItems(self):
         print("distributing items")
         # Player1
