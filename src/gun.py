@@ -47,7 +47,7 @@ class Gun:
         # Initialize bullets and firing mechanism
         self.odds = [0.5, 0.5] # [blank, live]
         self.bullets = self.load()
-        self.target = 69
+        self.__target = 69
         self.turning_left = False
         self.turning_right = False
         self.live = 0
@@ -62,7 +62,7 @@ class Gun:
         # Bullet display and animation
         self.bulletHolder = pg.Rect(300, 300, (6 * Gun.IMG_W) + 10, 50)
         self.bulletHolder.center = (300, 375 / 2)
-        self.displaying = True
+        self.__displaying = True
         self.displayingTimer = 0
         self.fading = False
         self.fadingTimer = 0
@@ -78,6 +78,21 @@ class Gun:
         self.ejectHolder.center = (300, 375 / 2)
         self.ejectTimer = 0
         self.eject_img = None
+
+    def isDisplaying(self) -> bool:
+        return self.__displaying
+    
+    @property
+    
+    def target(self):
+        return self.__target
+    
+    @target.setter
+    def target(self, newTarget):
+        if newTarget not in [0, 1]:
+            raise ValueError('Target must either be 0 or 1')
+        self.__target = newTarget
+
 
     def load(self):
         '''
@@ -139,7 +154,7 @@ class Gun:
                     self.blur_sprite += 1
                 else:
                     self.fading = False
-                    self.displaying = False
+                    self.__displaying = False
                     self.discarding = False
         for bullet in self.bullets:
             bullet.aiming = self.target
@@ -153,7 +168,7 @@ class Gun:
                     self.live += 1
                 else:
                     self.blank += 1
-            self.displaying = True
+            self.__displaying = True
             self.displayingTimer = 0
             self.fading = False
             self.fadeUpdate = 0
@@ -203,7 +218,7 @@ class Gun:
             y = self.ejectHolder.topleft[1] + 5
             factor = self.fading * ((-1) ** (self.fadeUpdate % 2) * self.dx)
             self.window.blit(self.eject_img, (x + factor, y))
-        if self.displaying and not death_time:
+        if self.__displaying and not death_time:
             self.displayingTimer += 1
             if self.displayingTimer > 150:
                 self.fading = True

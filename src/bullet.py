@@ -68,7 +68,6 @@ class Bullet:
         Set isFired to True to start drawing and updating the bullet
         Check for the direction the bullet needs to go
         '''
-        # print('fired')
         self.isFired = True
 
     def update(self):
@@ -77,10 +76,6 @@ class Bullet:
         '''
         if self.isFired:
             if self.timer >= self.frame:
-            # self.rect.x += self.speed
-            # self.exact_pos[0] += self.speed * (-1)**(self.aiming+1)
-            # self.rect.topleft = self.exact_pos
-            # print(self.rect.x)
                 if self.currentFrame < len(self.sprite) - 1:
                     self.currentFrame += 1
                 else:

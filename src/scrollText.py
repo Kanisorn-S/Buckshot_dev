@@ -36,7 +36,6 @@ class ScrollText:
             if event.type == pg.MOUSEWHEEL:
             # event.y is 1 when scrolling up, -1 when scrolling down
 
-                print(event.y)
                 self.scroll = max(-580, min(self.scroll + event.y * self.speed, 0))
                 self.bar_scroll = -self.scroll * (self.h - 40) / 580
 

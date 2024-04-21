@@ -21,14 +21,9 @@ class Item(pw.CustomButton):
 
     
     def usedItem(self, player, gun):
-        print("Item is used")
-
-    def update(self):
         pass
-        #update the state
 
-    def __del__(self):
-        print("Item is gone")
+
 
 
 
@@ -118,7 +113,5 @@ class Lasso(Item):
     def usedItem(self, player, gun):
         #take away one item on opponent side and destroy it
         itemChannel.play(lasso, loops = 0)
-        print("Player {} used Lasso! They took away from their opponent.".format(player.name))
-        print("Player {} used Lasso! But their opponent has no items to take.".format(player.name))
         return 2
 

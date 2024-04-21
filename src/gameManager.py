@@ -18,7 +18,6 @@ class GameManager:
                 nbullets - The number of bullets in the gun
         '''
         self.window = window
-        self.nplayers = 2
         self.nbullets = nbullets
         self.players_pic = players_pic
         self.locations = [(70, 375/2), (530, 375/2)]
@@ -29,6 +28,7 @@ class GameManager:
         self.turn = 0
         self.winner = None
         self.bullets_on_screen = []
+        self.target = None
 
         # Itemframes
         self.itemframes = []
@@ -40,7 +40,7 @@ class GameManager:
         self.itemframes[1][1].center = (400, 375/4)
         self.itemframes[2][1].center = (200, 3*375/4)
         self.itemframes[3][1].center = (400, 3*375/4)
-        self.target = None
+
 
         # Item management
         self.itemStack = ItemStack(self.window, 100)
@@ -62,7 +62,7 @@ class GameManager:
         
     def loadPlayer(self):
         '''
-        Create nplayers Player and return a dictionary with the keys being players and the values being their corresponding health
+        Create 2 Player and return a dictionary with the keys being players and the values being their corresponding health
         '''
         Players = {}
         player1 = Player(self.window, self.players_pic[0:3], self.locations[0], 0, "Player 1")
@@ -78,11 +78,12 @@ class GameManager:
         Handle events from the user's input
         '''
         if self.death_time:
+            # Disable input when a player is killed
             return
         if e.type == pg.KEYDOWN: 
         # Spacebar to fire
             if e.key == pg.K_SPACE:
-                if self.gun.displaying:
+                if self.gun.isDisplaying():
                     return
                 if self.gun.target not in [0, 1]:
                     return
@@ -98,9 +99,6 @@ class GameManager:
                 else:
                     self.free_shot = False
                     self.lock = True
-                    print(self.free_shot)
-                    print(self.lock)
-                    print(self.turn)
             
             # Change aim of the gun
             elif e.key == pg.K_RIGHT:
@@ -112,7 +110,7 @@ class GameManager:
                 pg.display.toggle_fullscreen()
         
         for i, item in self.playersItem[self.players[self.turn]]:
-            if self.gun.displaying:
+            if self.gun.isDisplaying():
                 return
             if item.handleEvent(e):
                 result = item.usedItem(self.players[self.turn], self.gun)
@@ -125,8 +123,6 @@ class GameManager:
                     self.distributeItems(id = self.turn, amount = 2)
                 elif result == 1: # Skip
                     self.free_shot = True
-                    print(self.free_shot)
-                    print(self.lock)
                 elif result == 2: # Lasso
                     opp = not self.turn
                     stolen_slot = random.randint(0, 7)
@@ -155,7 +151,6 @@ class GameManager:
                         
         
     def distributeItems(self, id = 2, amount = 4):
-        print("distributing items")
         # Player1
         if id == 0 or id == 2:
             full1 = False
