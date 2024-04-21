@@ -45,7 +45,7 @@ class Gun:
         self.players = players
         
         # Initialize bullets and firing mechanism
-        self.odds = [1, 0] # [blank, live]
+        self.odds = [0, 1] # [blank, live]
         self.bullets = self.load()
         self.target = 69
         self.turning_left = False

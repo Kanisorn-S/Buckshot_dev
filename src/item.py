@@ -24,9 +24,9 @@ class PotOfGreed(Item):
         self.effect = "Draw 2 cards"
 
 
-    # def usedItem(self, player, gun):
-    #     #draw 2 items
-    #     player.heath += 1
+    def usedItem(self, player, gun):
+        #draw 2 items
+        return 0
         
 
 
@@ -80,7 +80,8 @@ class Heal(Item):
 
     def usedItem(self, player, gun):
         # restore healty heart to player
-        player.health += 1
+        if not player.disrepair:
+            player.health += 1
         
 
 
