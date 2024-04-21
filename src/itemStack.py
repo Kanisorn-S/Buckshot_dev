@@ -17,7 +17,7 @@ class ItemStack():
         '''
         items = deque()
         for i in range(nitems):
-            itemType = random.randint(0, 4) 
+            itemType = random.randint(0, 7) 
             if itemType == 0:
                 items.append(Item())
                 pass 
@@ -38,6 +38,14 @@ class ItemStack():
                 items.append(Item())
                 pass
                 # items.append(Skip())
+            elif itemType == 5:
+                items.append(Item())
+            elif itemType == 6:
+                items.append(Item())
+
+            elif itemType == 7:
+                items.append(Item())
+
 
         return items
     
