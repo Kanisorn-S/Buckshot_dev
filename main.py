@@ -38,7 +38,7 @@ gameChannel = pg.mixer.Channel(1)
 endChannel = pg.mixer.Channel(2)
 
 gameChannel.set_volume(0.1)
-startMenuChannel.set_volume(0.3)
+startMenuChannel.set_volume(0.06)
 endChannel.set_volume(0.3)
 
 # Load necessary images

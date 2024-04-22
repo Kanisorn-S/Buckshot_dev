@@ -9,7 +9,11 @@ pg.mixer.init()
 itemChannel = pg.mixer.Channel(5)
 itemChannel.set_volume(0.1)
 superChannel = pg.mixer.Channel(6)
-superChannel.set_volume(1.8)
+superChannel.set_volume(0.3)
+demonChannel = pg.mixer.Channel(7)
+demonChannel.set_volume(0.04)
+# highChannel = pg.mixer.Channel(8)
+# highChannel.set_volume(0.6)
 
 access_card = pg.mixer.Sound('sounds\Credit card sfx.mp3')
 demon_core = pg.mixer.Sound('sounds\Demon core sfx.mp3')
@@ -85,6 +89,7 @@ class SuperCharger(Item):
 
     def usedItem(self, player: Player, gun: Gun):
        # increase bullet damage
+       superChannel.set_volume(1.8)
        superChannel.play(super_charger, loops = 0)
        gun.bullets[gun.bulletsLeft() - 1].damage = 2
 
@@ -98,7 +103,8 @@ class GNDrive(Item):
 
     def usedItem(self, player: Player, gun: Gun):
         # player evasiveness to 0.5
-        itemChannel.play(gn_drive, loops = 0)
+        superChannel.set_volume(0.3)
+        superChannel.play(gn_drive, loops = 0)
         player.evade()
         player.evasiveness = 0.5
 
@@ -111,7 +117,7 @@ class DemonCore(Item):
         self.used = False
 
     def usedItem(self, player: Player, gun: Gun):
-        itemChannel.play(demon_core, loops = 0)
+        demonChannel.play(demon_core, loops = 0)
         return 1
 
 
@@ -123,7 +129,8 @@ class Heal(Item):
 
     def usedItem(self, player: Player, gun: Gun):
         # restore healty heart to player
-        itemChannel.play(heal, loops = 0)
+        superChannel.set_volume(0.3)
+        superChannel.play(heal, loops = 0)
         if not player.isDisrepair():
             player.health += 1
         
@@ -147,6 +154,7 @@ class Lasso(Item):
 
     def usedItem(self, player: Player, gun: Gun):
         #take away one item on opponent side and destroy it
-        itemChannel.play(lasso, loops = 0)
+        superChannel.set_volume(0.3)
+        superChannel.play(lasso, loops = 0)
         return 2
 
