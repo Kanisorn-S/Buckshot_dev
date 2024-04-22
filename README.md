@@ -75,8 +75,15 @@ This project is developed as a part of the Programming Methodologies course, foc
 - `sounds` - Contains all of the music and sound effects
 - `src` - Contains all of the Class and Function code
 ### Important Files
-- `main.py` 
-
+- `main.py` - The main program, used to control which menu to display
+- `gameManager.py` - GameManager class. Manage all elements of the game by initializing, updating, and drawing all elements
+- `player.py` - Player class representing a player. Contains attributes like health, evasiveness, id and methods like shot, which updates the player's status after getting shot, and update, which facilitates the player's animation and sprite changes
+- `gun.py` - Gun class representing the laser cannon. Contains a stack of `Bullet`s. Handle the aiming, shooting mechanisms and displaying of bullets.
+- `bullet.py` - Bullet class representing a bullet. Contains class variables to signified its type, LIVE or BLANK. Contains the bullet's damage which is used to calculate a player's health after getting shot.
+- `itemStack.py` - ItemStack class representing a deck of `Item`s to be drawn from. Manages and loads item randomly.
+- `item.py` - Item abstsraction class, inherits from the pygwidgets.CustomButton class for functionality. Also contains different type of items as a subclass of the Item class, each differing in the usedItem method.
+- `starting.py`, `ending.py`, `rules.py` - Contains functions that display different menus. Return an int that signifies the program's state, which is used by `main.py` to correctly display different menus
+### How it works
 
 
 ## Contributing
