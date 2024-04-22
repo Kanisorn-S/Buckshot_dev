@@ -8,6 +8,8 @@ from abc import ABC, abstractmethod
 pg.mixer.init()
 itemChannel = pg.mixer.Channel(5)
 itemChannel.set_volume(0.1)
+superChannel = pg.mixer.Channel(6)
+superChannel.set_volume(1.8)
 
 access_card = pg.mixer.Sound('sounds\Credit card sfx.mp3')
 demon_core = pg.mixer.Sound('sounds\Demon core sfx.mp3')
@@ -83,7 +85,7 @@ class SuperCharger(Item):
 
     def usedItem(self, player: Player, gun: Gun):
        # increase bullet damage
-       itemChannel.play(super_charger, loops = 0)
+       superChannel.play(super_charger, loops = 0)
        gun.bullets[gun.bulletsLeft() - 1].damage = 2
 
 
