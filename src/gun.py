@@ -45,7 +45,7 @@ class Gun:
         self.players = players
         
         # Initialize bullets and firing mechanism
-        self.odds = [0.5, 0.5] # [blank, live]
+        self.__odds = [0.5, 0.5] # [blank, live]
         self.bullets = self.load()
         self.__target = 69
         self.turning_left = False
@@ -98,11 +98,11 @@ class Gun:
 
     def load(self):
         '''
-        Load the gun by initializing a stack of bullets with the odds of self.odds
+        Load the gun by initializing a stack of bullets with the __odds of self.__odds
         '''
         bullets = deque()
         for _ in range(self.nbullets):
-            bullets.append(Bullet(self.window, self.odds))
+            bullets.append(Bullet(self.window, self.__odds))
         return bullets
     
     def fire(self) -> tuple[Player, Bullet]:
