@@ -22,20 +22,21 @@ class ItemStack():
         items = deque()
         for i in range(nitems):
             itemType = random.choices(range(7), self.weights, k = 1)[0]
-            if itemType == 0:
-                items.append(Heal(self.window))
-            elif itemType == 1:
-                items.append(PotOfGreed(self.window))
-            elif itemType == 2:
-                items.append(SuperCharger(self.window))
-            elif itemType == 3:
-                items.append(GNDrive(self.window))
-            elif itemType == 4:
-                items.append(DemonCore(self.window))
-            elif itemType == 5:
-                items.append(AccessCard(self.window))
-            elif itemType == 6:
-                items.append(Lasso(self.window))
+            match itemType:
+                case 0:
+                    items.append(Heal(self.window))
+                case 1:
+                    items.append(PotOfGreed(self.window))
+                case 2:
+                    items.append(SuperCharger(self.window))
+                case 3:
+                    items.append(GNDrive(self.window))
+                case 4:
+                    items.append(DemonCore(self.window))
+                case 5:
+                    items.append(AccessCard(self.window))
+                case 6:
+                    items.append(Lasso(self.window))
 
         return items
     
@@ -43,13 +44,10 @@ class ItemStack():
         '''
         Return the top most item on the stack
         '''
-        # TODO
         return self.items.pop()
 
     def shuffle(self):
         '''
         Shuffle the item stack
         '''
-        # TODO 
         random.shuffle(self.items)
-        pass
