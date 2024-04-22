@@ -220,7 +220,7 @@ class GameManager:
         for bullet in self.bullets_on_screen:
             bullet.update()
             
-        for i in range(2):
+        for i in range(len(self.players)):
             for slot, item in self.playersItem[self.players[i]]:
                 item.update()
                 if item.isUsed():
