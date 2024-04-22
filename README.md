@@ -85,7 +85,7 @@ This project is developed as a part of the Programming Methodologies course, foc
 - `starting.py`, `ending.py`, `rules.py` - Contains functions that display different menus. Return an int that signifies the program's state, which is used by `main.py` to correctly display different menus
 ### How it works
 - `main.py` - Display the correct menu by running different functions based on the current state of the program. Check for button press to change state by utilizing the pygwidgets.CustomButton.handleEvent method. Initializes a gameManager when in game state and passes events into the GameManager.handleEvent method
-- `gameManager.py` - Initializes players, a gun, and an itemStack. Keep tracks of each object's status and makes appropriate update in the update method. Handles user's input, including aiming the gun, firing, and using items, throught the handleEvent method
+- `gameManager.py` - Initializes players, a gun, and an itemStack. Keep tracks of each object's status and makes appropriate update in the update method. Handles user's input, including aiming the gun, firing, and using items, throught the handleEvent method. Draws all the appropriate objects
 
 
 ## Contributing
