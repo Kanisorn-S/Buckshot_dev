@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.locals import *
 import pygwidgets as pw
+from abc import ABC, abstractmethod
 
 pg.mixer.init()
 itemChannel = pg.mixer.Channel(5)
@@ -14,12 +15,12 @@ super_charger = pg.mixer.Sound('sounds\Super Charger sfx.mp3')
 heal = pg.mixer.Sound('sounds\Heal_sfx.mp3')
 lasso = pg.mixer.Sound('sounds\Steal_sfx.mp3')
 
-class Item(pw.CustomButton):
+class Item(pw.CustomButton, ABC):
     def __init__(self, window, image):
         super().__init__(window, (0, 0), image)
         self.isActive = True
 
-    
+    @abstractmethod
     def usedItem(self, player, gun):
         pass
 
