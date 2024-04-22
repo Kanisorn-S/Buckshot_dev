@@ -114,7 +114,8 @@ class GameManager:
                 return
             if item.handleEvent(e):
                 result = item.usedItem(self.players[self.turn], self.gun)
-                self.playersItem[self.players[self.turn]].remove((i, item))
+                item.remove()
+                # self.playersItem[self.players[self.turn]].remove((i, item))
                 if self.turn == 0:
                     self.slot1[i] = 0
                 else:
@@ -133,9 +134,9 @@ class GameManager:
                                 break
                             stolen_slot = (stolen_slot + 1) % 8
                             j += 1
-                        for pair in self.playersItem[self.players[opp]]:
-                            if pair[0] == stolen_slot:
-                                self.playersItem[self.players[opp]].remove(pair)
+                        for slot, item in self.playersItem[self.players[opp]]:
+                            if slot == stolen_slot:
+                                item.remove()
                                 self.slot1[stolen_slot] = 0
                     else:
                         j = 0
@@ -144,9 +145,9 @@ class GameManager:
                                 break
                             stolen_slot = (stolen_slot + 1) % 8
                             j += 1
-                        for pair in self.playersItem[self.players[opp]]:
-                            if pair[0] == stolen_slot:
-                                self.playersItem[self.players[opp]].remove(pair)
+                        for slot, item in self.playersItem[self.players[opp]]:
+                            if slot == stolen_slot:
+                                item.remove()
                                 self.slot2[stolen_slot] = 0
                         
         
@@ -219,7 +220,12 @@ class GameManager:
             self.distributeItems()
         for bullet in self.bullets_on_screen:
             bullet.update()
-
+            
+        for i in range(2):
+            for slot, item in self.playersItem[self.players[i]]:
+                item.update()
+                
+                
     def draw(self):
         '''
         Draws all the components by calling draw() on all objects.

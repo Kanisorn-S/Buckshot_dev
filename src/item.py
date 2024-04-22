@@ -18,11 +18,39 @@ lasso = pg.mixer.Sound('sounds\Steal_sfx.mp3')
 class Item(pw.CustomButton, ABC):
     def __init__(self, window, image):
         super().__init__(window, (0, 0), image)
+        self.blur = []
+        self.imageForBlur = pg.image.load(image)
+        for i in range(1, 6):
+            self.blur.append(pg.transform.box_blur(self.imageForBlur, i))
         self.isActive = True
+        self.current_sprite = 0
+        self.timer = 0
+        self.displaying = True
 
     @abstractmethod
     def usedItem(self, player, gun):
         pass
+    
+    def update(self):
+        if not self.isActive:
+            self.timer += 1
+            if self.timer > 3:
+                self.timer = 0
+                print(self.current_sprite)
+                if self.current_sprite >= 4:
+                    self.displaying = False
+                    self.disable()
+                self.current_sprite += 1
+    
+    def draw(self):
+        if self.isActive:
+            super().draw()
+        elif self.displaying:
+            self.window.blit(self.blur[self.current_sprite], self.loc)
+    
+    def remove(self):
+        self.isActive = False
+
 
 
 
@@ -52,7 +80,7 @@ class SuperCharger(Item):
     def usedItem(self, player, gun):
        # increase bullet damage
        itemChannel.play(super_charger, loops = 0)
-       gun.bullets[len(gun.bullets) - 1].damage = 2
+       gun.bullets[gun.bulletsLeft() - 1].damage = 2
 
 
 class GNDrive(Item):
@@ -65,7 +93,7 @@ class GNDrive(Item):
     def usedItem(self, player, gun):
         # player evasiveness to 0.5
         itemChannel.play(gn_drive, loops = 0)
-        player.evading = True
+        player.evade()
         player.evasiveness = 0.5
 
 
@@ -90,7 +118,7 @@ class Heal(Item):
     def usedItem(self, player, gun):
         # restore healty heart to player
         itemChannel.play(heal, loops = 0)
-        if not player.disrepair:
+        if not player.isDisrepair():
             player.health += 1
         
 

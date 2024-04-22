@@ -39,12 +39,12 @@ class Player:
         self.image = self.image_full
         self.rect = self.image.get_rect()
         self.rect.center = loc
-        self.health = 6
+        self.__health = 6
         self.death_notice = math.ceil(self.health / 3)
         self.id = id
         self.name = name
         self.evading = False
-        self.evasiveness = 0
+        self.__evasiveness = 0
         self.disrepair = False
         
         # Wobble full effect
@@ -112,7 +112,32 @@ class Player:
         # Items
         self.items = []
 
+    def evade(self):
+        self.evading = True
         
+    @property
+    def evasiveness(self):
+        return self.__evasiveness
+    
+    @evasiveness.setter
+    def evasiveness(self, new_eva):
+        if new_eva < 0 or new_eva > 1:
+            raise ValueError("Evasiveness needs to be between 0 and 1")
+        self.__evasiveness = new_eva
+        
+    @property
+    def health(self):
+        return self.__health
+    
+    @health.setter
+    def health(self, newHealth):
+        if newHealth > 6:
+            self.__health = 6
+            return
+        self.__health = newHealth
+        
+    def isDisrepair(self):
+        return self.disrepair
 
 
     def shot(self, bullet: Bullet):
@@ -142,8 +167,8 @@ class Player:
         '''
         Update the player's image based on their current health and their evasive status
         '''
-        if self.health > 6:
-            self.health = 6
+        # if self.health > 6:
+        #     self.health = 6
         if self.isShot:
             self.shotTimer += 1
             if self.shotTimer >= 8:

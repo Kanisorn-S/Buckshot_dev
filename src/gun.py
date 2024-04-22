@@ -82,8 +82,10 @@ class Gun:
     def isDisplaying(self) -> bool:
         return self.__displaying
     
-    @property
+    def bulletsLeft(self) -> int:
+        return len(self.bullets)
     
+    @property
     def target(self):
         return self.__target
     
