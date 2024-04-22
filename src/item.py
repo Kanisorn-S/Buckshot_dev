@@ -23,7 +23,7 @@ super_charger = pg.mixer.Sound('sounds\Super Charger sfx.mp3')
 heal = pg.mixer.Sound('sounds\Heal_sfx.mp3')
 lasso = pg.mixer.Sound('sounds\Steal_sfx.mp3')
 
-class Item(pw.CustomButton, ABC):
+class Item(pw.CustomButton, ABC): # pw.CustomButton -> Inheretance, ABC -> abstraction
     def __init__(self, window: pg.Surface, image: str):
         super().__init__(window, (0, 0), image)
         self.blur = []
@@ -38,7 +38,7 @@ class Item(pw.CustomButton, ABC):
     def isUsed(self) -> bool:
         return not self.displaying
 
-    @abstractmethod
+    @abstractmethod 
     def usedItem(self, player: Player, gun: Gun):
         pass
     
@@ -67,7 +67,7 @@ class Item(pw.CustomButton, ABC):
 
 
 class PotOfGreed(Item):
-    pot_of_greed = 'images/pot_of_greed.png'
+    pot_of_greed = 'images/pot_of_greed.png' # Class variable
     def __init__(self, window: pg.Surface):
         super().__init__(window, PotOfGreed.pot_of_greed)
         self.effect = "Draw 2 cards"

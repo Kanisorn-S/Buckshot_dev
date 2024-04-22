@@ -129,7 +129,7 @@ class Player:
     def health(self):
         return self.__health
     
-    @health.setter
+    @health.setter # Setter to check max health
     def health(self, newHealth):
         if newHealth > 6:
             self.__health = 6
