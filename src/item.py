@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 pg.mixer.init()
 itemChannel = pg.mixer.Channel(5)
-itemChannel.set_volume(0.2)
+itemChannel.set_volume(0.1)
 
 access_card = pg.mixer.Sound('sounds\Credit card sfx.mp3')
 demon_core = pg.mixer.Sound('sounds\Demon core sfx.mp3')
