@@ -96,7 +96,7 @@ class GameManager:
                 if ((self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets))) and ((not self.free_shot) or self.lock):
                     self.turn = not self.turn
                     self.lock = False
-                else:
+                elif (self.target != self.players[self.turn]) or (bullet.type == Bullet.LIVE) or not(len(self.gun.bullets)):
                     self.free_shot = False
                     self.lock = True
             
@@ -115,7 +115,6 @@ class GameManager:
             if item.handleEvent(e):
                 result = item.usedItem(self.players[self.turn], self.gun)
                 item.remove()
-                # self.playersItem[self.players[self.turn]].remove((i, item))
                 if self.turn == 0:
                     self.slot1[i] = 0
                 else:
@@ -224,6 +223,8 @@ class GameManager:
         for i in range(2):
             for slot, item in self.playersItem[self.players[i]]:
                 item.update()
+                if item.isUsed():
+                    self.playersItem[self.players[i]].remove((slot, item))
                 
                 
     def draw(self):

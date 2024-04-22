@@ -1,6 +1,8 @@
 import pygame as pg
 from pygame.locals import *
 import pygwidgets as pw
+from src.player import Player
+from src.gun import Gun
 from abc import ABC, abstractmethod
 
 pg.mixer.init()
@@ -16,7 +18,7 @@ heal = pg.mixer.Sound('sounds\Heal_sfx.mp3')
 lasso = pg.mixer.Sound('sounds\Steal_sfx.mp3')
 
 class Item(pw.CustomButton, ABC):
-    def __init__(self, window, image):
+    def __init__(self, window: pg.Surface, image: str):
         super().__init__(window, (0, 0), image)
         self.blur = []
         self.imageForBlur = pg.image.load(image)
@@ -26,9 +28,12 @@ class Item(pw.CustomButton, ABC):
         self.current_sprite = 0
         self.timer = 0
         self.displaying = True
+    
+    def isUsed(self) -> bool:
+        return not self.displaying
 
     @abstractmethod
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         pass
     
     def update(self):
@@ -36,7 +41,6 @@ class Item(pw.CustomButton, ABC):
             self.timer += 1
             if self.timer > 3:
                 self.timer = 0
-                print(self.current_sprite)
                 if self.current_sprite >= 4:
                     self.displaying = False
                     self.disable()
@@ -58,12 +62,12 @@ class Item(pw.CustomButton, ABC):
 
 class PotOfGreed(Item):
     pot_of_greed = 'images/pot_of_greed.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, PotOfGreed.pot_of_greed)
         self.effect = "Draw 2 cards"
 
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         #draw 2 items
         itemChannel.play(pot_of_greed, loops = 0)
         return 0
@@ -72,12 +76,12 @@ class PotOfGreed(Item):
 
 class SuperCharger(Item):
     power_amp = 'images/power_amp.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, SuperCharger.power_amp)
         self.effect = "Next shot deals 2 damage"
 
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
        # increase bullet damage
        itemChannel.play(super_charger, loops = 0)
        gun.bullets[gun.bulletsLeft() - 1].damage = 2
@@ -85,12 +89,12 @@ class SuperCharger(Item):
 
 class GNDrive(Item):
     evasiveness = 'images/evasiveness.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, GNDrive.evasiveness)
         self.effect = "Increase evasiveness by 0.5 for next shot"
 
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         # player evasiveness to 0.5
         itemChannel.play(gn_drive, loops = 0)
         player.evade()
@@ -99,12 +103,12 @@ class GNDrive(Item):
 
 class DemonCore(Item):
     skip = 'images/skip.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, DemonCore.skip)
         self.effect = "Skip opponent's turn (once per turn)"
         self.used = False
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         itemChannel.play(demon_core, loops = 0)
         return 1
 
@@ -112,10 +116,10 @@ class DemonCore(Item):
 
 class Heal(Item):
     heal = 'images/heal.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, Heal.heal)
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         # restore healty heart to player
         itemChannel.play(heal, loops = 0)
         if not player.isDisrepair():
@@ -125,10 +129,10 @@ class Heal(Item):
 
 class AccessCard(Item):
     reload = 'images/reload.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, AccessCard.reload)
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         # skip next shot and show that bullet type
         itemChannel.play(access_card, loops = 0)
         gun.eject()
@@ -136,10 +140,10 @@ class AccessCard(Item):
 
 class Lasso(Item):
     steal = 'images/steal.png'
-    def __init__(self, window):
+    def __init__(self, window: pg.Surface):
         super().__init__(window, Lasso.steal)
 
-    def usedItem(self, player, gun):
+    def usedItem(self, player: Player, gun: Gun):
         #take away one item on opponent side and destroy it
         itemChannel.play(lasso, loops = 0)
         return 2
