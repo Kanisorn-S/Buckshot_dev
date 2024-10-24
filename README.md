@@ -97,9 +97,3 @@ This project is developed as a part of the Programming Methodologies course, foc
 - `Inheritance` - The Item class and its subclasses exhibit inheritance. The Item class inherits from pygwidgets's CustomButton in order to utilize the functionality of a button, while adding additional methods for applying an item's effect. The different items then inherits from the item class, creating a class hierarchy. Each item modifies the usedItem method in order to implement its own functionality
 - `Abstract Class` - By inheriting from ABC, the Item class is an abstract class. An Item object should never be initialized, only its subclass should. The item class also includes an abstract method: usedItem. Each item type must overrides this method in order to implement its own effect
 - `Polymorphism` - Every class, except the ItemStack, exhibits polymorphism by having both the update and draw method. This allows the gameManager to call update and draw on every object in the program without worrying about its class. The different items also exhibits polymorphism through the usedItem method. Each item has a different implementation of the usedItem method in order to reflect the difference in effect; however, due to polymorphism, the gameManager can call usedItem on any item object
-
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
